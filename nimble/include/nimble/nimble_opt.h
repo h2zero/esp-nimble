@@ -25,7 +25,7 @@ extern "C" {
 #endif
 
 /* Include automatically-generated settings. */
-#include "nimble/nimble_opt_auto.h"
+#include "nimble_opt_auto.h"
 
 #ifdef __cplusplus
 }

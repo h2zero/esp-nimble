@@ -7,16 +7,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
 #define MESH_LOG_MODULE BLE_MESH_ADV_LOG
 
-#include "mesh/mesh.h"
-#include "host/ble_hs_adv.h"
-#include "host/ble_gap.h"
-#include "nimble/hci_common.h"
-#include "mesh/porting.h"
-#include "nimble/nimble_port.h"
-
+#include "../include/mesh/mesh.h"
+#include "nimble/nimble/host/include/host/ble_hs_adv.h"
+#include "nimble/nimble/host/include/host/ble_gap.h"
+#include "nimble/nimble/include/nimble/hci_common.h"
+#include "../include/mesh/porting.h"
+#include "nimble/porting/nimble/include/nimble/nimble_port.h"
 #include "adv.h"
 #include "net.h"
 #include "foundation.h"
@@ -337,9 +336,12 @@ void bt_mesh_adv_init(void)
 	os_task_init(&adv_task, "mesh_adv", mesh_adv_thread, NULL,
 	             MYNEWT_VAL(BLE_MESH_ADV_TASK_PRIO), OS_WAIT_FOREVER,
 	             g_blemesh_stack, ADV_STACK_SIZE);
-#else
+#elif ESP_PLATFORM
     xTaskCreatePinnedToCore(mesh_adv_thread, "mesh_adv", 2768,
             NULL, (configMAX_PRIORITIES - 5), &adv_task_h, NIMBLE_CORE);
+#else
+    xTaskCreate(mesh_adv_thread, "mesh_adv", MYNEWT_VAL(BLE_MESH_ADV_STACK_SIZE),
+            NULL, MYNEWT_VAL(BLE_MESH_ADV_TASK_PRIO), &adv_task_h);
 #endif
 
 	/* For BT5 controllers we can have fast advertising interval */

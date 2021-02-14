@@ -78,7 +78,7 @@
 #ifndef __TC_ECC_DSA_H__
 #define __TC_ECC_DSA_H__
 
-#include <tinycrypt/ecc.h>
+#include "ecc.h"
 
 #ifdef __cplusplus
 extern "C" {

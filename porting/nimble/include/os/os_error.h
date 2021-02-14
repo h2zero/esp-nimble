@@ -20,7 +20,7 @@
 #ifndef H_OS_ERROR_
 #define H_OS_ERROR_
 
-#include "os/os.h"
+#include "os.h"
 
 enum os_error {
     OS_OK = 0,

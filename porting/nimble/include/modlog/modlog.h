@@ -22,8 +22,8 @@
 
 #include <stdio.h>
 
-#include "log/log.h"
-#include "log_common/log_common.h"
+#include "../log/log.h"
+#include "../log_common/log_common.h"
 
 #ifdef ESP_PLATFORM
 #include "esp_log.h"
@@ -59,35 +59,35 @@
 #define MODLOG_DEBUG(ml_mod_, ml_msg_, ...) \
     printf((ml_msg_), ##__VA_ARGS__)
 #else
-#define MODLOG_DEBUG(ml_mod_, ...) IGNORE(__VA_ARGS__)
+#define MODLOG_DEBUG(ml_mod_, ...)
 #endif
 
 #if MYNEWT_VAL(LOG_LEVEL) <= LOG_LEVEL_INFO || defined __DOXYGEN__
 #define MODLOG_INFO(ml_mod_, ml_msg_, ...) \
     printf((ml_msg_), ##__VA_ARGS__)
 #else
-#define MODLOG_INFO(ml_mod_, ...) IGNORE(__VA_ARGS__)
+#define MODLOG_INFO(ml_mod_, ...)
 #endif
 
 #if MYNEWT_VAL(LOG_LEVEL) <= LOG_LEVEL_WARN || defined __DOXYGEN__
 #define MODLOG_WARN(ml_mod_, ml_msg_, ...) \
     printf((ml_msg_), ##__VA_ARGS__)
 #else
-#define MODLOG_WARN(ml_mod_, ...) IGNORE(__VA_ARGS__)
+#define MODLOG_WARN(ml_mod_, ...)
 #endif
 
 #if MYNEWT_VAL(LOG_LEVEL) <= LOG_LEVEL_ERROR || defined __DOXYGEN__
 #define MODLOG_ERROR(ml_mod_, ml_msg_, ...) \
     printf((ml_msg_), ##__VA_ARGS__)
 #else
-#define MODLOG_ERROR(ml_mod_, ...) IGNORE(__VA_ARGS__)
+#define MODLOG_ERROR(ml_mod_, ...)
 #endif
 
 #if MYNEWT_VAL(LOG_LEVEL) <= LOG_LEVEL_CRITICAL || defined __DOXYGEN__
 #define MODLOG_CRITICAL(ml_mod_, ml_msg_, ...) \
     printf((ml_msg_), ##__VA_ARGS__)
 #else
-#define MODLOG_CRITICAL(ml_mod_, ...) IGNORE(__VA_ARGS__)
+#define MODLOG_CRITICAL(ml_mod_, ...)
 #endif
 
 #endif

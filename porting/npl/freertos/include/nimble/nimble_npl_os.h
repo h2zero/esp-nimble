@@ -37,6 +37,8 @@ extern "C" {
 
 #define BLE_NPL_TIME_FOREVER    portMAX_DELAY
 
+#define NIMBLE_CFG_CONTROLLER 1
+
 /* This should be compatible with TickType_t */
 typedef uint32_t ble_npl_time_t;
 typedef int32_t ble_npl_stime_t;
@@ -300,13 +302,14 @@ ble_npl_time_delay(ble_npl_time_t ticks)
 
 #if NIMBLE_CFG_CONTROLLER
 static inline void
-ble_npl_hw_set_isr(int irqn, uint32_t addr)
+ble_npl_hw_set_isr(int irqn, void (*addr)(void))
 {
     npl_freertos_hw_set_isr(irqn, addr);
 }
 #endif
 
-extern portMUX_TYPE ble_port_mutex; 
+#ifdef ESP32_PLATFORM
+extern portMUX_TYPE ble_port_mutex;
 //critical section
 static inline uint32_t
 ble_npl_hw_enter_critical(void)
@@ -319,8 +322,23 @@ static inline void
 ble_npl_hw_exit_critical(uint32_t ctx)
 {
     portEXIT_CRITICAL(&ble_port_mutex);
-
 }
+
+#else
+static inline uint32_t
+ble_npl_hw_enter_critical(void)
+{
+    vPortEnterCritical();
+    return 0;
+}
+
+static inline void
+ble_npl_hw_exit_critical(uint32_t ctx)
+{
+    (void)ctx; // silence warning
+    vPortExitCritical();
+}
+#endif
 
 #ifdef __cplusplus
 }

@@ -18,8 +18,8 @@
  */
 
 #include <stdint.h>
-#include "syscfg/syscfg.h"
-#include "os/os_trace_api.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/os/os_trace_api.h"
 
 #if MYNEWT_VAL(BLE_LL_SYSVIEW)
 

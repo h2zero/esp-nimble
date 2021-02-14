@@ -21,10 +21,10 @@
 #define H_BLE_ATT_PRIV_
 
 #include <inttypes.h>
-#include "stats/stats.h"
-#include "host/ble_att.h"
-#include "host/ble_uuid.h"
-#include "nimble/nimble_npl.h"
+#include "nimble/porting/nimble/include/stats/stats.h"
+#include "nimble/nimble/host/include/host/ble_att.h"
+#include "nimble/nimble/host/include/host/ble_uuid.h"
+#include "nimble/nimble/include/nimble/nimble_npl.h"
 
 #ifdef __cplusplus
 extern "C" {

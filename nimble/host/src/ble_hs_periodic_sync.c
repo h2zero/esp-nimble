@@ -19,9 +19,9 @@
 
 #include <string.h>
 #include <errno.h>
-#include "syscfg/syscfg.h"
-#include "os/os.h"
-#include "host/ble_hs_id.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/os/os.h"
+#include "nimble/nimble/host/include/host/ble_hs_id.h"
 #include "ble_hs_priv.h"
 
 #if MYNEWT_VAL(BLE_PERIODIC_ADV)

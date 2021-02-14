@@ -18,12 +18,12 @@
  */
 
 #include <assert.h>
-#include "sysinit/sysinit.h"
-#include "syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/sysinit/sysinit.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
 #include "ble_hs_priv.h"
-#include "nimble/nimble_npl.h"
+#include "nimble/nimble/include/nimble/nimble_npl.h"
 #ifndef MYNEWT
-#include "nimble/nimble_port.h"
+#include "nimble/porting/nimble/include/nimble/nimble_port.h"
 #endif
 
 #define BLE_HOST_STOP_TIMEOUT_MS MYNEWT_VAL(BLE_HS_STOP_ON_SHUTDOWN_TIMEOUT)

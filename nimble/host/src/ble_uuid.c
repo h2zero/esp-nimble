@@ -22,10 +22,10 @@
 #include <string.h>
 #include <errno.h>
 #include <stdio.h>
-#include "os/os_mbuf.h"
-#include "nimble/ble.h"
+#include "nimble/porting/nimble/include/os/os_mbuf.h"
+#include "nimble/nimble/include/nimble/ble.h"
 #include "ble_hs_priv.h"
-#include "host/ble_uuid.h"
+#include "nimble/nimble/host/include/host/ble_uuid.h"
 
 static uint8_t ble_uuid_base[16] = {
     0xfb, 0x34, 0x9b, 0x5f, 0x80, 0x00, 0x00, 0x80,

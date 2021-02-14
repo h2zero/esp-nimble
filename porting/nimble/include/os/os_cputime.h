@@ -31,9 +31,9 @@
 extern "C" {
 #endif
 
-#include "syscfg/syscfg.h"
-#include "hal/hal_timer.h"
-#include "os/os.h"
+#include "../syscfg/syscfg.h"
+#include "../hal/hal_timer.h"
+#include "os.h"
 
 /*
  * NOTE: these definitions allow one to override the cputime frequency used.

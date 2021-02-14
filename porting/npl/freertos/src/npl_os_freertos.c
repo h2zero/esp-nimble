@@ -20,16 +20,60 @@
 #include <assert.h>
 #include <stddef.h>
 #include <string.h>
+<<<<<<< HEAD
 #include "nimble/nimble_npl.h"
 #include "freertos/portable.h"
 
 portMUX_TYPE ble_port_mutex = portMUX_INITIALIZER_UNLOCKED;
+=======
+#include "nimble/nimble/include/nimble/nimble_npl.h"
+#include "nrf.h"
+
+static void *radio_isr_addr;
+static void *rng_isr_addr;
+static void *rtc0_isr_addr;
+>>>>>>> Initial work: Arduinoize includes and remove excess files.
 
 static inline bool
 in_isr(void)
 {
     /* XXX hw specific! */
     return xPortInIsrContext() != 0;
+}
+
+void
+RADIO_IRQHandler(void)
+{
+    ((void (*)(void))radio_isr_addr)();
+}
+
+void
+RNG_IRQHandler(void)
+{
+    ((void (*)(void))rng_isr_addr)();
+}
+
+void
+RTC0_IRQHandler(void)
+{
+    ((void (*)(void))rtc0_isr_addr)();
+}
+
+/* This is called by NimBLE radio driver to set interrupt handlers */
+void
+npl_freertos_hw_set_isr(int irqn, void (*addr)(void))
+{
+    switch (irqn) {
+    case RADIO_IRQn:
+        radio_isr_addr = addr;
+        break;
+    case RNG_IRQn:
+        rng_isr_addr = addr;
+        break;
+    case RTC0_IRQn:
+        rtc0_isr_addr = addr;
+        break;
+    }
 }
 
 struct ble_npl_event *

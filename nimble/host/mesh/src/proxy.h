@@ -14,7 +14,7 @@
 #define BT_MESH_PROXY_CONFIG    0x02
 #define BT_MESH_PROXY_PROV      0x03
 
-#include "mesh/mesh.h"
+#include "../include/mesh/mesh.h"
 
 int bt_mesh_proxy_send(uint16_t conn_handle, u8_t type, struct os_mbuf *msg);
 

@@ -20,11 +20,11 @@
 #include <stdint.h>
 #include <string.h>
 
-#include "nimble/ble.h"
-#include "nimble/nimble_opt.h"
-#include "nimble/hci_common.h"
-#include "controller/ble_ll.h"
-#include "controller/ble_ll_hci.h"
+#include "nimble/nimble/include/nimble/ble.h"
+#include "nimble/nimble/include/nimble/nimble_opt.h"
+#include "nimble/nimble/include/nimble/hci_common.h"
+#include "../include/controller/ble_ll.h"
+#include "../include/controller/ble_ll_hci.h"
 
 /* Octet 0 */
 #define BLE_SUPP_CMD_DISCONNECT             (1 << 5)

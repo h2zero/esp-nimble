@@ -17,13 +17,13 @@
  * under the License.
  */
 
-#include "syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
 #define MESH_LOG_MODULE BLE_MESH_LOG
 
-#include "mesh/glue.h"
+#include "../include/mesh/glue.h"
 #include "adv.h"
 #ifndef MYNEWT
-#include "nimble/nimble_port.h"
+#include "nimble/porting/nimble/include/nimble/nimble_port.h"
 #endif
 
 #if MYNEWT_VAL(BLE_MESH_SETTINGS)

@@ -20,7 +20,7 @@
 #include <stddef.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
-#include "nimble/nimble_port.h"
+#include "../../../nimble/include/nimble/nimble_port.h"
 
 #if NIMBLE_CFG_CONTROLLER
 static TaskHandle_t ll_task_h;

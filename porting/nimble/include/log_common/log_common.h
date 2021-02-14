@@ -20,7 +20,7 @@
 #ifndef H_LOG_COMMON_
 #define H_LOG_COMMON_
 
-#include "log_common/ignore.h"
+#include "ignore.h"
 
 #ifdef __cplusplus
 extern "C" {

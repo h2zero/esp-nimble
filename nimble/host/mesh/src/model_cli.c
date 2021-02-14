@@ -4,11 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
 #define MESH_LOG_MODULE BLE_MESH_MODEL_LOG
 
-#include "mesh/mesh.h"
-#include "mesh/model_cli.h"
+#include "../include/mesh/mesh.h"
+#include "../include/mesh/model_cli.h"
 #include "mesh_priv.h"
 
 static s32_t msg_timeout = K_SECONDS(5);
