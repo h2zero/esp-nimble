@@ -19,10 +19,10 @@
 #include <inttypes.h>
 #include <stdio.h>
 #include <string.h>
-#include "stats/stats.h"
+#include "nimble/porting/nimble/include/stats/stats.h"
 #include "ble_hs_priv.h"
 #include "ble_hs_resolv_priv.h"
-#include "host/ble_hs_pvcy.h"
+#include "nimble/nimble/host/include/host/ble_hs_pvcy.h"
 
 static uint8_t ble_hs_pvcy_started;
 static uint8_t ble_hs_pvcy_irk[16];

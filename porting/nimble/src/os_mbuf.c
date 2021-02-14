@@ -33,7 +33,7 @@
  *
  */
 
-#include "os/os.h"
+#include "../include/os/os.h"
 
 #include <assert.h>
 #include <stddef.h>

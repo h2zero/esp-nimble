@@ -1,8 +1,8 @@
 
-#include "syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
 
-#include "mesh/mesh.h"
-#include "console/console.h"
+#include "../include/mesh/mesh.h"
+#include "nimble/console/console.h"
 #include "light_model.h"
 
 

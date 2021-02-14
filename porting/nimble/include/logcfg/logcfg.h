@@ -5,8 +5,8 @@
 #ifndef H_MYNEWT_LOGCFG_
 #define H_MYNEWT_LOGCFG_
 
-#include "modlog/modlog.h"
-#include "log_common/log_common.h"
+#include "../modlog/modlog.h"
+#include "../log_common/log_common.h"
 
 #if (MYNEWT_VAL(BLE_HS_LOG_LVL) == LOG_LEVEL_DEBUG)
 #define BLE_HS_LOG_DEBUG(...) MODLOG_DEBUG(4, __VA_ARGS__)
@@ -130,6 +130,7 @@
 #define BLE_MESH_TRANS_LOG_ERROR(...) MODLOG_ERROR(21, __VA_ARGS__)
 #define BLE_MESH_TRANS_LOG_CRITICAL(...) MODLOG_CRITICAL(21, __VA_ARGS__)
 #define BLE_MESH_TRANS_LOG_DISABLED(...) MODLOG_DISABLED(21, __VA_ARGS__)
+
 #define DFLT_LOG_DEBUG(...) IGNORE(__VA_ARGS__)
 #define DFLT_LOG_INFO(...) MODLOG_INFO(0, __VA_ARGS__)
 #define DFLT_LOG_WARN(...) MODLOG_WARN(0, __VA_ARGS__)

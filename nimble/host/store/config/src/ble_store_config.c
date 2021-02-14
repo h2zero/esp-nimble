@@ -20,10 +20,10 @@
 #include <inttypes.h>
 #include <string.h>
 
-#include "sysinit/sysinit.h"
-#include "syscfg/syscfg.h"
-#include "host/ble_hs.h"
-#include "store/config/ble_store_config.h"
+#include "nimble/porting/nimble/include/sysinit/sysinit.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/nimble/host/include/host/ble_hs.h"
+#include "../include/store/config/ble_store_config.h"
 #include "ble_store_config_priv.h"
 
 struct ble_store_value_sec

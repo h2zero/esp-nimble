@@ -20,7 +20,7 @@
 #ifndef H_BLE_LL_TRACE_
 #define H_BLE_LL_TRACE_
 
-#include "os/os_trace_api.h"
+#include "nimble/porting/nimble/include/os/os_trace_api.h"
 
 #ifdef __cplusplus
 extern "C" {

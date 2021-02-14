@@ -74,7 +74,7 @@
 #ifndef __TC_CCM_MODE_H__
 #define __TC_CCM_MODE_H__
 
-#include <tinycrypt/aes.h>
+#include "aes.h"
 #include <stddef.h>
 
 #ifdef __cplusplus

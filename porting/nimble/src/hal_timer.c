@@ -21,9 +21,9 @@
 #include <stdint.h>
 #include <assert.h>
 #include <errno.h>
-#include "os/os.h"
-#include "nrfx.h"
-#include "hal/hal_timer.h"
+#include "../include/os/os.h"
+#include "nrf.h"
+#include "../include/hal/hal_timer.h"
 
 /* IRQ prototype */
 typedef void (*hal_timer_irq_handler_t)(void);

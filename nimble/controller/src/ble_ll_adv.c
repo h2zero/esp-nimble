@@ -20,27 +20,38 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
-#include "syscfg/syscfg.h"
-#include "os/os.h"
-#include "os/os_cputime.h"
-#include "ble/xcvr.h"
-#include "nimble/ble.h"
-#include "nimble/nimble_opt.h"
-#include "nimble/hci_common.h"
-#include "nimble/ble_hci_trans.h"
-#include "controller/ble_phy.h"
-#include "controller/ble_hw.h"
-#include "controller/ble_ll.h"
-#include "controller/ble_ll_hci.h"
-#include "controller/ble_ll_adv.h"
-#include "controller/ble_ll_sched.h"
-#include "controller/ble_ll_scan.h"
-#include "controller/ble_ll_whitelist.h"
-#include "controller/ble_ll_resolv.h"
-#include "controller/ble_ll_trace.h"
-#include "controller/ble_ll_utils.h"
-#include "controller/ble_ll_rfmgmt.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/os/os.h"
+#include "nimble/porting/nimble/include/os/os_cputime.h"
+
+#if defined(ARDUINO_ARCH_NRF5) && defined(NRF51)
+#include "nimble/nimble/drivers/nrf51/include/ble/xcvr.h"
+#elif defined(ARDUINO_ARCH_NRF5) && defined(NRF52)
+#include "nimble/nimble/drivers/nrf52/include/ble/xcvr.h"
+#endif
+
+#include "nimble/nimble/include/nimble/ble.h"
+#include "nimble/nimble/include/nimble/nimble_opt.h"
+#include "nimble/nimble/include/nimble/hci_common.h"
+#include "nimble/nimble/include/nimble/ble_hci_trans.h"
+#include "../include/controller/ble_phy.h"
+#include "../include/controller/ble_hw.h"
+#include "../include/controller/ble_ll.h"
+#include "../include/controller/ble_ll_hci.h"
+#include "../include/controller/ble_ll_adv.h"
+#include "../include/controller/ble_ll_sched.h"
+#include "../include/controller/ble_ll_scan.h"
+#include "../include/controller/ble_ll_whitelist.h"
+#include "../include/controller/ble_ll_resolv.h"
+#include "../include/controller/ble_ll_trace.h"
+#include "../include/controller/ble_ll_utils.h"
+#include "../include/controller/ble_ll_rfmgmt.h"
 #include "ble_ll_conn_priv.h"
+
+#ifndef ARRAY_SIZE
+#define ARRAY_SIZE(array) \
+        (sizeof(array) / sizeof((array)[0]))
+#endif
 
 /* XXX: TODO
  * 1) Need to look at advertising and scan request PDUs. Do I allocate these

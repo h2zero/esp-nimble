@@ -21,7 +21,7 @@
 #define H_BLE_HS_PERIODIC_SYNC_
 
 #include <inttypes.h>
-#include "os/queue.h"
+#include "nimble/porting/nimble/include/os/queue.h"
 #ifdef __cplusplus
 extern "C" {
 #endif

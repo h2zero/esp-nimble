@@ -19,16 +19,16 @@
 
 #include <assert.h>
 #include <string.h>
-#include "sysinit/sysinit.h"
-#include "syscfg/syscfg.h"
-#include "host/ble_hs.h"
-#include "services/tps/ble_svc_tps.h"
+#include "nimble/porting/nimble/include/sysinit/sysinit.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/nimble/host/include/host/ble_hs.h"
+#include "../include/services/tps/ble_svc_tps.h"
 
 /* XXX: We shouldn't be including the host's private header files.  The host
  * API needs to be updated with a function to query the advertising transmit
  * power.
  */
-#include "../src/ble_hs_hci_priv.h"
+#include "nimble/nimble/host/src/ble_hs_hci_priv.h"
 
 int8_t ble_svc_tps_tx_power_level;
 

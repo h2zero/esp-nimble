@@ -20,9 +20,9 @@
 #include <string.h>
 #include <stdint.h>
 #include <assert.h>
-#include "syscfg/syscfg.h"
-#include "os/os_cputime.h"
-#include "hal/hal_timer.h"
+#include "../include/syscfg/syscfg.h"
+#include "../include/os/os_cputime.h"
+#include "../include/hal/hal_timer.h"
 
 #if defined(OS_CPUTIME_FREQ_HIGH)
 struct os_cputime_data g_os_cputime;

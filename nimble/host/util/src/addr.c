@@ -17,11 +17,11 @@
  * under the License.
  */
 
-#include "host/ble_hs.h"
-#include "host/util/util.h"
+#include "nimble/nimble/host/include/host/ble_hs.h"
+#include "../include/host/util/util.h"
 
 #if MYNEWT_VAL(BLE_CONTROLLER)
-#include "controller/ble_hw.h"
+#include "nimble/nimble/controller/include/controller/ble_hw.h"
 #endif
 
 static int

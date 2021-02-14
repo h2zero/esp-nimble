@@ -20,9 +20,9 @@
 #ifndef H_BLE_GATT_PRIV_
 #define H_BLE_GATT_PRIV_
 
-#include "syscfg/syscfg.h"
-#include "stats/stats.h"
-#include "host/ble_gatt.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/stats/stats.h"
+#include "nimble/nimble/host/include/host/ble_gatt.h"
 #ifdef __cplusplus
 extern "C" {
 #endif

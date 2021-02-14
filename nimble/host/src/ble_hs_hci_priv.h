@@ -20,7 +20,7 @@
 #ifndef H_BLE_HS_HCI_PRIV_
 #define H_BLE_HS_HCI_PRIV_
 
-#include "nimble/hci_common.h"
+#include "nimble/nimble/include/nimble/hci_common.h"
 #ifdef __cplusplus
 extern "C" {
 #endif

@@ -21,7 +21,7 @@
 #define H_BLE_HS_ADV_
 
 #include <inttypes.h>
-#include "host/ble_uuid.h"
+#include "ble_uuid.h"
 
 #ifdef __cplusplus
 extern "C" {

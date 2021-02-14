@@ -19,9 +19,9 @@
 
 #include <assert.h>
 
-#include "sysinit/sysinit.h"
-#include "host/ble_hs.h"
-#include "services/ipss/ble_svc_ipss.h"
+#include "nimble/porting/nimble/include/sysinit/sysinit.h"
+#include "nimble/nimble/host/include/host/ble_hs.h"
+#include "../include/services/ipss/ble_svc_ipss.h"
 
 static const struct ble_gatt_svc_def ble_svc_ipss_defs[] = {
     {

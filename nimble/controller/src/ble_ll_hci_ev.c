@@ -19,13 +19,13 @@
 #include <stdint.h>
 #include <assert.h>
 #include <string.h>
-#include "syscfg/syscfg.h"
-#include "nimble/ble.h"
-#include "nimble/hci_common.h"
-#include "nimble/ble_hci_trans.h"
-#include "controller/ble_ll.h"
-#include "controller/ble_ll_hci.h"
-#include "controller/ble_ll_ctrl.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/nimble/include/nimble/ble.h"
+#include "nimble/nimble/include/nimble/hci_common.h"
+#include "nimble/nimble/include/nimble/ble_hci_trans.h"
+#include "../include/controller/ble_ll.h"
+#include "../include/controller/ble_ll_hci.h"
+#include "../include/controller/ble_ll_ctrl.h"
 #include "ble_ll_conn_priv.h"
 
 #if (BLETEST_CONCURRENT_CONN_TEST == 1)

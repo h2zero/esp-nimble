@@ -28,7 +28,7 @@
  */
 
 #include <inttypes.h>
-#include "nimble/ble.h"
+#include "nimble/nimble/include/nimble/ble.h"
 
 #ifdef __cplusplus
 extern "C" {

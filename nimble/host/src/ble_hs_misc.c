@@ -19,7 +19,7 @@
 
 #include <assert.h>
 #include <stdlib.h>
-#include "os/os.h"
+#include "nimble/porting/nimble/include/os/os.h"
 #include "ble_hs_priv.h"
 
 const uint8_t ble_hs_misc_null_addr[6];

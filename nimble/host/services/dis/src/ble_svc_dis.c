@@ -19,9 +19,9 @@
 
 #include <assert.h>
 #include <string.h>
-#include "sysinit/sysinit.h"
-#include "host/ble_hs.h"
-#include "services/dis/ble_svc_dis.h"
+#include "nimble/porting/nimble/include/sysinit/sysinit.h"
+#include "nimble/nimble/host/include/host/ble_hs.h"
+#include "../include/services/dis/ble_svc_dis.h"
 
 /* Device information */
 struct ble_svc_dis_data ble_svc_dis_data = {

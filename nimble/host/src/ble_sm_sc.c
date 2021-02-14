@@ -19,8 +19,8 @@
 
 #include <string.h>
 
-#include "nimble/nimble_opt.h"
-#include "host/ble_sm.h"
+#include "nimble/nimble/include/nimble/nimble_opt.h"
+#include "nimble/nimble/host/include/host/ble_sm.h"
 #include "ble_hs_priv.h"
 #include "ble_sm_priv.h"
 

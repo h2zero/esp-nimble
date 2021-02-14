@@ -20,10 +20,10 @@
 #include <string.h>
 #include <errno.h>
 #include <stdio.h>
-#include "os/os.h"
-#include "mem/mem.h"
-#include "nimble/ble_hci_trans.h"
-#include "host/ble_monitor.h"
+#include "nimble/porting/nimble/include/os/os.h"
+#include "nimble/porting/nimble/include/mem/mem.h"
+#include "nimble/nimble/include/nimble/ble_hci_trans.h"
+#include "nimble/nimble/host/include/host/ble_monitor.h"
 #include "ble_hs_priv.h"
 #include "ble_monitor_priv.h"
 

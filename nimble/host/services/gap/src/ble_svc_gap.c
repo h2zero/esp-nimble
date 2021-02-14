@@ -20,10 +20,10 @@
 #include <assert.h>
 #include <string.h>
 
-#include "sysinit/sysinit.h"
-#include "host/ble_hs.h"
-#include "services/gap/ble_svc_gap.h"
-#include "os/endian.h"
+#include "nimble/porting/nimble/include/sysinit/sysinit.h"
+#include "nimble/nimble/host/include/host/ble_hs.h"
+#include "../include/services/gap/ble_svc_gap.h"
+#include "nimble/porting/nimble/include/os/endian.h"
 
 #define PPCP_ENABLED \
     MYNEWT_VAL(BLE_ROLE_PERIPHERAL) && \

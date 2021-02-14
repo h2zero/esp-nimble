@@ -22,9 +22,9 @@
 
 #include <stdint.h>
 
-#include "nimble/ble.h"
-#include "controller/ble_ll_hci.h"
-#include "controller/ble_ll_conn.h"
+#include "nimble/nimble/include/nimble/ble.h"
+#include "ble_ll_hci.h"
+#include "ble_ll_conn.h"
 
 #ifdef __cplusplus
 extern "C" {

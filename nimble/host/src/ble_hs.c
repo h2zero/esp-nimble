@@ -20,15 +20,15 @@
 #include <assert.h>
 #include <errno.h>
 #include <string.h>
-#include "sysinit/sysinit.h"
-#include "syscfg/syscfg.h"
-#include "stats/stats.h"
-#include "nimble/ble_hci_trans.h"
+#include "nimble/porting/nimble/include/sysinit/sysinit.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/stats/stats.h"
+#include "nimble/nimble/include/nimble/ble_hci_trans.h"
 #include "ble_hs_priv.h"
 #include "ble_monitor_priv.h"
-#include "nimble/nimble_npl.h"
+#include "nimble/nimble/include/nimble/nimble_npl.h"
 #ifndef MYNEWT
-#include "nimble/nimble_port.h"
+#include "nimble/porting/nimble/include/nimble/nimble_port.h"
 #endif
 
 #define BLE_HS_HCI_EVT_COUNT                    \

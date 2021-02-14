@@ -19,7 +19,7 @@
 
 #include <string.h>
 
-#include "host/ble_store.h"
+#include "nimble/nimble/host/include/host/ble_store.h"
 #include "ble_hs_priv.h"
 
 int

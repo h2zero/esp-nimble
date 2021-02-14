@@ -8,7 +8,7 @@
 #ifndef __CRYPTO_H__
 #define __CRYPTO_H__
 
-#include "mesh/mesh.h"
+#include "../include/mesh/mesh.h"
 
 struct bt_mesh_sg {
 	const void *data;

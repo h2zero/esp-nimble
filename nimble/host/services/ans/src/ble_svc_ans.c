@@ -20,11 +20,11 @@
 #include <assert.h>
 #include <string.h>
 
-#include "sysinit/sysinit.h"
-#include "syscfg/syscfg.h"
-#include "host/ble_hs.h"
-#include "host/ble_gap.h"
-#include "services/ans/ble_svc_ans.h"
+#include "nimble/porting/nimble/include/sysinit/sysinit.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/nimble/host/include/host/ble_hs.h"
+#include "nimble/nimble/host/include/host/ble_gap.h"
+#include "../include/services/ans/ble_svc_ans.h"
 
 /* Max length of new alert info string */
 #define BLE_SVC_ANS_INFO_STR_MAX_LEN        18

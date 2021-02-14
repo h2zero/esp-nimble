@@ -22,7 +22,7 @@
 
 #include <inttypes.h>
 #include <stddef.h>
-#include "os/os_mbuf.h"
+#include "nimble/porting/nimble/include/os/os_mbuf.h"
 
 #ifdef __cplusplus
 extern "C" {

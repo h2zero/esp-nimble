@@ -17,9 +17,11 @@
  * under the License.
  */
 
+#if defined(ARDUINO_ARCH_NRF5) && defined(NRF52)
+
 #include <stdint.h>
-#include "syscfg/syscfg.h"
-#include "os/os_trace_api.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/os/os_trace_api.h"
 
 #if MYNEWT_VAL(BLE_PHY_SYSVIEW)
 
@@ -41,4 +43,5 @@ ble_phy_trace_init(void)
             os_trace_module_register(&g_ble_phy_trace_mod, "ble_phy", 3,
                                      ble_phy_trace_module_send_desc);
 }
+#endif
 #endif

@@ -20,7 +20,7 @@
 #ifndef H_NIMBLE_OPT_AUTO_
 #define H_NIMBLE_OPT_AUTO_
 
-#include "syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
 
 #ifdef __cplusplus
 extern "C" {

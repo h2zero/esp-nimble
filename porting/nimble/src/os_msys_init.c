@@ -18,9 +18,12 @@
  */
 
 #include <assert.h>
-#include "os/os.h"
-#include "mem/mem.h"
+#include "../include/os/os.h"
+#include "../include/mem/mem.h"
+
+#ifdef ESP32_PLATFORM
 #include "esp_nimble_mem.h"
+#endif
 
 #if MYNEWT_VAL(MSYS_1_BLOCK_COUNT) > 0
 #define SYSINIT_MSYS_1_MEMBLOCK_SIZE                \

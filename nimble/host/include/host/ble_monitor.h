@@ -20,7 +20,7 @@
 #ifndef H_BLE_MONITOR_
 #define H_BLE_MONITOR_
 
-#include <syscfg/syscfg.h>
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
 
 #undef BLE_MONITOR
 #define BLE_MONITOR (MYNEWT_VAL(BLE_MONITOR_UART) || MYNEWT_VAL(BLE_MONITOR_RTT))

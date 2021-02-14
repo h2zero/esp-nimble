@@ -20,7 +20,7 @@
 #ifndef _NIMBLE_PORT_FREERTOS_H
 #define _NIMBLE_PORT_FREERTOS_H
 
-#include "nimble/nimble_npl.h"
+#include "nimble/nimble/include/nimble/nimble_npl.h"
 
 #ifdef __cplusplus
 extern "C" {

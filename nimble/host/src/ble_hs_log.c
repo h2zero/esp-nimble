@@ -17,8 +17,8 @@
  * under the License.
  */
 
-#include "os/os.h"
-#include "host/ble_hs.h"
+#include "nimble/porting/nimble/include/os/os.h"
+#include "nimble/nimble/host/include/host/ble_hs.h"
 
 struct log ble_hs_log;
 

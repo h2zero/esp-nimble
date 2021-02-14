@@ -18,12 +18,12 @@
  */
 
 #include <stddef.h>
-#include "os/os.h"
-#include "sysinit/sysinit.h"
-#include "host/ble_hs.h"
-#include "nimble/nimble_port.h"
+#include "../include/os/os.h"
+#include "../include/sysinit/sysinit.h"
+#include "nimble/nimble/host/include/host/ble_hs.h"
+#include "../include/nimble/nimble_port.h"
 #if NIMBLE_CFG_CONTROLLER
-#include "controller/ble_ll.h"
+#include "nimble/nimble/controller/include/controller/ble_ll.h"
 #endif
 #ifdef ESP_PLATFORM
 #include "esp_log.h"

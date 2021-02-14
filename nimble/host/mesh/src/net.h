@@ -22,8 +22,8 @@
 
 #include <stdbool.h>
 #include "atomic.h"
-#include "mesh/mesh.h"
-#include "mesh/glue.h"
+#include "../include/mesh/mesh.h"
+#include "../include/mesh/glue.h"
 
 /* How many hours in between updating IVU duration */
 #define BT_MESH_IVU_MIN_HOURS      96

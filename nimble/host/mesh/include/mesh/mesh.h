@@ -11,8 +11,8 @@
 #define __BT_MESH_H
 
 #include <stddef.h>
-#include "syscfg/syscfg.h"
-#include "os/os_mbuf.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/os/os_mbuf.h"
 
 #include "glue.h"
 #include "access.h"

@@ -28,8 +28,8 @@
  */
 
 #include <inttypes.h>
-#include "host/ble_att.h"
-#include "host/ble_uuid.h"
+#include "ble_att.h"
+#include "ble_uuid.h"
 #ifdef __cplusplus
 extern "C" {
 #endif

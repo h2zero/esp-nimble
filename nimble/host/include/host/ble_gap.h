@@ -28,9 +28,9 @@
  */
 
 #include <inttypes.h>
-#include "host/ble_hs.h"
-#include "host/ble_hs_adv.h"
-#include "syscfg/syscfg.h"
+#include "ble_hs.h"
+#include "ble_hs_adv.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
 
 #ifdef __cplusplus
 extern "C" {

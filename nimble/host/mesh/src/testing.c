@@ -6,11 +6,11 @@
 
 #include <stddef.h>
 
-#include "console/console.h"
-#include "mesh/testing.h"
-#include "mesh/slist.h"
-#include "mesh/glue.h"
-#include "mesh/access.h"
+#include "nimble/console/console.h"
+#include "../include/mesh/testing.h"
+#include "../include/mesh/slist.h"
+#include "../include/mesh/glue.h"
+#include "../include/mesh/access.h"
 
 #include "net.h"
 #include "testing.h"

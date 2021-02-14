@@ -20,9 +20,9 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
-#include "nimble/ble.h"
-#include "host/ble_uuid.h"
-#include "host/ble_store.h"
+#include "nimble/nimble/include/nimble/ble.h"
+#include "nimble/nimble/host/include/host/ble_uuid.h"
+#include "nimble/nimble/host/include/host/ble_store.h"
 #include "ble_hs_priv.h"
 #include "esp_nimble_mem.h"
 

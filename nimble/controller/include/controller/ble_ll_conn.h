@@ -20,13 +20,13 @@
 #ifndef H_BLE_LL_CONN_
 #define H_BLE_LL_CONN_
 
-#include "os/os.h"
-#include "nimble/ble.h"
-#include "nimble/hci_common.h"
-#include "nimble/nimble_npl.h"
-#include "controller/ble_ll_sched.h"
-#include "controller/ble_ll_ctrl.h"
-#include "controller/ble_phy.h"
+#include "nimble/porting/nimble/include/os/os.h"
+#include "nimble/nimble/include/nimble/ble.h"
+#include "nimble/nimble/include/nimble/hci_common.h"
+#include "nimble/nimble/include/nimble/nimble_npl.h"
+#include "ble_ll_sched.h"
+#include "ble_ll_ctrl.h"
+#include "ble_phy.h"
 
 #ifdef __cplusplus
 extern "C" {
