@@ -17,13 +17,13 @@
  * under the License.
  */
 
-#include "os/os.h"
-#include "os/os_trace_api.h"
+#include "../include/os/os.h"
+#include "../include/os/os_trace_api.h"
 
 #include <string.h>
 #include <assert.h>
 #include <stdbool.h>
-#include "syscfg/syscfg.h"
+#include "../include/syscfg/syscfg.h"
 #if !MYNEWT_VAL(OS_SYSVIEW_TRACE_MEMPOOL)
 #define OS_TRACE_DISABLE_FILE_API
 #endif

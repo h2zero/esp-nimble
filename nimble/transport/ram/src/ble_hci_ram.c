@@ -20,13 +20,13 @@
 #include <assert.h>
 #include <errno.h>
 #include <stddef.h>
-#include "syscfg/syscfg.h"
-#include "sysinit/sysinit.h"
-#include "os/os.h"
-#include "mem/mem.h"
-#include "nimble/ble.h"
-#include "nimble/ble_hci_trans.h"
-#include "transport/ram/ble_hci_ram.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/sysinit/sysinit.h"
+#include "nimble/porting/nimble/include/os/os.h"
+#include "nimble/porting/nimble/include/mem/mem.h"
+#include "nimble/nimble/include/nimble/ble.h"
+#include "nimble/nimble/include/nimble/ble_hci_trans.h"
+#include "../include/transport/ram/ble_hci_ram.h"
 
 static ble_hci_trans_rx_cmd_fn *ble_hci_ram_rx_cmd_hs_cb;
 static void *ble_hci_ram_rx_cmd_hs_arg;

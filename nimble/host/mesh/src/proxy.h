@@ -14,8 +14,8 @@
 #define BT_MESH_PROXY_CONFIG    0x02
 #define BT_MESH_PROXY_PROV      0x03
 
-#include "mesh/mesh.h"
-#include "mesh/slist.h"
+#include "../include/mesh/mesh.h"
+#include "../include/mesh/slist.h"
 
 struct bt_mesh_proxy_idle_cb {
 	sys_snode_t n;

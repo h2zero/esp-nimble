@@ -10,9 +10,9 @@
 #define __PROV_H__
 
 #include "prov_bearer.h"
-#include "os/os_mbuf.h"
-#include "mesh/mesh.h"
-#include "../src/ble_hs_conn_priv.h"
+#include "nimble/porting/nimble/include/os/os_mbuf.h"
+#include "../include/mesh/mesh.h"
+#include "nimble/nimble/host/src/ble_hs_conn_priv.h"
 
 #define PROV_ERR_NONE          0x00
 #define PROV_ERR_NVAL_PDU      0x01

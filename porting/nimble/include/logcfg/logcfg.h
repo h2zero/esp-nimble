@@ -5,8 +5,8 @@
 #ifndef H_LOGCFG_
 #define H_LOGCFG_
 
-#include "modlog/modlog.h"
-#include "log_common/log_common.h"
+#include "../modlog/modlog.h"
+#include "../log_common/log_common.h"
 
 #if (MYNEWT_VAL(BLE_HS_LOG_LVL) == LOG_LEVEL_DEBUG)
 #define BLE_HS_LOG_DEBUG(...) MODLOG_DEBUG(4, __VA_ARGS__)

@@ -6,14 +6,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
 #define MESH_LOG_MODULE BLE_MESH_TRANS_LOG
 
 #include <errno.h>
 #include <string.h>
 
-#include "mesh/mesh.h"
-#include "mesh/glue.h"
+#include "../include/mesh/mesh.h"
+#include "../include/mesh/glue.h"
 #include "mesh_priv.h"
 
 #include "crypto.h"

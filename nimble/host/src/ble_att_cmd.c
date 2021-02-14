@@ -19,11 +19,11 @@
 
 #include <errno.h>
 #include <string.h>
-#include "os/os.h"
-#include "nimble/ble.h"
+#include "nimble/porting/nimble/include/os/os.h"
+#include "nimble/nimble/include/nimble/ble.h"
 #include "ble_hs_priv.h"
-#include "host/ble_att.h"
-#include "host/ble_uuid.h"
+#include "nimble/nimble/host/include/host/ble_att.h"
+#include "nimble/nimble/host/include/host/ble_uuid.h"
 #include "ble_hs_priv.h"
 
 #if NIMBLE_BLE_CONNECT

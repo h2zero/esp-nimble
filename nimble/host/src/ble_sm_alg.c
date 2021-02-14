@@ -20,13 +20,13 @@
 
 #include <inttypes.h>
 #include <string.h>
-#include "syscfg/syscfg.h"
-#include "nimble/nimble_opt.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/nimble/include/nimble/nimble_opt.h"
 
 #if NIMBLE_BLE_CONNECT
 #if NIMBLE_BLE_SM
 
-#include "nimble/ble.h"
+#include "nimble/nimble/include/nimble/ble.h"
 #include "ble_hs_priv.h"
 
 #if MYNEWT_VAL(BLE_CRYPTO_STACK_MBEDTLS)
@@ -42,13 +42,13 @@
 #endif
 
 #else
-#include "tinycrypt/aes.h"
-#include "tinycrypt/constants.h"
-#include "tinycrypt/utils.h"
+#include "nimble/ext/tinycrypt/include/tinycrypt/aes.h"
+#include "nimble/ext/tinycrypt/include/tinycrypt/constants.h"
+#include "nimble/ext/tinycrypt/include/tinycrypt/utils.h"
 
 #if MYNEWT_VAL(BLE_SM_SC)
-#include "tinycrypt/cmac_mode.h"
-#include "tinycrypt/ecc_dh.h"
+#include "nimble/ext/tinycrypt/include/tinycrypt/cmac_mode.h"
+#include "nimble/ext/tinycrypt/include/tinycrypt/ecc_dh.h"
 #if MYNEWT_VAL(TRNG)
 #include "trng/trng.h"
 #endif

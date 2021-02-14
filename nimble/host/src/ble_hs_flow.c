@@ -17,8 +17,8 @@
  * under the License.
  */
 
-#include "syscfg/syscfg.h"
-#include "nimble/ble_hci_trans.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/nimble/include/nimble/ble_hci_trans.h"
 #include "ble_hs_priv.h"
 
 #if MYNEWT_VAL(BLE_HS_FLOW_CTRL)

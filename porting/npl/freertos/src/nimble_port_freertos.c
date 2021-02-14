@@ -20,8 +20,10 @@
 #include <stddef.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
-#include "nimble/nimble_port.h"
+#include "../../../nimble/include/nimble/nimble_port.h"
+#ifdef ESP32_PLATFORM
 #include "esp_bt.h"
+#endif
 
 static TaskHandle_t host_task_h;
 

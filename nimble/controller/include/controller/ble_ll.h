@@ -20,14 +20,14 @@
 #ifndef H_BLE_LL_
 #define H_BLE_LL_
 
-#include "stats/stats.h"
-#include "os/os_cputime.h"
-#include "nimble/nimble_opt.h"
-#include "nimble/nimble_npl.h"
-#include "controller/ble_phy.h"
+#include "nimble/porting/nimble/include/stats/stats.h"
+#include "nimble/porting/nimble/include/os/os_cputime.h"
+#include "nimble/nimble/include/nimble/nimble_opt.h"
+#include "nimble/nimble/include/nimble/nimble_npl.h"
+#include "ble_phy.h"
 
 #ifdef MYNEWT
-#include "controller/ble_ll_ctrl.h"
+#include "./ble_ll_ctrl.h"
 #include "hal/hal_system.h"
 #endif
 

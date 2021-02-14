@@ -16,15 +16,15 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-#if 0
+#ifndef ESP_PLATFORM
 #include <string.h>
 #include <stdint.h>
 #include <assert.h>
 #include <errno.h>
-#include "os/os.h"
+#include "../include/os/os.h"
 #include "nrfx.h"
-#include "hal/hal_timer.h"
-#include "os/os_trace_api.h"
+#include "../include/hal/hal_timer.h"
+#include "../include/os/os_trace_api.h"
 
 /* IRQ prototype */
 typedef void (*hal_timer_irq_handler_t)(void);

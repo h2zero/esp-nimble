@@ -19,9 +19,9 @@
 
 #include <assert.h>
 #include <string.h>
-#include "sysinit/sysinit.h"
-#include "host/ble_hs.h"
-#include "services/lls/ble_svc_lls.h"
+#include "nimble/porting/nimble/include/sysinit/sysinit.h"
+#include "nimble/nimble/host/include/host/ble_hs.h"
+#include "../include/services/lls/ble_svc_lls.h"
 
 /* Callback function */
 static ble_svc_lls_event_fn *ble_svc_lls_cb_fn;

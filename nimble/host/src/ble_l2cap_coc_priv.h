@@ -21,10 +21,10 @@
 #define H_L2CAP_COC_PRIV_
 
 #include <inttypes.h>
-#include "syscfg/syscfg.h"
-#include "os/queue.h"
-#include "os/os_mbuf.h"
-#include "host/ble_l2cap.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/os/queue.h"
+#include "nimble/porting/nimble/include/os/os_mbuf.h"
+#include "nimble/nimble/host/include/host/ble_l2cap.h"
 #include "ble_l2cap_sig_priv.h"
 #ifdef __cplusplus
 extern "C" {

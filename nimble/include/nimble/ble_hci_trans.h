@@ -21,7 +21,7 @@
 #define H_HCI_TRANSPORT_
 
 #include <inttypes.h>
-#include "os/os_mempool.h"
+#include "nimble/porting/nimble/include/os/os_mempool.h"
 
 #ifdef __cplusplus
 extern "C" {

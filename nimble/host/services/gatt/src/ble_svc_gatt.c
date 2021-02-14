@@ -19,9 +19,9 @@
 
 #include <assert.h>
 
-#include "sysinit/sysinit.h"
-#include "host/ble_hs.h"
-#include "services/gatt/ble_svc_gatt.h"
+#include "nimble/porting/nimble/include/sysinit/sysinit.h"
+#include "nimble/nimble/host/include/host/ble_hs.h"
+#include "../include/services/gatt/ble_svc_gatt.h"
 
 static uint16_t ble_svc_gatt_changed_val_handle;
 static uint16_t ble_svc_gatt_start_handle;

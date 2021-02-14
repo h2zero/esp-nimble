@@ -33,8 +33,8 @@
  *
  */
 
-#include "os/os.h"
-#include "os/os_trace_api.h"
+#include "../include/os/os.h"
+#include "../include/os/os_trace_api.h"
 
 #include <assert.h>
 #include <stddef.h>

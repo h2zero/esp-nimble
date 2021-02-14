@@ -20,7 +20,7 @@
 #ifndef H_BLE_L2CAP_
 #define H_BLE_L2CAP_
 
-#include "nimble/nimble_opt.h"
+#include "nimble/nimble/include/nimble/nimble_opt.h"
 #ifdef __cplusplus
 extern "C" {
 #endif

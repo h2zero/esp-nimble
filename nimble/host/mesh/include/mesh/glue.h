@@ -23,19 +23,19 @@
 #include <assert.h>
 #include <errno.h>
 
-#include "syscfg/syscfg.h"
-#include "logcfg/logcfg.h"
-#include "modlog/modlog.h"
-#include "nimble/nimble_npl.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/logcfg/logcfg.h"
+#include "nimble/porting/nimble/include/modlog/modlog.h"
+#include "nimble/nimble/include/nimble/nimble_npl.h"
 
-#include "os/os_mbuf.h"
-#include "os/queue.h"
+#include "nimble/porting/nimble/include/os/os_mbuf.h"
+#include "nimble/porting/nimble/include/os/queue.h"
 
-#include "nimble/ble.h"
-#include "host/ble_hs.h"
-#include "host/ble_uuid.h"
-#include "../src/ble_sm_priv.h"
-#include "../src/ble_hs_hci_priv.h"
+#include "nimble/nimble/include/nimble/ble.h"
+#include "nimble/nimble/host/include/host/ble_hs.h"
+#include "nimble/nimble/host/include/host/ble_uuid.h"
+#include "nimble/nimble/host/src/ble_sm_priv.h"
+#include "nimble/nimble/host/src/ble_hs_hci_priv.h"
 
 #if MYNEWT_VAL(BLE_CRYPTO_STACK_MBEDTLS)
 #include "mbedtls/aes.h"
@@ -47,11 +47,11 @@
 #include "mbedtls/ecp.h"
 
 #else
-#include "tinycrypt/aes.h"
-#include "tinycrypt/constants.h"
-#include "tinycrypt/utils.h"
-#include "tinycrypt/cmac_mode.h"
-#include "tinycrypt/ecc_dh.h"
+#include "nimble/ext/tinycrypt/include/tinycrypt/aes.h"
+#include "nimble/ext/tinycrypt/include/tinycrypt/constants.h"
+#include "nimble/ext/tinycrypt/include/tinycrypt/utils.h"
+#include "nimble/ext/tinycrypt/include/tinycrypt/cmac_mode.h"
+#include "nimble/ext/tinycrypt/include/tinycrypt/ecc_dh.h"
 #endif
 
 #if MYNEWT_VAL(BLE_MESH_SETTINGS)

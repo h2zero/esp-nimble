@@ -6,13 +6,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
 #define MESH_LOG_MODULE BLE_MESH_ACCESS_LOG
 
 #include <errno.h>
-#include <os/os_mbuf.h>
+#include "nimble/porting/nimble/include/os/os_mbuf.h"
 
-#include "mesh/mesh.h"
+#include "../include/mesh/mesh.h"
 
 #include "mesh_priv.h"
 #include "adv.h"
@@ -22,7 +22,7 @@
 #include "access.h"
 #include "foundation.h"
 #if MYNEWT_VAL(BLE_MESH_SHELL_MODELS)
-#include "mesh/model_cli.h"
+#include "../include/mesh/model_cli.h"
 #endif
 
 static const struct bt_mesh_comp *dev_comp;

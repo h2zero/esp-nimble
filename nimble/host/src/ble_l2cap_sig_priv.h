@@ -20,7 +20,7 @@
 #ifndef H_BLE_L2CAP_SIG_
 #define H_BLE_L2CAP_SIG_
 
-#include "syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
 
 #ifdef __cplusplus
 extern "C" {

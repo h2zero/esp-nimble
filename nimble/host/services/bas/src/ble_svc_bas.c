@@ -20,11 +20,11 @@
 #include <assert.h>
 #include <string.h>
 
-#include "sysinit/sysinit.h"
-#include "syscfg/syscfg.h"
-#include "host/ble_hs.h"
-#include "host/ble_gap.h"
-#include "services/bas/ble_svc_bas.h"
+#include "nimble/porting/nimble/include/sysinit/sysinit.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/nimble/host/include/host/ble_hs.h"
+#include "nimble/nimble/host/include/host/ble_gap.h"
+#include "../include/services/bas/ble_svc_bas.h"
 
 /* Characteristic value handles */
 #if MYNEWT_VAL(BLE_SVC_BAS_BATTERY_LEVEL_NOTIFY_ENABLE) > 0

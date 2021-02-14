@@ -8,7 +8,7 @@
 #ifndef __LPN_H__
 #define __LPN_H__
 
-#include "mesh/mesh.h"
+#include "../include/mesh/mesh.h"
 
 int bt_mesh_lpn_friend_update(struct bt_mesh_net_rx *rx,
 			      struct os_mbuf *buf);

@@ -20,23 +20,31 @@
 #include <assert.h>
 #include <stddef.h>
 #include <string.h>
-#include "syscfg/syscfg.h"
-#include "nimble/nimble_npl.h"
+#include "nimble/nimble/include/nimble/nimble_npl.h"
+#ifdef ESP_PLATFORM
+#include "../../../nimble/include/syscfg/syscfg.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/queue.h"
 #include "freertos/semphr.h"
 #include "freertos/task.h"
 #include "freertos/timers.h"
 #include "freertos/portable.h"
-#include "nimble/npl_freertos.h"
+#include "../include/nimble/nimble/npl_freertos.h"
 
-#include "os/os_mempool.h"
+#include "nimble/porting/nimble/include/os/os_mempool.h"
 
 #include "esp_log.h"
 
 #include "soc/soc_caps.h"
 
 portMUX_TYPE ble_port_mutex = portMUX_INITIALIZER_UNLOCKED;
+#else
+#include "nrf.h"
+
+static void *radio_isr_addr;
+static void *rng_isr_addr;
+static void *rtc0_isr_addr;
+#endif
 
 #if CONFIG_BT_NIMBLE_USE_ESP_TIMER
 static const char *TAG = "Timer";
@@ -247,6 +255,41 @@ IRAM_ATTR in_isr(void)
 {
     /* XXX hw specific! */
     return xPortInIsrContext() != 0;
+}
+
+void
+RADIO_IRQHandler(void)
+{
+    ((void (*)(void))radio_isr_addr)();
+}
+
+void
+RNG_IRQHandler(void)
+{
+    ((void (*)(void))rng_isr_addr)();
+}
+
+void
+RTC0_IRQHandler(void)
+{
+    ((void (*)(void))rtc0_isr_addr)();
+}
+
+/* This is called by NimBLE radio driver to set interrupt handlers */
+void
+npl_freertos_hw_set_isr(int irqn, void (*addr)(void))
+{
+    switch (irqn) {
+    case RADIO_IRQn:
+        radio_isr_addr = addr;
+        break;
+    case RNG_IRQn:
+        rng_isr_addr = addr;
+        break;
+    case RTC0_IRQn:
+        rtc0_isr_addr = addr;
+        break;
+    }
 }
 
 struct ble_npl_event *

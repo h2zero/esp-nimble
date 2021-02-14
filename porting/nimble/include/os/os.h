@@ -38,8 +38,8 @@ extern "C" {
 #define max(a, b) ((a)>(b)?(a):(b))
 #endif
 
-#include "syscfg/syscfg.h"
-#include "nimble/nimble_npl.h"
+#include "../syscfg/syscfg.h"
+#include "nimble/nimble/include/nimble/nimble_npl.h"
 
 #define OS_ALIGN(__n, __a) (                             \
         (((__n) & ((__a) - 1)) == 0)                   ? \
@@ -54,11 +54,11 @@ typedef uint32_t os_sr_t;
 #define OS_ASSERT_CRITICAL() assert(ble_npl_hw_is_in_critical())
 
 /* Mynewt components (not abstracted in NPL) */
-#include "os/endian.h"
-#include "os/queue.h"
-#include "os/os_error.h"
-#include "os/os_mbuf.h"
-#include "os/os_mempool.h"
+#include "endian.h"
+#include "queue.h"
+#include "os_error.h"
+#include "os_mbuf.h"
+#include "os_mempool.h"
 
 #ifdef __cplusplus
 }

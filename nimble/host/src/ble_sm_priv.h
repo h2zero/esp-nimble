@@ -21,9 +21,9 @@
 #define H_BLE_SM_PRIV_
 
 #include <inttypes.h>
-#include "syscfg/syscfg.h"
-#include "os/queue.h"
-#include "nimble/nimble_opt.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/os/queue.h"
+#include "nimble/nimble/include/nimble/nimble_opt.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -20,7 +20,7 @@
 #ifndef _NIMBLE_PORT_H
 #define _NIMBLE_PORT_H
 
-#include "nimble/nimble_npl.h"
+#include "nimble/nimble/include/nimble/nimble_npl.h"
 
 #define NIMBLE_CORE (CONFIG_BT_NIMBLE_PINNED_TO_CORE < portNUM_PROCESSORS ? CONFIG_BT_NIMBLE_PINNED_TO_CORE : tskNO_AFFINITY)
 
