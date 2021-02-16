@@ -17,6 +17,8 @@
  * under the License.
  */
 
+#ifndef ESP_PLATFORM
+
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
@@ -3975,3 +3977,5 @@ ble_ll_scan_init(void)
 
     ble_ll_scan_common_init();
 }
+
+#endif

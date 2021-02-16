@@ -16,6 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+#ifndef ESP_PLATFORM
 
 #include <assert.h>
 #include <errno.h>
@@ -236,3 +237,5 @@ ble_hci_ram_init(void)
                          "ble_hci_ram_evt_lo_pool");
     SYSINIT_PANIC_ASSERT(rc == 0);
 }
+
+#endif

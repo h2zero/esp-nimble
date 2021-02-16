@@ -16,6 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+#ifndef ESP_PLATFORM
 
 #include <assert.h>
 #include <stdlib.h>
@@ -299,3 +300,4 @@ ble_ll_utils_calc_window_widening(uint32_t anchor_point,
 
     return window_widening;
 }
+#endif

@@ -22,7 +22,7 @@
 #include "../include/mem/mem.h"
 
 #ifdef ESP_PLATFORM
-#include "esp_nimble_mem.h"
+#include "nimble/esp/port/include/esp_nimble_mem.h"
 #endif
 
 /**

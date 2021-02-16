@@ -16,6 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+#ifndef ESP_PLATFORM
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -2243,4 +2244,5 @@ ble_ll_sync_init(void)
         g_ble_ll_sync_adv_list[i].adv_sid = 0xff;
     }
 }
+#endif
 #endif

@@ -16,6 +16,8 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+#ifndef ESP_PLATFORM
+ 
 #include <stdint.h>
 #include <assert.h>
 #include <string.h>
@@ -2742,3 +2744,4 @@ ble_ll_ctrl_tx_done(struct os_mbuf *txpdu, struct ble_ll_conn_sm *connsm)
     os_mbuf_free_chain(txpdu);
     return rc;
 }
+#endif

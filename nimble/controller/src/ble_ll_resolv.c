@@ -16,6 +16,8 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+#ifndef ESP_PLATFORM
+
 #include <stdint.h>
 #include <assert.h>
 #include <string.h>
@@ -750,4 +752,4 @@ ble_ll_resolv_init(void)
 }
 
 #endif  /* if MYNEWT_VAL(BLE_LL_CFG_FEAT_LL_PRIVACY) */
-
+#endif

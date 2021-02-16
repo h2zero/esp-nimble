@@ -24,7 +24,10 @@
 #include "nimble/nimble/host/include/host/ble_uuid.h"
 #include "nimble/nimble/host/include/host/ble_store.h"
 #include "ble_hs_priv.h"
-#include "esp_nimble_mem.h"
+
+#ifdef ESP_PLATFORM
+#include "nimble/esp/port/include/esp_nimble_mem.h"
+#endif
 
 #define BLE_GATTS_INCLUDE_SZ    6
 #define BLE_GATTS_CHR_MAX_SZ    19
@@ -1155,7 +1158,11 @@ ble_gatts_connection_broken(uint16_t conn_handle)
 static void
 ble_gatts_free_svc_defs(void)
 {
+#ifdef ESP_PLATFORM
     nimble_platform_mem_free(ble_gatts_svc_defs);
+#else
+    free(ble_gatts_svc_defs);
+#endif
     ble_gatts_svc_defs = NULL;
     ble_gatts_num_svc_defs = 0;
 }
@@ -1163,11 +1170,19 @@ ble_gatts_free_svc_defs(void)
 static void
 ble_gatts_free_mem(void)
 {
+#ifdef ESP_PLATFORM
     nimble_platform_mem_free(ble_gatts_clt_cfg_mem);
     ble_gatts_clt_cfg_mem = NULL;
 
     nimble_platform_mem_free(ble_gatts_svc_entries);
     ble_gatts_svc_entries = NULL;
+#else
+    free(ble_gatts_clt_cfg_mem);
+    ble_gatts_clt_cfg_mem = NULL;
+
+    free(ble_gatts_svc_entries);
+    ble_gatts_svc_entries = NULL;
+#endif
 }
 
 
@@ -1210,7 +1225,11 @@ ble_gatts_start(void)
     }
 
     if (ble_hs_max_client_configs > 0) {
+#ifdef ESP_PLATFORM
         ble_gatts_clt_cfg_mem = nimble_platform_mem_malloc(
+#else
+        ble_gatts_clt_cfg_mem = malloc(
+#endif
             OS_MEMPOOL_BYTES(ble_hs_max_client_configs,
                              sizeof (struct ble_gatts_clt_cfg)));
         if (ble_gatts_clt_cfg_mem == NULL) {
@@ -1221,7 +1240,11 @@ ble_gatts_start(void)
 
     if (ble_hs_max_services > 0) {
         ble_gatts_svc_entries =
+#ifdef ESP_PLATFORM
             nimble_platform_mem_malloc(ble_hs_max_services * sizeof *ble_gatts_svc_entries);
+#else
+            malloc(ble_hs_max_services * sizeof *ble_gatts_svc_entries);
+#endif
         if (ble_gatts_svc_entries == NULL) {
             rc = BLE_HS_ENOMEM;
             goto done;
