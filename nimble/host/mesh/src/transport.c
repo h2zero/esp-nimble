@@ -28,7 +28,6 @@
 #include "settings.h"
 #include "heartbeat.h"
 #include "transport.h"
-#include "testing.h"
 
 #define AID_MASK                    ((uint8_t)(BIT_MASK(6)))
 

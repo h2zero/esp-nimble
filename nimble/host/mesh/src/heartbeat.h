@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "mesh/heartbeat.h"
+#include "../include/mesh/heartbeat.h"
 
 static inline uint16_t bt_mesh_hb_pwr2(uint8_t val)
 {

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "mesh/mesh.h"
+#include "../include/mesh/mesh.h"
 #include "mesh_priv.h"
 #include "net.h"
 #include "rpl.h"
@@ -13,7 +13,7 @@
 #include "heartbeat.h"
 #include "friend.h"
 #include "cfg.h"
-#include "mesh/glue.h"
+#include "../include/mesh/glue.h"
 
 void bt_mesh_beacon_set(bool beacon)
 {

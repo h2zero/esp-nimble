@@ -16,6 +16,8 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+#ifndef ESP_PLATFORM
+ 
 #include <stdint.h>
 #include <assert.h>
 #include <string.h>
@@ -551,3 +553,5 @@ ble_ll_hci_ev_send_vendor_err(const char *file, uint32_t line)
         ble_ll_hci_event_send(hci_ev);
     }
 }
+
+#endif

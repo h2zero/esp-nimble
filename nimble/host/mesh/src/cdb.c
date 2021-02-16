@@ -6,14 +6,14 @@
 
 #define BT_DBG_ENABLED MYNEWT_VAL(BLE_MESH_DEBUG_CDB)
 #define LOG_MODULE_NAME bt_mesh_cdb
-#include "log/log.h"
+#include "nimble/porting/nimble/include/log/log.h"
 
-#include "mesh/mesh.h"
+#include "../include/mesh/mesh.h"
 #include "net.h"
 #include "rpl.h"
 #include "settings.h"
 #include "mesh_priv.h"
-#include "mesh/glue.h"
+#include "../include/mesh/glue.h"
 
 #if MYNEWT_VAL(BLE_MESH_CDB)
 struct bt_mesh_cdb bt_mesh_cdb = {

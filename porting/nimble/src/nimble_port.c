@@ -42,9 +42,9 @@
 #ifdef CONFIG_BT_NIMBLE_CONTROL_USE_UART_HCI
 #include "transport/uart/ble_hci_uart.h"
 #else
-#include "transport/ram/ble_hci_ram.h"
+#include "nimble/nimble/transport/ram/include/transport/ram/ble_hci_ram.h"
 #endif
-#include "nimble/ble_hci_trans.h"
+#include "nimble/nimble/include/nimble/ble_hci_trans.h"
 
 #include "esp_intr_alloc.h"
 #include "freertos/FreeRTOS.h"
@@ -55,7 +55,7 @@ extern void ble_hs_deinit(void);
 #define NIMBLE_PORT_LOG_TAG          "BLE_INIT"
 
 extern void os_msys_init(void);
- 
+
 static struct ble_npl_eventq g_eventq_dflt;
 static struct ble_hs_stop_listener stop_listener;
 static struct ble_npl_sem ble_hs_stop_sem;
@@ -72,7 +72,7 @@ nimble_port_init(void)
     }
      /* Initialize the host */
      ble_hs_init();
- 
+
 #else //SOC_ESP_NIMBLE_CONTROLLER
 
     /* Initialize the function pointers for OS porting */
@@ -84,7 +84,6 @@ nimble_port_init(void)
 
     ble_npl_eventq_init(&g_eventq_dflt);
 
-    void ble_store_ram_init(void);
 #if NIMBLE_CFG_CONTROLLER
     void ble_hci_ram_init(void);
 #endif
@@ -92,9 +91,6 @@ nimble_port_init(void)
     os_msys_init();
 
     ble_hs_init();
-
-    /* XXX Need to have template for store */
-    ble_store_ram_init();
 
 #endif
 }

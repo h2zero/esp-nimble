@@ -31,7 +31,6 @@
 #include "lpn.h"
 #include "transport.h"
 #include "foundation.h"
-#include "testing.h"
 #include "settings.h"
 
 #if MYNEWT_VAL(BLE_MESH_SHELL_MODELS)

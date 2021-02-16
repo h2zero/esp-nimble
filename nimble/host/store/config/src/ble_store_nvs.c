@@ -20,15 +20,15 @@
 */
 
 #ifdef ESP_PLATFORM
-#include "syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
 
 #if MYNEWT_VAL(BLE_STORE_CONFIG_PERSIST)
 
 #include <string.h>
 #include <esp_system.h>
-#include "sysinit/sysinit.h"
-#include "host/ble_hs.h"
-#include "store/config/ble_store_config.h"
+#include "nimble/porting/nimble/include/sysinit/sysinit.h"
+#include "../../../include/host/ble_hs.h"
+#include "../include/store/config/ble_store_config.h"
 #include "ble_store_config_priv.h"
 #include "esp_log.h"
 #include "nvs.h"
@@ -41,6 +41,8 @@
 #define NIMBLE_NVS_CCCD_SEC_KEY                  "cccd_sec"
 #define NIMBLE_NVS_PEER_RECORDS_KEY              "p_dev_rec"
 #define NIMBLE_NVS_NAMESPACE                     "nimble_bond"
+
+typedef uint32_t nvs_handle_t;
 
 static const char *TAG = "NIMBLE_NVS";
 

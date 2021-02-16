@@ -21,7 +21,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "../../../nimble/include/nimble/nimble_port.h"
-#ifdef ESP32_PLATFORM
+#ifdef ESP_PLATFORM
 #include "esp_bt.h"
 #endif
 
@@ -44,8 +44,13 @@ nimble_port_freertos_init(TaskFunction_t host_task_fn)
      * have separate task for NimBLE host, but since something needs to handle
      * default queue it is just easier to make separate task which does this.
      */
+#ifdef ESP_PLATFORM
     xTaskCreatePinnedToCore(host_task_fn, "ble", NIMBLE_HS_STACK_SIZE,
                 NULL, (configMAX_PRIORITIES - 4), &host_task_h, NIMBLE_CORE);
+#else
+    xTaskCreate(host_task_fn, "ble", configMINIMAL_STACK_SIZE + 400,
+                NULL, tskIDLE_PRIORITY + 1, &host_task_h);
+#endif
 }
 
 void

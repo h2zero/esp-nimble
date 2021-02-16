@@ -8,7 +8,7 @@
  */
 #define MESH_LOG_MODULE BLE_MESH_PROV_LOG
 
-#include "mesh/mesh.h"
+#include "../include/mesh/mesh.h"
 #include "prov.h"
 #include "net.h"
 #include "proxy.h"

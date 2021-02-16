@@ -7,7 +7,7 @@
 
 #include <string.h>
 #include <stdlib.h>
-#include "mesh/mesh.h"
+#include "../include/mesh/mesh.h"
 #include "mesh_priv.h"
 #include "net.h"
 #include "app_keys.h"
@@ -22,7 +22,7 @@
 #include "subnet.h"
 
 #define MESH_LOG_MODULE BLE_MESH_LOG
-#include "log/log.h"
+#include "nimble/porting/nimble/include/log/log.h"
 
 static struct bt_mesh_app_key apps[CONFIG_BT_MESH_APP_KEY_COUNT] = {
 	[0 ... (CONFIG_BT_MESH_APP_KEY_COUNT - 1)] = {

@@ -31,8 +31,8 @@
 #include "settings.h"
 #include "prov.h"
 #include "cfg.h"
-#include "mesh/glue.h"
-#include "mesh/slist.h"
+#include "../include/mesh/glue.h"
+#include "../include/mesh/slist.h"
 
 /* Minimum valid Mesh Network PDU length. The Network headers
  * themselves take up 9 bytes. After that there is a minumum of 1 byte

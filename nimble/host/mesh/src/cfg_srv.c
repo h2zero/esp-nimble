@@ -29,7 +29,6 @@
 #include "proxy.h"
 #include "foundation.h"
 #include "friend.h"
-#include "testing.h"
 #include "settings.h"
 #include "cfg.h"
 

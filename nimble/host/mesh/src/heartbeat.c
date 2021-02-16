@@ -15,7 +15,7 @@
 #include "transport.h"
 #include "heartbeat.h"
 #include "foundation.h"
-#include "mesh/glue.h"
+#include "../include/mesh/glue.h"
 
 struct bt_mesh_hb_cb hb_cb;
 

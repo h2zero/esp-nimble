@@ -22,8 +22,8 @@
 #include "../include/mem/mem.h"
 #include "../include/sysinit/sysinit.h"
 
-#ifdef ESP32_PLATFORM
-#include "esp_nimble_mem.h"
+#ifdef ESP_PLATFORM
+#include "nimble/esp/port/include/esp_nimble_mem.h"
 #include "esp_err.h"
 #endif
 

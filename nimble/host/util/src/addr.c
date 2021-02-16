@@ -19,7 +19,7 @@
 
 #include "nimble/nimble/host/include/host/ble_hs.h"
 #include "../include/host/util/util.h"
-#include "../src/ble_hs_hci_priv.h"
+#include "../../src/ble_hs_hci_priv.h"
 
 #if SOC_ESP_NIMBLE_CONTROLLER
 #include "esp_bt.h"

@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
+#ifndef ESP_PLATFORM
 #include <stdint.h>
 #include "nimble/porting/nimble/include/syscfg/syscfg.h"
 #include "nimble/porting/nimble/include/os/os_trace_api.h"
@@ -52,4 +52,5 @@ ble_ll_trace_init(void)
             os_trace_module_register(&g_ble_ll_trace_mod, "ble_ll", 12,
                                      ble_ll_trace_module_send_desc);
 }
+#endif
 #endif

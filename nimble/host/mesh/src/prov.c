@@ -20,7 +20,6 @@
 #include "access.h"
 #include "foundation.h"
 #include "prov.h"
-#include "testing.h"
 
 struct bt_mesh_prov_link bt_mesh_prov_link;
 const struct bt_mesh_prov *bt_mesh_prov;
