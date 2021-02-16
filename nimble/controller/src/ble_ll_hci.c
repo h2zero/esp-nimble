@@ -15,7 +15,9 @@
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- */
+ */ 
+#ifndef ESP_PLATFORM
+
 #include <stdint.h>
 #include <assert.h>
 #include <string.h>
@@ -1872,3 +1874,5 @@ ble_ll_hci_init(void)
     hci_adv_mode = ADV_MODE_ANY;
 #endif
 }
+
+#endif

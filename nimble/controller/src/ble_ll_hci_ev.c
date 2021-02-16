@@ -16,6 +16,8 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+#ifndef ESP_PLATFORM
+
 #include <stdint.h>
 #include <assert.h>
 #include <string.h>
@@ -609,4 +611,6 @@ ble_ll_hci_ev_send_vs_llcp_trace(uint8_t type, uint16_t handle, uint16_t count,
         ble_ll_hci_event_send(hci_ev);
     }
 }
+
+#endif
 #endif

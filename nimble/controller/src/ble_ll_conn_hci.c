@@ -16,6 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+#ifndef ESP_PLATFORM
 
 #include <stdint.h>
 #include <string.h>
@@ -2129,5 +2130,6 @@ ble_ll_set_default_sync_transfer_params(const uint8_t *cmdbuf, uint8_t len)
 
     return BLE_ERR_SUCCESS;
 }
+#endif
 #endif
 #endif

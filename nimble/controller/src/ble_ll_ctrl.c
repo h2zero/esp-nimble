@@ -16,6 +16,8 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+#ifndef ESP_PLATFORM
+
 #include <stdint.h>
 #include <assert.h>
 #include <string.h>
@@ -3211,4 +3213,6 @@ ble_ll_ctrl_init_conn_sm(struct ble_ll_conn_sm *connsm)
     ble_npl_callout_init(&connsm->ctrl_proc_rsp_timer, &g_ble_ll_data.ll_evq,
                          ble_ll_ctrl_proc_rsp_timer_cb, connsm);
 }
+
+#endif
 #endif

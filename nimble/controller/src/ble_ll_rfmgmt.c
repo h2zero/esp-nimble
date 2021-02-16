@@ -16,6 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+#ifndef ESP_PLATFORM
 
 #include <stdint.h>
 #include <stddef.h>
@@ -348,4 +349,5 @@ ble_ll_rfmgmt_init(void)
     enabled = true;
 }
 
+#endif
 #endif

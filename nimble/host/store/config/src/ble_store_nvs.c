@@ -48,6 +48,7 @@
 
 #define NIMBLE_NVS_LOCAL_IRK_KEY                "local_irk"
 #define NIMBLE_NVS_RPA_RECORDS_KEY               "rpa_rec"
+typedef uint32_t nvs_handle_t;
 
 static const char *TAG = "NIMBLE_NVS";
 

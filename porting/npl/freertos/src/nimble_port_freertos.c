@@ -21,23 +21,8 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "../../../nimble/include/nimble/nimble_port.h"
-#ifdef ESP32_PLATFORM
+#ifdef ESP_PLATFORM
 #include "esp_bt.h"
-#endif
-
-static TaskHandle_t host_task_h;
-
-void
-nimble_port_freertos_init(TaskFunction_t host_task_fn)
-{
-#if NIMBLE_CFG_CONTROLLER
-    /*
-     * Create task where NimBLE LL will run. This one is required as LL has its
-     * own event queue and should have highest priority. The task function is
-     * provided by NimBLE and in case of FreeRTOS it does not need to be wrapped
-     * since it has compatible prototype.
-     */
-    esp_bt_controller_enable(ESP_BT_MODE_BLE);
 #endif
 
 static TaskHandle_t host_task_h = NULL;
@@ -55,10 +40,14 @@ esp_err_t esp_nimble_enable(void *host_task)
      * have separate task for NimBLE host, but since something needs to handle
      * default queue it is just easier to make separate task which does this.
      */
+#ifdef ESP_PLATFORM
     xTaskCreatePinnedToCore(host_task, "nimble_host", NIMBLE_HS_STACK_SIZE,
                             NULL, (configMAX_PRIORITIES - 4), &host_task_h, NIMBLE_CORE);
     return ESP_OK;
-
+#else
+    xTaskCreate(host_task_fn, "ble", configMINIMAL_STACK_SIZE + 400,
+                NULL, tskIDLE_PRIORITY + 1, &host_task_h);
+#endif
 }
 
 /**

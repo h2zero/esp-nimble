@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
+#ifndef ESP_PLATFORM
 #include <stdint.h>
 #include "nimble/porting/nimble/include/syscfg/syscfg.h"
 #include "nimble/nimble/include/nimble/ble.h"
@@ -142,5 +142,6 @@ ble_ll_iso_end_test(const uint8_t *cmdbuf, uint8_t len)
 {
     return BLE_ERR_UNSUPPORTED;
 }
+#endif
 #endif
 #endif

@@ -16,6 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+#ifndef ESP_PLATFORM
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -2015,3 +2016,5 @@ ble_transport_ll_init(void)
 {
     ble_ll_init();
 }
+
+#endif

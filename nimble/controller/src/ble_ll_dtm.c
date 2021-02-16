@@ -16,6 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+#ifndef ESP_PLATFORM
 
 #include "nimble/porting/nimble/include/syscfg/syscfg.h"
 #include "nimble/porting/nimble/include/sysinit/sysinit.h"
@@ -715,4 +716,5 @@ ble_ll_dtm_init(void)
                             "ble_ll_dtm");
     SYSINIT_PANIC_ASSERT(rc == 0);
 }
+#endif
 #endif
