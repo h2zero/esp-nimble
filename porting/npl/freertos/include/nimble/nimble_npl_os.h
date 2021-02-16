@@ -37,7 +37,9 @@ extern "C" {
 
 #define BLE_NPL_TIME_FOREVER    portMAX_DELAY
 
+#ifndef ESP_PLATFORM
 #define NIMBLE_CFG_CONTROLLER 1
+#endif
 
 /* This should be compatible with TickType_t */
 typedef uint32_t ble_npl_time_t;
@@ -308,7 +310,7 @@ ble_npl_hw_set_isr(int irqn, void (*addr)(void))
 }
 #endif
 
-#ifdef ESP32_PLATFORM
+#ifdef ESP_PLATFORM
 extern portMUX_TYPE ble_port_mutex;
 //critical section
 static inline uint32_t

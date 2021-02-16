@@ -20,25 +20,35 @@
 #include <assert.h>
 #include <stddef.h>
 #include <string.h>
-<<<<<<< HEAD
-#include "nimble/nimble_npl.h"
-#include "freertos/portable.h"
 
-portMUX_TYPE ble_port_mutex = portMUX_INITIALIZER_UNLOCKED;
-=======
 #include "nimble/nimble/include/nimble/nimble_npl.h"
+
+#ifdef ESP_PLATFORM
+#include "freertos/portable.h"
+portMUX_TYPE ble_port_mutex = portMUX_INITIALIZER_UNLOCKED;
+
+#else
 #include "nrf.h"
 
 static void *radio_isr_addr;
 static void *rng_isr_addr;
 static void *rtc0_isr_addr;
->>>>>>> Initial work: Arduinoize includes and remove excess files.
+#endif
 
+#ifdef ESP_PLATFORM
 static inline bool
 in_isr(void)
 {
     /* XXX hw specific! */
     return xPortInIsrContext() != 0;
+}
+
+#else
+static inline bool
+in_isr(void)
+{
+    /* XXX hw specific! */
+    return (SCB->ICSR & SCB_ICSR_VECTACTIVE_Msk) != 0;
 }
 
 void
@@ -75,6 +85,7 @@ npl_freertos_hw_set_isr(int irqn, void (*addr)(void))
         break;
     }
 }
+#endif
 
 struct ble_npl_event *
 npl_freertos_eventq_get(struct ble_npl_eventq *evq, ble_npl_time_t tmo)
@@ -86,9 +97,13 @@ npl_freertos_eventq_get(struct ble_npl_eventq *evq, ble_npl_time_t tmo)
     if (in_isr()) {
         assert(tmo == 0);
         ret = xQueueReceiveFromISR(evq->q, &ev, &woken);
+#ifdef ESP_PLATFORM
         if( woken == pdTRUE ) {
             portYIELD_FROM_ISR();
         }
+#else
+        portYIELD_FROM_ISR(woken);
+#endif
     } else {
         ret = xQueueReceive(evq->q, &ev, tmo);
     }
@@ -115,9 +130,13 @@ npl_freertos_eventq_put(struct ble_npl_eventq *evq, struct ble_npl_event *ev)
 
     if (in_isr()) {
         ret = xQueueSendToBackFromISR(evq->q, &ev, &woken);
+#ifdef ESP_PLATFORM
         if( woken == pdTRUE ) {
             portYIELD_FROM_ISR();
         }
+#else
+        portYIELD_FROM_ISR(woken);
+#endif
     } else {
         ret = xQueueSendToBack(evq->q, &ev, portMAX_DELAY);
     }
@@ -164,13 +183,20 @@ npl_freertos_eventq_remove(struct ble_npl_eventq *evq,
             woken |= woken2;
         }
 
+#ifdef ESP_PLATFORM
         if( woken == pdTRUE ) {
             portYIELD_FROM_ISR();
         }
+#else
+        portYIELD_FROM_ISR(woken);
+#endif
     } else {
+#ifdef ESP_PLATFORM
         portMUX_TYPE ble_npl_mut = portMUX_INITIALIZER_UNLOCKED;
         portENTER_CRITICAL(&ble_npl_mut);
-
+#else
+        vPortEnterCritical();
+#endif
         count = uxQueueMessagesWaiting(evq->q);
         for (i = 0; i < count; i++) {
             ret = xQueueReceive(evq->q, &tmp_ev, 0);
@@ -183,8 +209,11 @@ npl_freertos_eventq_remove(struct ble_npl_eventq *evq,
             ret = xQueueSendToBack(evq->q, &tmp_ev, 0);
             assert(ret == pdPASS);
         }
-
+#ifdef ESP_PLATFORM
         portEXIT_CRITICAL(&ble_npl_mut);
+#else
+        vPortExitCritical();
+#endif
     }
 
     ev->queued = 0;
@@ -300,9 +329,13 @@ npl_freertos_sem_pend(struct ble_npl_sem *sem, ble_npl_time_t timeout)
     if (in_isr()) {
         assert(timeout == 0);
         ret = xSemaphoreTakeFromISR(sem->handle, &woken);
+#ifdef ESP_PLATFORM
         if( woken == pdTRUE ) {
             portYIELD_FROM_ISR();
         }
+#else
+        portYIELD_FROM_ISR(woken);
+#endif
     } else {
         ret = xSemaphoreTake(sem->handle, timeout);
     }
@@ -324,10 +357,13 @@ npl_freertos_sem_release(struct ble_npl_sem *sem)
 
     if (in_isr()) {
         ret = xSemaphoreGiveFromISR(sem->handle, &woken);
-        
+#ifdef ESP_PLATFORM
         if( woken == pdTRUE ) {
             portYIELD_FROM_ISR();
         }
+#else
+        portYIELD_FROM_ISR(woken);
+#endif
     } else {
         ret = xSemaphoreGive(sem->handle);
     }
@@ -440,10 +476,13 @@ npl_freertos_callout_reset(struct ble_npl_callout *co, ble_npl_time_t ticks)
         xTimerStopFromISR(co->handle, &woken1);
         xTimerChangePeriodFromISR(co->handle, ticks, &woken2);
         xTimerResetFromISR(co->handle, &woken3);
-
+#ifdef ESP_PLATFORM
         if( woken1 == pdTRUE || woken2 == pdTRUE || woken3 == pdTRUE) {
             portYIELD_FROM_ISR();
         }
+#else
+        portYIELD_FROM_ISR(woken1 || woken2 || woken3);
+#endif
     } else {
         xTimerStop(co->handle, portMAX_DELAY);
         xTimerChangePeriod(co->handle, ticks, portMAX_DELAY);

@@ -16,6 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+#ifndef ESP_PLATFORM
 
 #include <stdint.h>
 #include <string.h>
@@ -456,3 +457,5 @@ const uint8_t g_ble_ll_supp_cmds[BLE_LL_SUPP_CMD_LEN] =
     BLE_LL_SUPP_CMD_OCTET_40,           /* Octet 40 */
     BLE_LL_SUPP_CMD_OCTET_41,
 };
+
+#endif

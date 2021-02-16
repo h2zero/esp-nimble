@@ -28,17 +28,6 @@
 #include "ble_hs_priv.h"
 #include "ble_monitor_priv.h"
 
-/*
- * HCI Command Header
- *
- * Comprises the following fields
- *  -> Opcode group field & Opcode command field (2)
- *  -> Parameter Length                          (1)
- *      Length of all the parameters (does not include any part of the hci
- *      command header
- */
-#define BLE_HCI_CMD_HDR_LEN                 (3)
-
 static int
 ble_hs_hci_cmd_transport(struct ble_hci_cmd *cmd)
 {
@@ -61,6 +50,18 @@ ble_hs_hci_cmd_transport(struct ble_hci_cmd *cmd)
         return BLE_HS_EUNKNOWN;
     }
 }
+
+#ifdef ESP_PLATFORM
+/*
+ * HCI Command Header
+ *
+ * Comprises the following fields
+ *  -> Opcode group field & Opcode command field (2)
+ *  -> Parameter Length                          (1)
+ *      Length of all the parameters (does not include any part of the hci
+ *      command header
+ */
+#define BLE_HCI_CMD_HDR_LEN                 (3)
 
 static int
 ble_hs_hci_cmd_send(uint16_t opcode, uint8_t len, const void *cmddata)
@@ -97,6 +98,34 @@ ble_hs_hci_cmd_send(uint16_t opcode, uint8_t len, const void *cmddata)
 
     return rc;
 }
+
+#else
+static int
+ble_hs_hci_cmd_send(uint16_t opcode, uint8_t len, const void *cmddata)
+{
+    struct ble_hci_cmd *cmd;
+    int rc;
+
+    cmd = (void *) ble_hci_trans_buf_alloc(BLE_HCI_TRANS_BUF_CMD);
+    BLE_HS_DBG_ASSERT(cmd != NULL);
+
+    cmd->opcode = htole16(opcode);
+    cmd->length = len;
+    if (len != 0) {
+        memcpy(cmd->data, cmddata, len);
+    }
+
+    rc = ble_hs_hci_cmd_transport(cmd);
+
+    if (rc == 0) {
+        STATS_INC(ble_hs_stats, hci_cmd);
+    } else {
+        BLE_HS_LOG(DEBUG, "ble_hs_hci_cmd_send failure; rc=%d\n", rc);
+    }
+
+    return rc;
+}
+#endif
 
 int
 ble_hs_hci_cmd_send_buf(uint16_t opcode, const void *buf, uint8_t buf_len)
