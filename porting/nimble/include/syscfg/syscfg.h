@@ -6,7 +6,7 @@
 #define H_MYNEWT_SYSCFG_
 
 #ifdef ESP_PLATFORM
-#include "nimble/esp/port/include/esp_nimble_cfg.h"
+#include "nimble/esp_port/port/include/esp_nimble_cfg.h"
 #else
 
 /**
