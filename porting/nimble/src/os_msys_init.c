@@ -20,7 +20,7 @@
 #include <assert.h>
 #include "../include/os/os.h"
 #include "../include/mem/mem.h"
-
+#include "NimBLELog.h"
 #ifdef ESP_PLATFORM
 #include "nimble/esp/port/include/esp_nimble_mem.h"
 #endif
@@ -31,7 +31,11 @@
 #define SYSINIT_MSYS_1_MEMPOOL_SIZE                 \
     OS_MEMPOOL_SIZE(MYNEWT_VAL(MSYS_1_BLOCK_COUNT),  \
                     SYSINIT_MSYS_1_MEMBLOCK_SIZE)
+#ifdef ESP_PLATFORM
 static os_membuf_t *os_msys_init_1_data;
+#else
+static os_membuf_t os_msys_init_1_data[SYSINIT_MSYS_1_MEMPOOL_SIZE];
+#endif
 static struct os_mbuf_pool os_msys_init_1_mbuf_pool;
 static struct os_mempool os_msys_init_1_mempool;
 #endif
@@ -42,7 +46,11 @@ static struct os_mempool os_msys_init_1_mempool;
 #define SYSINIT_MSYS_2_MEMPOOL_SIZE                 \
     OS_MEMPOOL_SIZE(MYNEWT_VAL(MSYS_2_BLOCK_COUNT),  \
                     SYSINIT_MSYS_2_MEMBLOCK_SIZE)
+#ifdef ESP_PLATFORM
 static os_membuf_t *os_msys_init_2_data;
+#else
+static os_membuf_t os_msys_init_2_data[SYSINIT_MSYS_2_MEMPOOL_SIZE];
+#endif
 static struct os_mbuf_pool os_msys_init_2_mbuf_pool;
 static struct os_mempool os_msys_init_2_mempool;
 #endif
@@ -56,6 +64,7 @@ os_msys_init_once(void *data, struct os_mempool *mempool,
 
     rc = mem_init_mbuf_pool(data, mempool, mbuf_pool, block_count, block_size,
                             name);
+    NIMBLE_LOGE("OSINIT", "mem_init_mbuf_pool rc=%d mp=%p bc=%d bs=%d %s",rc,mempool,block_count, block_size,name);
     assert(rc == 0);
 
     rc = os_msys_register(mbuf_pool);

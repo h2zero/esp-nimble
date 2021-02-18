@@ -42,6 +42,8 @@ modlog_dummy(const char *msg, ...)
 #endif
 
 #ifdef ESP_PLATFORM
+#include "esp_log.h"
+
 #define MODLOG_ESP_LOCAL(level, ml_msg_, ...) do { \
     if (MYNEWT_VAL(BLE_HS_LOG_LVL) <= level) esp_log_write(level, "NimBLE", ml_msg_, ##__VA_ARGS__); \
 } while(0)
@@ -81,13 +83,13 @@ modlog_dummy(const char *msg, ...)
     MODLOG_ESP_LOCAL(LOG_LEVEL_CRITICAL, ml_msg_, ##__VA_ARGS__)
 
 #else
-
+#include "nimble/console/console.h"
 #if (MYNEWT_VAL(LOG_LEVEL) > 0)
 #define MODLOG_DEBUG(ml_mod_, ml_msg_, ...) \
         modlog_dummy((ml_msg_), ##__VA_ARGS__)
 #else
 #define MODLOG_DEBUG(ml_mod_, ml_msg_, ...) \
-        printf((ml_msg_), ##__VA_ARGS__);
+        console_printf((ml_msg_), ##__VA_ARGS__);
 #endif
 
 #if (MYNEWT_VAL(LOG_LEVEL) > 1)
@@ -95,7 +97,7 @@ modlog_dummy(const char *msg, ...)
         modlog_dummy((ml_msg_), ##__VA_ARGS__)
 #else
 #define MODLOG_INFO(ml_mod_, ml_msg_, ...) \
-        printf((ml_msg_), ##__VA_ARGS__);
+        console_printf((ml_msg_), ##__VA_ARGS__);
 #endif
 
 #if (MYNEWT_VAL(LOG_LEVEL) > 2)
@@ -103,7 +105,7 @@ modlog_dummy(const char *msg, ...)
         modlog_dummy((ml_msg_), ##__VA_ARGS__)
 #else
 #define MODLOG_WARN(ml_mod_, ml_msg_, ...) \
-        printf((ml_msg_), ##__VA_ARGS__);
+        console_printf((ml_msg_), ##__VA_ARGS__);
 #endif
 
 #if (MYNEWT_VAL(LOG_LEVEL) > 3)
@@ -111,7 +113,7 @@ modlog_dummy(const char *msg, ...)
         modlog_dummy((ml_msg_), ##__VA_ARGS__)
 #else
 #define MODLOG_ERROR(ml_mod_, ml_msg_, ...) \
-        printf((ml_msg_), ##__VA_ARGS__);
+        console_printf((ml_msg_), ##__VA_ARGS__);
 #endif
 
 #if (MYNEWT_VAL(LOG_LEVEL) > 4)
@@ -119,7 +121,7 @@ modlog_dummy(const char *msg, ...)
         modlog_dummy((ml_msg_), ##__VA_ARGS__)
 #else
 #define MODLOG_CRITICAL(ml_mod_, ml_msg_, ...) \
-        printf((ml_msg_), ##__VA_ARGS__);
+        console_printf((ml_msg_), ##__VA_ARGS__);
 #endif
 
 #endif

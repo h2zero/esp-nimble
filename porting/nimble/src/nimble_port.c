@@ -28,6 +28,7 @@
 #ifdef ESP_PLATFORM
 #include "esp_log.h"
 #endif
+#include "NimBLELog.h"
 
 static struct ble_npl_eventq g_eventq_dflt;
 static struct ble_hs_stop_listener stop_listener;
@@ -39,23 +40,31 @@ nimble_port_init(void)
 {
     void os_msys_init(void);
     void ble_store_ram_init(void);
+    
 #if NIMBLE_CFG_CONTROLLER
     void ble_hci_ram_init(void);
 #endif
     /* Initialize default event queue */
+    NIMBLE_LOGE("NIMPORT", "eventq_init");
     ble_npl_eventq_init(&g_eventq_dflt);
 
+    NIMBLE_LOGE("NIMPORT", "os_msys_init");
     os_msys_init();
-
+    NIMBLE_LOGE("NIMPORT", "ble_hs_init");
     ble_hs_init();
 
     /* XXX Need to have template for store */
+    NIMBLE_LOGE("NIMPORT", "ble_store_ram_init");
     ble_store_ram_init();
 
 #if NIMBLE_CFG_CONTROLLER
+NIMBLE_LOGE("NIMPORT", "hal_timer_init");
     hal_timer_init(5, NULL);
+    NIMBLE_LOGE("NIMPORT", "os_cputime_init");
     os_cputime_init(32768);
+    NIMBLE_LOGE("NIMPORT", "ble_ll_init");
     ble_ll_init();
+    NIMBLE_LOGE("NIMPORT", "ble_hci_ram_init");
     ble_hci_ram_init();
 #endif
 }

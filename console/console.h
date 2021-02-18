@@ -7,7 +7,8 @@
 extern "C" {
 #endif
 
-#define console_printf(_fmt, ...) printf(_fmt, ##__VA_ARGS__)
+extern void ar_printf(const char *format, ...);
+#define console_printf(_fmt, ...) ar_printf(_fmt, ##__VA_ARGS__)
 
 #ifdef __cplusplus
 }

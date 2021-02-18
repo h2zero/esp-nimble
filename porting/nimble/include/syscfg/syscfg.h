@@ -73,7 +73,7 @@
 
 /*** @apache-mynewt-core/sys/log/stub */
 #ifndef MYNEWT_VAL_LOG_LEVEL
-#define MYNEWT_VAL_LOG_LEVEL (255)
+#define MYNEWT_VAL_LOG_LEVEL (0)
 #endif
 
 /*** @apache-mynewt-nimble/nimble */
