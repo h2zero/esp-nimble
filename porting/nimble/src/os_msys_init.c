@@ -62,6 +62,7 @@ os_msys_init_once(void *data, struct os_mempool *mempool,
     assert(rc == 0);
 }
 
+#ifdef ESP_PLATFORM
 int
 os_msys_buf_alloc(void)
 {
@@ -96,6 +97,7 @@ os_msys_buf_free(void)
 #endif
 
 }
+#endif
 
 void
 os_msys_init(void)
