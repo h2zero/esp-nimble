@@ -38,7 +38,7 @@ nimble_port_freertos_init(TaskFunction_t host_task_fn)
      * since it has compatible prototype.
      */
     xTaskCreate(nimble_port_ll_task_func, "ll", configMINIMAL_STACK_SIZE + 400,
-                NULL, configMAX_PRIORITIES - 1, &ll_task_h);
+                NULL, configMAX_PRIORITIES, &ll_task_h);
 #endif
 
     /*
@@ -51,7 +51,7 @@ nimble_port_freertos_init(TaskFunction_t host_task_fn)
                 NULL, (configMAX_PRIORITIES - 4), &host_task_h, NIMBLE_CORE);
 #else
     xTaskCreate(host_task_fn, "ble", configMINIMAL_STACK_SIZE + 400,
-                NULL, tskIDLE_PRIORITY + 1, &host_task_h);
+                NULL, (configMAX_PRIORITIES - 1), &host_task_h);
 #endif
 }
 

@@ -42,8 +42,12 @@
 #define MYNEWT_VAL_OS_CPUTIME_FREQ (32768)
 #endif
 
+#ifndef MYNEWT_VAL_TIMER_5
+#define MYNEWT_VAL_TIMER_5 (1)
+#endif
+
 #ifndef MYNEWT_VAL_OS_CPUTIME_TIMER_NUM
-#define MYNEWT_VAL_OS_CPUTIME_TIMER_NUM (0)
+#define MYNEWT_VAL_OS_CPUTIME_TIMER_NUM (5)
 #endif
 
 #ifndef MYNEWT_VAL_OS_MEMPOOL_CHECK
@@ -74,6 +78,10 @@
 /*** @apache-mynewt-core/sys/log/stub */
 #ifndef MYNEWT_VAL_LOG_LEVEL
 #define MYNEWT_VAL_LOG_LEVEL (0)
+#endif
+
+#ifndef MYNEWT_VAL_BLE_CONTROLLER
+#define MYNEWT_VAL_BLE_CONTROLLER (1)
 #endif
 
 /*** @apache-mynewt-nimble/nimble */
@@ -406,7 +414,7 @@
 #endif
 
 #ifndef MYNEWT_VAL_BLE_GATT_READ_MAX_ATTRS
-#define MYNEWT_VAL_BLE_GATT_READ_MAX_ATTRS (8)
+#define MYNEWT_VAL_BLE_GATT_READ_MAX_ATTRS (4)
 #endif
 
 #ifndef MYNEWT_VAL_BLE_GATT_READ_MULT
@@ -450,7 +458,7 @@
 #endif
 
 #ifndef MYNEWT_VAL_BLE_HS_AUTO_START
-#define MYNEWT_VAL_BLE_HS_AUTO_START (1)
+#define MYNEWT_VAL_BLE_HS_AUTO_START (0)
 #endif
 
 #ifndef MYNEWT_VAL_BLE_HS_DEBUG
@@ -685,66 +693,66 @@
 
 /* Overridden by apps/blemesh (defined by @apache-mynewt-nimble/nimble/host/mesh) */
 #ifndef MYNEWT_VAL_BLE_MESH_DEBUG
-#define MYNEWT_VAL_BLE_MESH_DEBUG (1)
+#define MYNEWT_VAL_BLE_MESH_DEBUG (0)
 #endif
 
 /* Overridden by apps/blemesh (defined by @apache-mynewt-nimble/nimble/host/mesh) */
 #ifndef MYNEWT_VAL_BLE_MESH_DEBUG_ACCESS
-#define MYNEWT_VAL_BLE_MESH_DEBUG_ACCESS (1)
+#define MYNEWT_VAL_BLE_MESH_DEBUG_ACCESS (0)
 #endif
 
 /* Overridden by apps/blemesh (defined by @apache-mynewt-nimble/nimble/host/mesh) */
 #ifndef MYNEWT_VAL_BLE_MESH_DEBUG_ADV
-#define MYNEWT_VAL_BLE_MESH_DEBUG_ADV (1)
+#define MYNEWT_VAL_BLE_MESH_DEBUG_ADV (0)
 #endif
 
 /* Overridden by apps/blemesh (defined by @apache-mynewt-nimble/nimble/host/mesh) */
 #ifndef MYNEWT_VAL_BLE_MESH_DEBUG_BEACON
-#define MYNEWT_VAL_BLE_MESH_DEBUG_BEACON (1)
+#define MYNEWT_VAL_BLE_MESH_DEBUG_BEACON (0)
 #endif
 
 /* Overridden by apps/blemesh (defined by @apache-mynewt-nimble/nimble/host/mesh) */
 #ifndef MYNEWT_VAL_BLE_MESH_DEBUG_CRYPTO
-#define MYNEWT_VAL_BLE_MESH_DEBUG_CRYPTO (1)
+#define MYNEWT_VAL_BLE_MESH_DEBUG_CRYPTO (0)
 #endif
 
 /* Overridden by apps/blemesh (defined by @apache-mynewt-nimble/nimble/host/mesh) */
 #ifndef MYNEWT_VAL_BLE_MESH_DEBUG_FRIEND
-#define MYNEWT_VAL_BLE_MESH_DEBUG_FRIEND (1)
+#define MYNEWT_VAL_BLE_MESH_DEBUG_FRIEND (0)
 #endif
 
 /* Overridden by apps/blemesh (defined by @apache-mynewt-nimble/nimble/host/mesh) */
 #ifndef MYNEWT_VAL_BLE_MESH_DEBUG_LOW_POWER
-#define MYNEWT_VAL_BLE_MESH_DEBUG_LOW_POWER (1)
+#define MYNEWT_VAL_BLE_MESH_DEBUG_LOW_POWER (0)
 #endif
 
 /* Overridden by apps/blemesh (defined by @apache-mynewt-nimble/nimble/host/mesh) */
 #ifndef MYNEWT_VAL_BLE_MESH_DEBUG_MODEL
-#define MYNEWT_VAL_BLE_MESH_DEBUG_MODEL (1)
+#define MYNEWT_VAL_BLE_MESH_DEBUG_MODEL (0)
 #endif
 
 /* Overridden by apps/blemesh (defined by @apache-mynewt-nimble/nimble/host/mesh) */
 #ifndef MYNEWT_VAL_BLE_MESH_DEBUG_NET
-#define MYNEWT_VAL_BLE_MESH_DEBUG_NET (1)
+#define MYNEWT_VAL_BLE_MESH_DEBUG_NET (0)
 #endif
 
 /* Overridden by apps/blemesh (defined by @apache-mynewt-nimble/nimble/host/mesh) */
 #ifndef MYNEWT_VAL_BLE_MESH_DEBUG_PROV
-#define MYNEWT_VAL_BLE_MESH_DEBUG_PROV (1)
+#define MYNEWT_VAL_BLE_MESH_DEBUG_PROV (0)
 #endif
 
 /* Overridden by apps/blemesh (defined by @apache-mynewt-nimble/nimble/host/mesh) */
 #ifndef MYNEWT_VAL_BLE_MESH_DEBUG_PROXY
-#define MYNEWT_VAL_BLE_MESH_DEBUG_PROXY (1)
+#define MYNEWT_VAL_BLE_MESH_DEBUG_PROXY (0)
 #endif
 
 #ifndef MYNEWT_VAL_BLE_MESH_DEBUG_SETTINGS
-#define MYNEWT_VAL_BLE_MESH_DEBUG_SETTINGS (1)
+#define MYNEWT_VAL_BLE_MESH_DEBUG_SETTINGS (0)
 #endif
 
 /* Overridden by apps/blemesh (defined by @apache-mynewt-nimble/nimble/host/mesh) */
 #ifndef MYNEWT_VAL_BLE_MESH_DEBUG_TRANS
-#define MYNEWT_VAL_BLE_MESH_DEBUG_TRANS (1)
+#define MYNEWT_VAL_BLE_MESH_DEBUG_TRANS (0)
 #endif
 
 #ifndef MYNEWT_VAL_BLE_MESH_DEVICE_NAME
@@ -1122,7 +1130,7 @@
 
 /*** @apache-mynewt-nimble/nimble/transport/socket */
 #ifndef MYNEWT_VAL_BLE_ACL_BUF_COUNT
-#define MYNEWT_VAL_BLE_ACL_BUF_COUNT (24)
+#define MYNEWT_VAL_BLE_ACL_BUF_COUNT (4)
 #endif
 
 #ifndef MYNEWT_VAL_BLE_ACL_BUF_SIZE
@@ -1130,7 +1138,7 @@
 #endif
 
 #ifndef MYNEWT_VAL_BLE_HCI_ACL_OUT_COUNT
-#define MYNEWT_VAL_BLE_HCI_ACL_OUT_COUNT (12)
+#define MYNEWT_VAL_BLE_HCI_ACL_OUT_COUNT (2)
 #endif
 
 #ifndef MYNEWT_VAL_BLE_HCI_EVT_BUF_SIZE
@@ -1138,11 +1146,11 @@
 #endif
 
 #ifndef MYNEWT_VAL_BLE_HCI_EVT_HI_BUF_COUNT
-#define MYNEWT_VAL_BLE_HCI_EVT_HI_BUF_COUNT (0)
+#define MYNEWT_VAL_BLE_HCI_EVT_HI_BUF_COUNT (2)
 #endif
 
 #ifndef MYNEWT_VAL_BLE_HCI_EVT_LO_BUF_COUNT
-#define MYNEWT_VAL_BLE_HCI_EVT_LO_BUF_COUNT (20)
+#define MYNEWT_VAL_BLE_HCI_EVT_LO_BUF_COUNT (8)
 #endif
 
 #ifndef MYNEWT_VAL_BLE_PUBLIC_DEV_ADDR

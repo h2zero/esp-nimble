@@ -7,9 +7,9 @@
 extern "C" {
 #endif
 
-//extern void ar_printf(const char *format, ...);
-int _write(int file, const char * p_char, int len);
-#define console_printf(_fmt, ...) printf(_fmt, ##__VA_ARGS__)
+extern void ar_printf(const char *format, ...);
+/*int _write(int file, const char * p_char, int len);*/
+#define console_printf(_fmt, ...) ar_printf(_fmt, ##__VA_ARGS__)
 
 #ifdef __cplusplus
 }
