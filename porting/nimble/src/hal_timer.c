@@ -16,7 +16,8 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-#if !defined(ESP_PLATFORM) && !defined(NRF51)
+#ifndef ESP_PLATFORM
+
 #include <string.h>
 #include <stdint.h>
 #include <assert.h>

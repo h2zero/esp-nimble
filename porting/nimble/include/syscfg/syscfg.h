@@ -19,22 +19,19 @@
 #define MYNEWT_VAL(_name)                       MYNEWT_VAL_ ## _name
 #define MYNEWT_VAL_CHOICE(_name, _val)          MYNEWT_VAL_ ## _name ## __ ## _val
 
-#ifdef NRF51
-#define MYNEWT_VAL_TIMER_3 (1)
-#define MYNEWT_VAL_OS_CPUTIME_TIMER_NUM (3)
-#else
+
 #define MYNEWT_VAL_TIMER_5 (1)
 #define MYNEWT_VAL_OS_CPUTIME_TIMER_NUM (5)
-#endif
+
 
 /*** @apache-mynewt-core/kernel/os */
 
 #ifndef MYNEWT_VAL_MSYS_1_BLOCK_COUNT
-#define MYNEWT_VAL_MSYS_1_BLOCK_COUNT (1)
+#define MYNEWT_VAL_MSYS_1_BLOCK_COUNT (12)
 #endif
 
 #ifndef MYNEWT_VAL_MSYS_1_BLOCK_SIZE
-#define MYNEWT_VAL_MSYS_1_BLOCK_SIZE (80)
+#define MYNEWT_VAL_MSYS_1_BLOCK_SIZE (160)
 #endif
 
 #ifndef MYNEWT_VAL_MSYS_2_BLOCK_COUNT
