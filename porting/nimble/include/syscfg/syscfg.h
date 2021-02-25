@@ -27,11 +27,11 @@
 /*** @apache-mynewt-core/kernel/os */
 
 #ifndef MYNEWT_VAL_MSYS_1_BLOCK_COUNT
-#define MYNEWT_VAL_MSYS_1_BLOCK_COUNT (12)
+#define MYNEWT_VAL_MSYS_1_BLOCK_COUNT (5)
 #endif
 
 #ifndef MYNEWT_VAL_MSYS_1_BLOCK_SIZE
-#define MYNEWT_VAL_MSYS_1_BLOCK_SIZE (160)
+#define MYNEWT_VAL_MSYS_1_BLOCK_SIZE (88)
 #endif
 
 #ifndef MYNEWT_VAL_MSYS_2_BLOCK_COUNT

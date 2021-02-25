@@ -26,13 +26,13 @@
 #define LL_TASK_STACK_SIZE 120
 static StackType_t ll_xStack[ LL_TASK_STACK_SIZE ] __attribute__((aligned(8)));
 static StaticTask_t ll_xTaskBuffer;
-//static TaskHandle_t ll_task_h;
+static TaskHandle_t ll_task_h;
 #endif
 
 #define HS_TASK_STACK_SIZE 460
-static StackType_t hs_xStack[ HS_TASK_STACK_SIZE ] __attribute__((aligned(8)));
-static StaticTask_t hs_xTaskBuffer;
-//static TaskHandle_t host_task_h;
+//static StackType_t hs_xStack[ HS_TASK_STACK_SIZE ] __attribute__((aligned(8)));
+//static StaticTask_t hs_xTaskBuffer;
+static TaskHandle_t host_task_h;
 
 void
 nimble_port_freertos_init(TaskFunction_t host_task_fn)
@@ -46,8 +46,8 @@ nimble_port_freertos_init(TaskFunction_t host_task_fn)
      */
   /*  xTaskCreate(nimble_port_ll_task_func, "ll", configMINIMAL_STACK_SIZE + 400,
                 NULL, configMAX_PRIORITIES, &ll_task_h);*/
-    xTaskCreateStatic(nimble_port_ll_task_func, "ll", LL_TASK_STACK_SIZE,
-                      NULL, configMAX_PRIORITIES, ll_xStack, &ll_xTaskBuffer);
+    ll_task_h = xTaskCreateStatic(nimble_port_ll_task_func, "ll", LL_TASK_STACK_SIZE,
+                                  NULL, configMAX_PRIORITIES, ll_xStack, &ll_xTaskBuffer);
 #endif
 
     /*
@@ -59,19 +59,30 @@ nimble_port_freertos_init(TaskFunction_t host_task_fn)
     xTaskCreatePinnedToCore(host_task_fn, "ble", NIMBLE_STACK_SIZE,
                 NULL, (configMAX_PRIORITIES - 4), &host_task_h, NIMBLE_CORE);
 #else
-    /*xTaskCreate(host_task_fn, "ble", configMINIMAL_STACK_SIZE + 400,
-                NULL, (configMAX_PRIORITIES - 1), &host_task_h);*/
-    xTaskCreateStatic(host_task_fn, "ble", HS_TASK_STACK_SIZE,
-                  NULL, (configMAX_PRIORITIES - 1), hs_xStack, &hs_xTaskBuffer);
+    xTaskCreate(host_task_fn, "ble", HS_TASK_STACK_SIZE,
+                NULL, (configMAX_PRIORITIES - 1), &host_task_h);
+    /*host_task_h = xTaskCreateStatic(host_task_fn, "ble", HS_TASK_STACK_SIZE,
+                                    NULL, (configMAX_PRIORITIES - 1), hs_xStack,
+                                    &hs_xTaskBuffer);*/
 #endif
 }
 
 void
 nimble_port_freertos_deinit(void)
 {
-#ifdef ESP_PLATFORM
     if (host_task_h) {
         vTaskDelete(host_task_h);
     }
-#endif
+}
+
+UBaseType_t
+nimble_port_freertos_get_ll_hwm(void)
+{
+    return uxTaskGetStackHighWaterMark(ll_task_h);
+}
+
+UBaseType_t
+nimble_port_freertos_get_hs_hwm(void)
+{
+    return uxTaskGetStackHighWaterMark(host_task_h);
 }
