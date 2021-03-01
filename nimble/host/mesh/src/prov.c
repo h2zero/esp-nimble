@@ -7,6 +7,8 @@
  */
 
 #include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#if MYNEWT_VAL(BLE_MESH)
+
 #define MESH_LOG_MODULE BLE_MESH_PROV_LOG
 
 #if MYNEWT_VAL(BLE_MESH_PROV)
@@ -2006,3 +2008,4 @@ void bt_mesh_prov_reset(void)
 }
 
 #endif /* MYNEWT_VAL(BLE_MESH_PROV) */
+#endif

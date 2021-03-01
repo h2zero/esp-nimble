@@ -22,7 +22,7 @@
 #include "../include/mem/mem.h"
 
 #ifdef ESP_PLATFORM
-#include "nimble/esp/port/include/esp_nimble_mem.h"
+#include "port/include/esp_nimble_mem.h"
 #endif
 
 #if MYNEWT_VAL(MSYS_1_BLOCK_COUNT) > 0

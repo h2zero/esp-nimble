@@ -7,6 +7,8 @@
  */
 
 #include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#if MYNEWT_VAL(BLE_MESH)
+
 #define MESH_LOG_MODULE BLE_MESH_CRYPTO_LOG
 
 #include <string.h>
@@ -964,3 +966,4 @@ int bt_mesh_beacon_auth(const u8_t beacon_key[16], u8_t flags,
 
 	return err;
 }
+#endif
