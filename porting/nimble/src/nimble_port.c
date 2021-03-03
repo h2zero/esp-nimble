@@ -22,6 +22,7 @@
 #include "../include/sysinit/sysinit.h"
 #include "nimble/nimble/host/include/host/ble_hs.h"
 #include "../include/nimble/nimble_port.h"
+#include "freertos/FreeRTOS.h"
 #if NIMBLE_CFG_CONTROLLER
 #include "nimble/nimble/controller/include/controller/ble_ll.h"
 #endif
@@ -44,20 +45,26 @@ nimble_port_init(void)
     void ble_hci_ram_init(void);
 #endif
     /* Initialize default event queue */
+    console_printf("1 Free Heap: %u\n", xPortGetFreeHeapSize()); 
     ble_npl_eventq_init(&g_eventq_dflt);
-
+    console_printf("2 Free Heap: %u\n", xPortGetFreeHeapSize()); 
     os_msys_init();
-
+    console_printf("3 Free Heap: %u\n", xPortGetFreeHeapSize()); 
     ble_hs_init();
-
+    console_printf("4 Free Heap: %u\n", xPortGetFreeHeapSize()); 
     /* XXX Need to have template for store */
     ble_store_ram_init();
+    console_printf("5 Free Heap: %u\n", xPortGetFreeHeapSize()); 
 
 #if NIMBLE_CFG_CONTROLLER
     hal_timer_init(5, NULL);
+    console_printf("6 Free Heap: %u\n", xPortGetFreeHeapSize()); 
     os_cputime_init(32768);
+    console_printf("7 Free Heap: %u\n", xPortGetFreeHeapSize()); 
     ble_ll_init();
+    console_printf("8 Free Heap: %u\n", xPortGetFreeHeapSize()); 
     ble_hci_ram_init();
+    console_printf("9 Free Heap: %u\n", xPortGetFreeHeapSize()); 
 #endif
 }
 
