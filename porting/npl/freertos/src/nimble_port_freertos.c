@@ -29,7 +29,7 @@ static StaticTask_t ll_xTaskBuffer;
 static TaskHandle_t ll_task_h;
 #endif
 
-#define HS_TASK_STACK_SIZE 420
+#define HS_TASK_STACK_SIZE 410
 static StackType_t hs_xStack[ HS_TASK_STACK_SIZE ] __attribute__((aligned(8)));
 static StaticTask_t hs_xTaskBuffer;
 static TaskHandle_t host_task_h;
@@ -75,7 +75,7 @@ nimble_port_freertos_deinit(void)
     }
 }
 
-#ifndef ESP_PLATFORM
+#if NIMBLE_CFG_CONTROLLER
 UBaseType_t
 nimble_port_freertos_get_ll_hwm(void)
 {

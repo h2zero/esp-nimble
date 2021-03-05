@@ -727,19 +727,19 @@ ble_hs_init(void)
 
     /* Ensure this function only gets called by sysinit. */
     SYSINIT_ASSERT_ACTIVE();
-    console_printf("11 Free Heap: %u\n", xPortGetFreeHeapSize());
+
     /* Create memory pool of OS events */
     rc = os_mempool_init(&ble_hs_hci_ev_pool, BLE_HS_HCI_EVT_COUNT,
                          sizeof (struct ble_npl_event), ble_hs_hci_os_event_buf,
                          "ble_hs_hci_ev_pool");
     SYSINIT_PANIC_ASSERT(rc == 0);
-    console_printf("12 Free Heap: %u\n", xPortGetFreeHeapSize());
+
     /* These get initialized here to allow unit tests to run without a zeroed
      * bss.
      */
     ble_hs_reset_reason = 0;
     ble_hs_enabled_state = BLE_HS_ENABLED_STATE_OFF;
-    console_printf("13 Free Heap: %u\n", xPortGetFreeHeapSize());
+
     ble_npl_event_init(&ble_hs_ev_tx_notifications, ble_hs_event_tx_notify,
                        NULL);
     ble_npl_event_init(&ble_hs_ev_reset, ble_hs_event_reset, NULL);
@@ -747,47 +747,47 @@ ble_hs_init(void)
                        NULL);
     ble_npl_event_init(&ble_hs_ev_start_stage2, ble_hs_event_start_stage2,
                        NULL);
-    console_printf("14 Free Heap: %u\n", xPortGetFreeHeapSize());
+
     ble_hs_hci_init();
-    console_printf("15 Free Heap: %u\n", xPortGetFreeHeapSize());
+
     rc = ble_hs_conn_init();
     SYSINIT_PANIC_ASSERT(rc == 0);
-    console_printf("16 Free Heap: %u\n", xPortGetFreeHeapSize());
+
 #if MYNEWT_VAL(BLE_PERIODIC_ADV)
     rc = ble_hs_periodic_sync_init();
     SYSINIT_PANIC_ASSERT(rc == 0);
 #endif
-    console_printf("17 Free Heap: %u\n", xPortGetFreeHeapSize());
+
     rc = ble_l2cap_init();
     SYSINIT_PANIC_ASSERT(rc == 0);
-    console_printf("18 Free Heap: %u\n", xPortGetFreeHeapSize());
+
     rc = ble_att_init();
     SYSINIT_PANIC_ASSERT(rc == 0);
-    console_printf("19 Free Heap: %u\n", xPortGetFreeHeapSize());
+
     rc = ble_att_svr_init();
     SYSINIT_PANIC_ASSERT(rc == 0);
-    console_printf("20 Free Heap: %u\n", xPortGetFreeHeapSize());
+
     rc = ble_gap_init();
     SYSINIT_PANIC_ASSERT(rc == 0);
-    console_printf("21 Free Heap: %u\n", xPortGetFreeHeapSize());
+
     rc = ble_gattc_init();
     SYSINIT_PANIC_ASSERT(rc == 0);
-    console_printf("22 Free Heap: %u\n", xPortGetFreeHeapSize());
+
     rc = ble_gatts_init();
     SYSINIT_PANIC_ASSERT(rc == 0);
-    console_printf("23 Free Heap: %u\n", xPortGetFreeHeapSize());
+
     ble_hs_stop_init();
-    console_printf("24 Free Heap: %u\n", xPortGetFreeHeapSize());
+
     ble_mqueue_init(&ble_hs_rx_q, ble_hs_event_rx_data, NULL);
-    console_printf("25 Free Heap: %u\n", xPortGetFreeHeapSize());
+
     rc = stats_init_and_reg(
         STATS_HDR(ble_hs_stats), STATS_SIZE_INIT_PARMS(ble_hs_stats,
         STATS_SIZE_32), STATS_NAME_INIT_PARMS(ble_hs_stats), "ble_hs");
     SYSINIT_PANIC_ASSERT(rc == 0);
-    console_printf("26 Free Heap: %u\n", xPortGetFreeHeapSize());
+
     rc = ble_npl_mutex_init(&ble_hs_mutex);
     SYSINIT_PANIC_ASSERT(rc == 0);
-    console_printf("27 Free Heap: %u\n", xPortGetFreeHeapSize());
+
 #if MYNEWT_VAL(BLE_HS_DEBUG)
     ble_hs_dbg_mutex_locked = 0;
 #endif
@@ -797,10 +797,10 @@ ble_hs_init(void)
 #else
     ble_hs_evq_set(nimble_port_get_dflt_eventq());
 #endif
-    console_printf("28 Free Heap: %u\n", xPortGetFreeHeapSize());
+
     /* Configure the HCI transport to communicate with a host. */
     ble_hci_trans_cfg_hs(ble_hs_hci_rx_evt, NULL, ble_hs_rx_data, NULL);
-    console_printf("29 Free Heap: %u\n", xPortGetFreeHeapSize());
+
 #if BLE_MONITOR
     rc = ble_monitor_init();
     SYSINIT_PANIC_ASSERT(rc == 0);
@@ -818,7 +818,7 @@ ble_hs_init(void)
     ble_npl_eventq_put(nimble_port_get_dflt_eventq(), &ble_hs_ev_start_stage1);
 #endif
 #endif
-    console_printf("30 Free Heap: %u\n", xPortGetFreeHeapSize());
+
 #if BLE_MONITOR
     ble_monitor_new_index(0, (uint8_t[6]){ }, "nimble0");
 #endif

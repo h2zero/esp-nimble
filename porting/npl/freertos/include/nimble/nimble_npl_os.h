@@ -39,6 +39,9 @@ extern "C" {
 
 #ifndef ESP_PLATFORM
 #define NIMBLE_CFG_CONTROLLER 1
+#define NIMBLE_EVT_QUEUE_SIZE 4
+#else
+#define NIMBLE_EVT_QUEUE_SIZE 32
 #endif
 
 /* This should be compatible with TickType_t */
@@ -92,7 +95,7 @@ ble_npl_get_current_task_id(void)
 static inline void
 ble_npl_eventq_init(struct ble_npl_eventq *evq)
 {
-    evq->q = xQueueCreate(32, sizeof(struct ble_npl_eventq *));
+    evq->q = xQueueCreate(NIMBLE_EVT_QUEUE_SIZE, sizeof(struct ble_npl_eventq *));
 }
 
 static inline void

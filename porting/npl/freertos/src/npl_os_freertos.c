@@ -389,13 +389,12 @@ os_callout_timer_cb(TimerHandle_t timer)
 
 void
 npl_freertos_callout_init(struct ble_npl_callout *co, struct ble_npl_eventq *evq,
-                     ble_npl_event_fn *ev_cb, void *ev_arg)
+                          ble_npl_event_fn *ev_cb, void *ev_arg)
 {
-    memset(co, 0, sizeof(*co));
-    co->handle = xTimerCreate("co", 1, pdFALSE, co, os_callout_timer_cb);
     co->evq = evq;
     ble_npl_event_init(&co->ev, ev_cb, ev_arg);
 }
+
 void
 npl_freertos_callout_deinit(struct ble_npl_callout *co)
 {
@@ -408,6 +407,11 @@ ble_npl_error_t
 npl_freertos_callout_reset(struct ble_npl_callout *co, ble_npl_time_t ticks)
 {
     BaseType_t woken1, woken2, woken3;
+
+    if (co->handle == NULL) {
+        co->handle = xTimerCreate("co", 1, pdFALSE, co, os_callout_timer_cb);
+        assert(co->handle);
+    }
 
     if (ticks == 0) {
         ticks = 1;
