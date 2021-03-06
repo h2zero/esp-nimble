@@ -719,7 +719,7 @@ ble_hs_tx_data(struct os_mbuf *om)
 
     return ble_hci_trans_hs_acl_tx(om);
 }
-#include "freertos/FreeRTOS.h"
+
 void
 ble_hs_init(void)
 {
@@ -776,7 +776,12 @@ ble_hs_init(void)
     rc = ble_gatts_init();
     SYSINIT_PANIC_ASSERT(rc == 0);
 
+    /* Removed for NRF5 platform since stopping the host is unlikely in NRF5 applications
+     * saves 48 bytes of RAM from freertos not creating the timer.
+     */
+#ifdef ESP_PLATFORM
     ble_hs_stop_init();
+#endif
 
     ble_mqueue_init(&ble_hs_rx_q, ble_hs_event_rx_data, NULL);
 
