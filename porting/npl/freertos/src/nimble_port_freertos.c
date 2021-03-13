@@ -44,8 +44,6 @@ nimble_port_freertos_init(TaskFunction_t host_task_fn)
      * provided by NimBLE and in case of FreeRTOS it does not need to be wrapped
      * since it has compatible prototype.
      */
-  /*  xTaskCreate(nimble_port_ll_task_func, "ll", configMINIMAL_STACK_SIZE + 400,
-                NULL, configMAX_PRIORITIES, &ll_task_h);*/
     ll_task_h = xTaskCreateStatic(nimble_port_ll_task_func, "ll", LL_TASK_STACK_SIZE,
                                   NULL, configMAX_PRIORITIES, ll_xStack, &ll_xTaskBuffer);
 #endif
@@ -57,13 +55,10 @@ nimble_port_freertos_init(TaskFunction_t host_task_fn)
      */
 #ifdef ESP_PLATFORM
     xTaskCreatePinnedToCore(host_task_fn, "ble", NIMBLE_STACK_SIZE,
-                NULL, (configMAX_PRIORITIES - 4), &host_task_h, NIMBLE_CORE);
+                            NULL, (configMAX_PRIORITIES - 4), &host_task_h, NIMBLE_CORE);
 #else
-    /*xTaskCreate(host_task_fn, "ble", HS_TASK_STACK_SIZE,
-                NULL, (configMAX_PRIORITIES - 1), &host_task_h);*/
     host_task_h = xTaskCreateStatic(host_task_fn, "ble", HS_TASK_STACK_SIZE,
-                                    NULL, (configMAX_PRIORITIES - 1), hs_xStack,
-                                    &hs_xTaskBuffer);
+                                    NULL, (configMAX_PRIORITIES - 1), hs_xStack, &hs_xTaskBuffer);
 #endif
 }
 
