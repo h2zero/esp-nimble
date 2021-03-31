@@ -23,15 +23,21 @@
 #include "../../../nimble/include/nimble/nimble_port.h"
 
 #if NIMBLE_CFG_CONTROLLER
-#define LL_TASK_STACK_SIZE 90
-static StackType_t ll_xStack[ LL_TASK_STACK_SIZE ] __attribute__((aligned(8)));
+#if MYNEWT_VAL(BLE_LL_CFG_FEAT_LL_EXT_ADV)
+#define NIMBLE_LL_TASK_STACK_SIZE   (120)
+#else
+#define NIMBLE_LL_TASK_STACK_SIZE   (90)
+#endif
+static StackType_t ll_xStack[ NIMBLE_LL_TASK_STACK_SIZE ];
 static StaticTask_t ll_xTaskBuffer;
 static TaskHandle_t ll_task_h;
 #endif
 
-#define HS_TASK_STACK_SIZE 410
-static StackType_t hs_xStack[ HS_TASK_STACK_SIZE ] __attribute__((aligned(8)));
+#ifndef ESP_PLATFORM
+static StackType_t hs_xStack[ NIMBLE_HS_TASK_STACK_SIZE ];
 static StaticTask_t hs_xTaskBuffer;
+#endif
+
 static TaskHandle_t host_task_h;
 
 void
@@ -44,7 +50,7 @@ nimble_port_freertos_init(TaskFunction_t host_task_fn)
      * provided by NimBLE and in case of FreeRTOS it does not need to be wrapped
      * since it has compatible prototype.
      */
-    ll_task_h = xTaskCreateStatic(nimble_port_ll_task_func, "ll", LL_TASK_STACK_SIZE,
+    ll_task_h = xTaskCreateStatic(nimble_port_ll_task_func, "ll", NIMBLE_LL_TASK_STACK_SIZE,
                                   NULL, configMAX_PRIORITIES, ll_xStack, &ll_xTaskBuffer);
 #endif
 
@@ -57,7 +63,7 @@ nimble_port_freertos_init(TaskFunction_t host_task_fn)
     xTaskCreatePinnedToCore(host_task_fn, "ble", NIMBLE_STACK_SIZE,
                             NULL, (configMAX_PRIORITIES - 4), &host_task_h, NIMBLE_CORE);
 #else
-    host_task_h = xTaskCreateStatic(host_task_fn, "ble", HS_TASK_STACK_SIZE,
+    host_task_h = xTaskCreateStatic(host_task_fn, "ble", NIMBLE_HS_TASK_STACK_SIZE,
                                     NULL, (configMAX_PRIORITIES - 1), hs_xStack, &hs_xTaskBuffer);
 #endif
 }
