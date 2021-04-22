@@ -45,7 +45,7 @@ modlog_dummy(const char *msg, ...)
 #include "esp_log.h"
 
 #define MODLOG_ESP_LOCAL(level, ml_msg_, ...) do { \
-    if (MYNEWT_VAL(BLE_HS_LOG_LVL) <= level) esp_log_write(level, "NimBLE", ml_msg_, ##__VA_ARGS__); \
+    if (MYNEWT_VAL(BLE_HS_LOG_LVL) <= level) esp_log_write((esp_log_level_t)level, "NimBLE", ml_msg_, ##__VA_ARGS__); \
 } while(0)
 
 #ifdef ARDUINO_ARCH_ESP32
