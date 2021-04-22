@@ -1,17 +1,81 @@
 #ifndef __NRF51_CONFIG__
 #define __NRF51_CONFIG__
 
+#ifndef NRF51
+#error NRF51 not defined
+#else
+
 #if defined __has_include
 #  if __has_include ("custom_config.h")
 #    include "custom_config.h"
 #  endif
 #endif
 
-#include "nimconfig.h"
+#ifndef DEVICE_RAM_SIZE
+#error undefined ram size
+#endif
 
-#ifndef NRF51
-#error NRF51 not defined
+#ifndef CONFIG_BT_NIMBLE_MAX_CONNECTIONS
+#  define CONFIG_BT_NIMBLE_MAX_CONNECTIONS 1
+#endif
+
+#if (DEVICE_RAM_SIZE) > 16
+#  ifndef CONFIG_BT_NIMBLE_MSYS1_BLOCK_COUNT
+#    define CONFIG_BT_NIMBLE_MSYS1_BLOCK_COUNT (12)
+#  endif
 #else
+#  ifndef CONFIG_BT_NIMBLE_MSYS1_BLOCK_COUNT
+#    define CONFIG_BT_NIMBLE_MSYS1_BLOCK_COUNT (5)
+#  endif
+#endif
+
+#ifndef CONFIG_BT_NIMBLE_MAX_BONDS
+#  define CONFIG_BT_NIMBLE_MAX_BONDS 1
+#endif
+
+#if CONFIG_BT_NIMBLE_MAX_BONDS
+#  ifndef CONFIG_BT_NIMBLE_MAX_CCCDS
+#    define CONFIG_BT_NIMBLE_MAX_CCCDS 3
+#  endif
+#  ifndef CONFIG_BT_NIMBLE_ENABLE_PRIVACY
+#    define CONFIG_BT_NIMBLE_ENABLE_PRIVACY (1)
+#  endif
+#else
+#  define CONFIG_BT_NIMBLE_MAX_CCCDS 0
+#  ifndef CONFIG_BT_NIMBLE_ENABLE_PRIVACY
+#    define CONFIG_BT_NIMBLE_ENABLE_PRIVACY (0)
+#  endif
+#endif
+
+
+#ifndef CONFIG_BT_NIMBLE_ATT_PREFERRED_MTU
+#define CONFIG_BT_NIMBLE_ATT_PREFERRED_MTU (23)
+#endif
+
+#ifndef CONFIG_BT_NIMBLE_SVC_GAP_DEVICE_NAME
+#define CONFIG_BT_NIMBLE_SVC_GAP_DEVICE_NAME "nimble"
+#endif
+
+#ifndef CONFIG_BT_NIMBLE_LOG_LEVEL
+#define CONFIG_BT_NIMBLE_LOG_LEVEL 5
+#endif
+
+#ifndef CONFIG_BT_NIMBLE_ROLE_CENTRAL_DISABLED
+#define CONFIG_BT_NIMBLE_ROLE_CENTRAL
+#endif
+
+#ifndef CONFIG_BT_NIMBLE_ROLE_OBSERVER_DISABLED
+#define CONFIG_BT_NIMBLE_ROLE_OBSERVER
+#endif
+
+#ifndef CONFIG_BT_NIMBLE_ROLE_PERIPHERAL_DISABLED
+#define CONFIG_BT_NIMBLE_ROLE_PERIPHERAL
+#endif
+
+#ifndef CONFIG_BT_NIMBLE_ROLE_BROADCASTER_DISABLED
+#define CONFIG_BT_NIMBLE_ROLE_BROADCASTER
+#endif
+
 
 /**
  * This macro exists to ensure code includes this header when needed.  If code
@@ -38,7 +102,7 @@
 /*** @apache-mynewt-core/kernel/os */
 
 #ifndef MYNEWT_VAL_MSYS_1_BLOCK_COUNT
-#define MYNEWT_VAL_MSYS_1_BLOCK_COUNT (5)
+#define MYNEWT_VAL_MSYS_1_BLOCK_COUNT CONFIG_BT_NIMBLE_MSYS1_BLOCK_COUNT
 #endif
 
 #ifndef MYNEWT_VAL_MSYS_1_BLOCK_SIZE
@@ -83,10 +147,6 @@
 #endif
 
 /*** @apache-mynewt-core/sys/log/stub */
-#ifndef MYNEWT_VAL_LOG_LEVEL
-#define MYNEWT_VAL_LOG_LEVEL (0)
-#endif
-
 #ifndef MYNEWT_VAL_BLE_CONTROLLER
 #define MYNEWT_VAL_BLE_CONTROLLER (1)
 #endif
@@ -162,7 +222,7 @@
 
 /* Overridden by @apache-mynewt-nimble/nimble/controller (defined by @apache-mynewt-nimble/nimble/controller) */
 #ifndef MYNEWT_VAL_BLE_HW_WHITELIST_ENABLE
-#define MYNEWT_VAL_BLE_HW_WHITELIST_ENABLE (0)
+#define MYNEWT_VAL_BLE_HW_WHITELIST_ENABLE (1)
 #endif
 
 #ifndef MYNEWT_VAL_BLE_LL_ADD_STRICT_SCHED_PERIODS
@@ -207,7 +267,7 @@
 #endif
 
 #ifndef MYNEWT_VAL_BLE_LL_CFG_FEAT_LL_PRIVACY
-#define MYNEWT_VAL_BLE_LL_CFG_FEAT_LL_PRIVACY (0)
+#define MYNEWT_VAL_BLE_LL_CFG_FEAT_LL_PRIVACY CONFIG_BT_NIMBLE_ENABLE_PRIVACY
 #endif
 
 #ifndef MYNEWT_VAL_BLE_LL_CFG_FEAT_SLAVE_INIT_FEAT_XCHG
@@ -264,7 +324,11 @@
 #endif
 
 #ifndef MYNEWT_VAL_BLE_LL_RESOLV_LIST_SIZE
+#if CONFIG_BT_NIMBLE_MAX_BONDS
 #define MYNEWT_VAL_BLE_LL_RESOLV_LIST_SIZE (4)
+#else
+#define MYNEWT_VAL_BLE_LL_RESOLV_LIST_SIZE (0)
+#endif
 #endif
 
 #ifndef MYNEWT_VAL_BLE_LL_RNG_BUFSIZE
@@ -341,7 +405,7 @@
 
 /*** @apache-mynewt-nimble/nimble/host */
 #ifndef MYNEWT_VAL_BLE_ATT_PREFERRED_MTU
-#define MYNEWT_VAL_BLE_ATT_PREFERRED_MTU (23)
+#define MYNEWT_VAL_BLE_ATT_PREFERRED_MTU CONFIG_BT_NIMBLE_ATT_PREFERRED_MTU
 #endif
 
 #ifndef MYNEWT_VAL_BLE_ATT_SVR_FIND_INFO
@@ -621,7 +685,7 @@
 #endif
 
 #ifndef MYNEWT_VAL_BLE_SM_BONDING
-#define MYNEWT_VAL_BLE_SM_BONDING (0)
+#define MYNEWT_VAL_BLE_SM_BONDING (1)
 #endif
 
 #ifndef MYNEWT_VAL_BLE_SM_IO_CAP
@@ -653,7 +717,7 @@
 #endif
 
 #ifndef MYNEWT_VAL_BLE_SM_SC
-#define MYNEWT_VAL_BLE_SM_SC (1)
+#define MYNEWT_VAL_BLE_SM_SC (0)
 #endif
 
 #ifndef MYNEWT_VAL_BLE_SM_SC_DEBUG_KEYS
@@ -665,11 +729,19 @@
 #endif
 
 #ifndef MYNEWT_VAL_BLE_STORE_MAX_BONDS
-#define MYNEWT_VAL_BLE_STORE_MAX_BONDS (1)
+#define MYNEWT_VAL_BLE_STORE_MAX_BONDS CONFIG_BT_NIMBLE_MAX_BONDS
 #endif
 
 #ifndef MYNEWT_VAL_BLE_STORE_MAX_CCCDS
-#define MYNEWT_VAL_BLE_STORE_MAX_CCCDS (3)
+#define MYNEWT_VAL_BLE_STORE_MAX_CCCDS CONFIG_BT_NIMBLE_MAX_CCCDS
+#endif
+
+#ifndef MYNEWT_VAL_BLE_STORE_CONFIG_PERSIST
+#if CONFIG_BT_NIMBLE_MAX_BONDS
+#define MYNEWT_VAL_BLE_STORE_CONFIG_PERSIST (1)
+#else
+#define MYNEWT_VAL_BLE_STORE_CONFIG_PERSIST (0)
+#endif
 #endif
 
 /*** @apache-mynewt-nimble/nimble/host/services/ans */
@@ -1111,7 +1183,7 @@
 #endif
 
 #ifndef MYNEWT_VAL_BLE_SVC_GAP_DEVICE_NAME
-#define MYNEWT_VAL_BLE_SVC_GAP_DEVICE_NAME ("nimble")
+#define MYNEWT_VAL_BLE_SVC_GAP_DEVICE_NAME CONFIG_BT_NIMBLE_SVC_GAP_DEVICE_NAME
 #endif
 
 #ifndef MYNEWT_VAL_BLE_SVC_GAP_DEVICE_NAME_MAX_LENGTH
