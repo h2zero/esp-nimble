@@ -7,10 +7,11 @@
 
 #ifdef ESP_PLATFORM
 #include "nimble/esp_port/port/include/esp_nimble_cfg.h"
-#elif NRF51
-#include "nrf51_config.h"
 #else
+#include "ext_nimble_config.h"
+#endif
 
+#if 0
 /**
  * This macro exists to ensure code includes this header when needed.  If code
  * checks the existence of a setting directly via ifdef without including this
@@ -1171,7 +1172,7 @@
 #define MYNEWT_VAL_BLE_PUBLIC_DEV_ADDR ((uint8_t[6]){0x00, 0x00, 0x00, 0x00, 0x00, 0x00})
 #endif
 
-#if defined(ARDUINO_ARCH_NRF5) && defined(NRF52)
+#if defined(ARDUINO_ARCH_NRF5) && defined(NRF52_SERIES)
 #ifndef MYNEWT_VAL_BLE_PHY_DBG_TIME_ADDRESS_END_PIN
 #define MYNEWT_VAL_BLE_PHY_DBG_TIME_ADDRESS_END_PIN (-1)
 #endif
