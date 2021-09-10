@@ -20,10 +20,11 @@
 #include <assert.h>
 #include <stddef.h>
 #include <string.h>
+#include <stdlib.h>
+#include "nimble/console/console.h"
 
 #include "nimble/nimble/include/nimble/nimble_npl.h"
 
-#ifdef ESP_PLATFORM
 #include "../../../nimble/include/syscfg/syscfg.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/queue.h"
@@ -35,6 +36,7 @@
 
 #include "nimble/porting/nimble/include/os/os_mempool.h"
 
+#ifdef ESP_PLATFORM
 #include "esp_log.h"
 
 #include "soc/soc_caps.h"
@@ -173,7 +175,7 @@ IRAM_ATTR npl_freertos_event_init(struct ble_npl_event *ev, ble_npl_event_fn *fn
     }
 #endif
     event = (struct ble_npl_event_freertos *)ev->event;
-    BLE_LL_ASSERT(event);
+    PLATFORM_BLE_LL_ASSERT(event);
 
     memset(event, 0, sizeof(*event));
     event->fn = fn;
@@ -183,7 +185,7 @@ IRAM_ATTR npl_freertos_event_init(struct ble_npl_event *ev, ble_npl_event_fn *fn
 void
 IRAM_ATTR npl_freertos_event_deinit(struct ble_npl_event *ev)
 {
-    BLE_LL_ASSERT(ev->event);
+    PLATFORM_BLE_LL_ASSERT(ev->event);
 #if OS_MEM_ALLOC
     os_memblock_put(&ble_freertos_ev_pool,ev->event);
 #else
@@ -196,7 +198,7 @@ void
 IRAM_ATTR npl_freertos_event_reset(struct ble_npl_event *ev)
 {
     struct ble_npl_event_freertos *event = (struct ble_npl_event_freertos *)ev->event;
-    BLE_LL_ASSERT(event);
+    PLATFORM_BLE_LL_ASSERT(event);
     event->queued = 0;
 }
 
@@ -208,21 +210,21 @@ IRAM_ATTR npl_freertos_eventq_init(struct ble_npl_eventq *evq)
     if (!os_memblock_from(&ble_freertos_evq_pool,evq->eventq)) {
         evq->eventq = os_memblock_get(&ble_freertos_evq_pool);
         eventq = (struct ble_npl_eventq_freertos*)evq->eventq;
-        BLE_LL_ASSERT(eventq);
+        PLATFORM_BLE_LL_ASSERT(eventq);
 
         memset(eventq, 0, sizeof(*eventq));
         eventq->q = xQueueCreate(BLE_TOTAL_EV_COUNT, sizeof(struct ble_npl_eventq *));
-        BLE_LL_ASSERT(eventq->q);
+        PLATFORM_BLE_LL_ASSERT(eventq->q);
     }
 #else
     if(!evq->eventq) {
         evq->eventq = malloc(sizeof(struct ble_npl_eventq_freertos));
         eventq = (struct ble_npl_eventq_freertos*)evq->eventq;
-        BLE_LL_ASSERT(eventq);
+        PLATFORM_BLE_LL_ASSERT(eventq);
 
         memset(eventq, 0, sizeof(*eventq));
         eventq->q = xQueueCreate(BLE_TOTAL_EV_COUNT, sizeof(struct ble_npl_eventq *));
-        BLE_LL_ASSERT(eventq->q);
+        PLATFORM_BLE_LL_ASSERT(eventq->q);
     }
 #endif
 }
@@ -232,7 +234,7 @@ IRAM_ATTR npl_freertos_eventq_deinit(struct ble_npl_eventq *evq)
 {
     struct ble_npl_eventq_freertos *eventq = (struct ble_npl_eventq_freertos *)evq->eventq;
 
-    BLE_LL_ASSERT(eventq);
+    PLATFORM_BLE_LL_ASSERT(eventq);
     vQueueDelete(eventq->q);
 #if OS_MEM_ALLOC
     os_memblock_put(&ble_freertos_evq_pool,eventq);
@@ -247,8 +249,8 @@ IRAM_ATTR npl_freertos_callout_mem_reset(struct ble_npl_callout *co)
 {
     struct ble_npl_callout_freertos *callout = (struct ble_npl_callout_freertos *)co->co;
 
-    BLE_LL_ASSERT(callout);
-    BLE_LL_ASSERT(callout->handle);
+    PLATFORM_BLE_LL_ASSERT(callout);
+    PLATFORM_BLE_LL_ASSERT(callout->handle);
 
     ble_npl_event_reset(&callout->ev);
 }
@@ -314,7 +316,7 @@ IRAM_ATTR npl_freertos_eventq_get(struct ble_npl_eventq *evq, ble_npl_time_t tmo
     BaseType_t ret;
 
     if (in_isr()) {
-        BLE_LL_ASSERT(tmo == 0);
+        PLATFORM_BLE_LL_ASSERT(tmo == 0);
         ret = xQueueReceiveFromISR(eventq->q, &ev, &woken);
 #ifdef ESP_PLATFORM
 
@@ -327,7 +329,7 @@ IRAM_ATTR npl_freertos_eventq_get(struct ble_npl_eventq *evq, ble_npl_time_t tmo
     } else {
         ret = xQueueReceive(eventq->q, &ev, tmo);
     }
-    BLE_LL_ASSERT(ret == pdPASS || ret == errQUEUE_EMPTY);
+    PLATFORM_BLE_LL_ASSERT(ret == pdPASS || ret == errQUEUE_EMPTY);
 
     if (ev) {
 	struct ble_npl_event_freertos *event = (struct ble_npl_event_freertos *)ev->event;
@@ -366,7 +368,7 @@ IRAM_ATTR npl_freertos_eventq_put(struct ble_npl_eventq *evq, struct ble_npl_eve
         ret = xQueueSendToBack(eventq->q, &ev, portMAX_DELAY);
     }
 
-    BLE_LL_ASSERT(ret == pdPASS);
+    PLATFORM_BLE_LL_ASSERT(ret == pdPASS);
 }
 
 void
@@ -398,7 +400,7 @@ IRAM_ATTR npl_freertos_eventq_remove(struct ble_npl_eventq *evq,
         count = uxQueueMessagesWaitingFromISR(eventq->q);
         for (i = 0; i < count; i++) {
             ret = xQueueReceiveFromISR(eventq->q, &tmp_ev, &woken2);
-            BLE_LL_ASSERT(ret == pdPASS);
+            PLATFORM_BLE_LL_ASSERT(ret == pdPASS);
             woken |= woken2;
 
             if (tmp_ev == ev) {
@@ -406,7 +408,7 @@ IRAM_ATTR npl_freertos_eventq_remove(struct ble_npl_eventq *evq,
             }
 
             ret = xQueueSendToBackFromISR(eventq->q, &tmp_ev, &woken2);
-            BLE_LL_ASSERT(ret == pdPASS);
+            PLATFORM_BLE_LL_ASSERT(ret == pdPASS);
             woken |= woken2;
         }
 
@@ -425,18 +427,18 @@ IRAM_ATTR npl_freertos_eventq_remove(struct ble_npl_eventq *evq,
         count = uxQueueMessagesWaiting(eventq->q);
 #else
         vPortEnterCritical();
-        count = uxQueueMessagesWaiting(evq->q);
+        count = uxQueueMessagesWaiting(eventq->q);
 #endif
         for (i = 0; i < count; i++) {
             ret = xQueueReceive(eventq->q, &tmp_ev, 0);
-            BLE_LL_ASSERT(ret == pdPASS);
+            PLATFORM_BLE_LL_ASSERT(ret == pdPASS);
 
             if (tmp_ev == ev) {
                 continue;
             }
 
             ret = xQueueSendToBack(eventq->q, &tmp_ev, 0);
-            BLE_LL_ASSERT(ret == pdPASS);
+            PLATFORM_BLE_LL_ASSERT(ret == pdPASS);
         }
 #ifdef ESP_PLATFORM
         portEXIT_CRITICAL(&ble_npl_mut);
@@ -463,7 +465,7 @@ IRAM_ATTR npl_freertos_mutex_init(struct ble_npl_mutex *mu)
 
         memset(mutex, 0, sizeof(*mutex));
         mutex->handle = xSemaphoreCreateRecursiveMutex();
-        BLE_LL_ASSERT(mutex->handle);
+        PLATFORM_BLE_LL_ASSERT(mutex->handle);
     }
 #else
     if(!mu->mutex) {
@@ -476,7 +478,7 @@ IRAM_ATTR npl_freertos_mutex_init(struct ble_npl_mutex *mu)
 
         memset(mutex, 0, sizeof(*mutex));
         mutex->handle = xSemaphoreCreateRecursiveMutex();
-        BLE_LL_ASSERT(mutex->handle);
+        PLATFORM_BLE_LL_ASSERT(mutex->handle);
     }
 #endif
 
@@ -492,7 +494,7 @@ IRAM_ATTR npl_freertos_mutex_deinit(struct ble_npl_mutex *mu)
         return BLE_NPL_INVALID_PARAM;
     }
 
-    BLE_LL_ASSERT(mutex->handle);
+    PLATFORM_BLE_LL_ASSERT(mutex->handle);
     vSemaphoreDelete(mutex->handle);
 
 #if OS_MEM_ALLOC
@@ -551,11 +553,11 @@ IRAM_ATTR npl_freertos_mutex_pend(struct ble_npl_mutex *mu, ble_npl_time_t timeo
         return BLE_NPL_INVALID_PARAM;
     }
 
-    BLE_LL_ASSERT(mutex->handle);
+    PLATFORM_BLE_LL_ASSERT(mutex->handle);
 
     if (in_isr()) {
         ret = pdFAIL;
-        BLE_LL_ASSERT(0);
+        PLATFORM_BLE_LL_ASSERT(0);
     } else {
         ret = xSemaphoreTakeRecursive(mutex->handle, timeout);
     }
@@ -572,10 +574,10 @@ IRAM_ATTR npl_freertos_mutex_release(struct ble_npl_mutex *mu)
         return BLE_NPL_INVALID_PARAM;
     }
 
-    BLE_LL_ASSERT(mutex->handle);
+    PLATFORM_BLE_LL_ASSERT(mutex->handle);
 
     if (in_isr()) {
-        BLE_LL_ASSERT(0);
+        PLATFORM_BLE_LL_ASSERT(0);
     } else {
         if (xSemaphoreGiveRecursive(mutex->handle) != pdPASS) {
             return BLE_NPL_BAD_MUTEX;
@@ -600,7 +602,7 @@ IRAM_ATTR npl_freertos_sem_init(struct ble_npl_sem *sem, uint16_t tokens)
 
         memset(semaphor, 0, sizeof(*semaphor));
         semaphor->handle = xSemaphoreCreateCounting(128, tokens);
-        BLE_LL_ASSERT(semaphor->handle);
+        PLATFORM_BLE_LL_ASSERT(semaphor->handle);
     }
 #else
     if(!sem->sem) {
@@ -613,7 +615,7 @@ IRAM_ATTR npl_freertos_sem_init(struct ble_npl_sem *sem, uint16_t tokens)
 
         memset(semaphor, 0, sizeof(*semaphor));
         semaphor->handle = xSemaphoreCreateCounting(128, tokens);
-        BLE_LL_ASSERT(semaphor->handle);
+        PLATFORM_BLE_LL_ASSERT(semaphor->handle);
     }
 #endif
 
@@ -629,7 +631,7 @@ IRAM_ATTR npl_freertos_sem_deinit(struct ble_npl_sem *sem)
         return BLE_NPL_INVALID_PARAM;
     }
 
-    BLE_LL_ASSERT(semaphor->handle);
+    PLATFORM_BLE_LL_ASSERT(semaphor->handle);
     vSemaphoreDelete(semaphor->handle);
 
 #if OS_MEM_ALLOC
@@ -653,10 +655,10 @@ IRAM_ATTR npl_freertos_sem_pend(struct ble_npl_sem *sem, ble_npl_time_t timeout)
         return BLE_NPL_INVALID_PARAM;
     }
 
-    BLE_LL_ASSERT(semaphor->handle);
+    PLATFORM_BLE_LL_ASSERT(semaphor->handle);
 
     if (in_isr()) {
-        BLE_LL_ASSERT(timeout == 0);
+        PLATFORM_BLE_LL_ASSERT(timeout == 0);
         ret = xSemaphoreTakeFromISR(semaphor->handle, &woken);
 #ifdef ESP_PLATFORM
         if( woken == pdTRUE ) {
@@ -683,7 +685,7 @@ IRAM_ATTR npl_freertos_sem_release(struct ble_npl_sem *sem)
         return BLE_NPL_INVALID_PARAM;
     }
 
-    BLE_LL_ASSERT(semaphor->handle);
+    PLATFORM_BLE_LL_ASSERT(semaphor->handle);
 
     if (in_isr()) {
         ret = xSemaphoreGiveFromISR(semaphor->handle, &woken);
@@ -698,7 +700,7 @@ IRAM_ATTR npl_freertos_sem_release(struct ble_npl_sem *sem)
         ret = xSemaphoreGive(semaphor->handle);
     }
 
-    BLE_LL_ASSERT(ret == pdPASS);
+    PLATFORM_BLE_LL_ASSERT(ret == pdPASS);
     return BLE_NPL_OK;
 }
 
@@ -707,7 +709,7 @@ static void
 IRAM_ATTR ble_npl_event_fn_wrapper(void *arg)
 {
     struct ble_npl_callout_freertos *callout = (struct ble_npl_callout_freertos *)arg;
-    BLE_LL_ASSERT(callout);
+    PLATFORM_BLE_LL_ASSERT(callout);
 
     if (callout->evq) {
         ble_npl_eventq_put(callout->evq, &callout->ev);
@@ -742,7 +744,7 @@ IRAM_ATTR os_callout_timer_cb(TimerHandle_t timer)
     struct ble_npl_callout_freertos *callout;
 
     callout = pvTimerGetTimerID(timer);
-    BLE_LL_ASSERT(callout);
+    PLATFORM_BLE_LL_ASSERT(callout);
 
     if (callout->evq) {
         ble_npl_eventq_put(callout->evq, &callout->ev);
@@ -763,7 +765,7 @@ IRAM_ATTR npl_freertos_callout_init(struct ble_npl_callout *co, struct ble_npl_e
     if (!os_memblock_from(&ble_freertos_co_pool, co->co)) {
         co->co = os_memblock_get(&ble_freertos_co_pool);
         callout = (struct ble_npl_callout_freertos *)co->co;
-        BLE_LL_ASSERT(callout);
+        PLATFORM_BLE_LL_ASSERT(callout);
 
         memset(callout, 0, sizeof(*callout));
 
@@ -784,17 +786,17 @@ IRAM_ATTR npl_freertos_callout_init(struct ble_npl_callout *co, struct ble_npl_e
 	callout->handle = xTimerCreate("co", 1, pdFALSE, callout, os_callout_timer_cb);
 #endif
 
-	BLE_LL_ASSERT(callout->handle);
+	PLATFORM_BLE_LL_ASSERT(callout->handle);
     } else {
 	callout = (struct ble_npl_callout_freertos *)co->co;
-	BLE_LL_ASSERT(callout);
+	PLATFORM_BLE_LL_ASSERT(callout);
     }
 #else
 
     if(!co->co) {
         co->co = malloc(sizeof(struct ble_npl_callout_freertos));
         callout = (struct ble_npl_callout_freertos *)co->co;
-        BLE_LL_ASSERT(callout);
+        PLATFORM_BLE_LL_ASSERT(callout);
 
 	memset(callout, 0, sizeof(*callout));
 
@@ -814,11 +816,11 @@ IRAM_ATTR npl_freertos_callout_init(struct ble_npl_callout *co, struct ble_npl_e
 	callout->handle = xTimerCreate("co", 1, pdFALSE, callout, os_callout_timer_cb);
 #endif
 
-	BLE_LL_ASSERT(callout->handle);
+	PLATFORM_BLE_LL_ASSERT(callout->handle);
     }
     else {
         callout = (struct ble_npl_callout_freertos *)co->co;
-        BLE_LL_ASSERT(callout);
+        PLATFORM_BLE_LL_ASSERT(callout);
     }
 #endif
 
@@ -836,7 +838,7 @@ IRAM_ATTR npl_freertos_callout_deinit(struct ble_npl_callout *co)
 	return;
     }
 
-    BLE_LL_ASSERT(callout->handle);
+    PLATFORM_BLE_LL_ASSERT(callout->handle);
 
 #if CONFIG_BT_NIMBLE_USE_ESP_TIMER
     if(esp_timer_stop(callout->handle))
@@ -1054,12 +1056,14 @@ IRAM_ATTR npl_freertos_time_delay(ble_npl_time_t ticks)
     vTaskDelay(ticks);
 }
 
+#ifdef ESP_PLATFORM
 #if NIMBLE_CFG_CONTROLLER || CONFIG_NIMBLE_CONTROLLER_MODE
 void
 IRAM_ATTR npl_freertos_hw_set_isr(int irqn, uint32_t addr)
 {
     //Do nothing
 }
+#endif
 #endif
 
 
@@ -1069,7 +1073,11 @@ uint32_t
 IRAM_ATTR npl_freertos_hw_enter_critical(void)
 {
     ++hw_critical_state_status;
+#ifdef ESP_PLATFORM
     portENTER_CRITICAL(&ble_port_mutex);
+#else
+    portENTER_CRITICAL();
+#endif
     return 0;
 }
 
@@ -1083,7 +1091,12 @@ void
 IRAM_ATTR npl_freertos_hw_exit_critical(uint32_t ctx)
 {
     --hw_critical_state_status;
+#ifdef ESP_PLATFORM
     portEXIT_CRITICAL(&ble_port_mutex);
+#else
+    portEXIT_CRITICAL();
+#endif
+
 
 }
 
@@ -1242,7 +1255,7 @@ _error:
     return -1;
 #else
 
-   BLE_LL_ASSERT(rc == 0);
+   PLATFORM_BLE_LL_ASSERT(rc == 0);
    return rc;
 #endif
 }

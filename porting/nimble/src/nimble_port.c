@@ -30,8 +30,8 @@
 
 #ifdef ESP_PLATFORM
 #include "esp_log.h"
-#endif
 #include "soc/soc_caps.h"
+#endif
 
 #if SOC_ESP_NIMBLE_CONTROLLER
 #if CONFIG_SW_COEXIST_ENABLE
@@ -46,10 +46,12 @@
 #endif
 #include "nimble/nimble/include/nimble/ble_hci_trans.h"
 
+#ifdef ESP_PLATFORM
 #include "esp_intr_alloc.h"
+#include "esp_bt.h"
+#endif
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
-#include "esp_bt.h"
 
 extern void ble_hs_deinit(void);
 #define NIMBLE_PORT_LOG_TAG          "BLE_INIT"
@@ -177,3 +179,15 @@ IRAM_ATTR nimble_port_get_dflt_eventq(void)
 {
     return &g_eventq_dflt;
 }
+
+#ifndef ESP_PLATFORM
+#if NIMBLE_CFG_CONTROLLER
+void
+nimble_port_ll_task_func(void *arg)
+{
+    extern void ble_ll_task(void *);
+
+    ble_ll_task(arg);
+}
+#endif
+#endif

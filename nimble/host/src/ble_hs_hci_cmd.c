@@ -27,7 +27,9 @@
 #include "nimble/nimble/host/include/host/ble_monitor.h"
 #include "ble_hs_priv.h"
 #include "ble_monitor_priv.h"
+#ifdef ESP_PLATFORM
 #include "soc/soc_caps.h"
+#endif
 
 static int
 ble_hs_hci_cmd_transport(struct ble_hci_cmd *cmd)
