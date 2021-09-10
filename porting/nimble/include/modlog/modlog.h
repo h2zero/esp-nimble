@@ -33,7 +33,7 @@
 
 #define MODLOG_MODULE_DFLT 255
 
-#ifdef ESP_PLATFORM
+#if defined(ESP_PLATFORM) && !defined(ARDUINO_ARCH_ESP32)
 #define MODLOG_ESP_LOCAL(level, ml_msg_, ...) do { \
     if (MYNEWT_VAL(BLE_HS_LOG_LVL) <= LOG_LOCAL_LEVEL) ESP_LOG_LEVEL_LOCAL(level, "NimBLE", ml_msg_, ##__VA_ARGS__); \
 } while(0)
@@ -55,39 +55,54 @@
 
 #else
 
-#if MYNEWT_VAL(LOG_LEVEL) <= LOG_LEVEL_DEBUG || defined __DOXYGEN__
+#if (MYNEWT_VAL(LOG_LEVEL) > 0)
+static inline void
+modlog_dummy(const char *msg, ...)
+{
+    (void)msg;
+}
+#endif
+
+#include "nimble/console/console.h"
+
+#if (MYNEWT_VAL(LOG_LEVEL) > 0)
 #define MODLOG_DEBUG(ml_mod_, ml_msg_, ...) \
-    printf((ml_msg_), ##__VA_ARGS__)
+        modlog_dummy((ml_msg_), ##__VA_ARGS__)
 #else
-#define MODLOG_DEBUG(ml_mod_, ...)
+#define MODLOG_DEBUG(ml_mod_, ml_msg_, ...) \
+        console_printf((ml_msg_), ##__VA_ARGS__);
 #endif
 
-#if MYNEWT_VAL(LOG_LEVEL) <= LOG_LEVEL_INFO || defined __DOXYGEN__
+#if (MYNEWT_VAL(LOG_LEVEL) > 1)
 #define MODLOG_INFO(ml_mod_, ml_msg_, ...) \
-    printf((ml_msg_), ##__VA_ARGS__)
+        modlog_dummy((ml_msg_), ##__VA_ARGS__)
 #else
-#define MODLOG_INFO(ml_mod_, ...)
+#define MODLOG_INFO(ml_mod_, ml_msg_, ...) \
+        console_printf((ml_msg_), ##__VA_ARGS__);
 #endif
 
-#if MYNEWT_VAL(LOG_LEVEL) <= LOG_LEVEL_WARN || defined __DOXYGEN__
+#if (MYNEWT_VAL(LOG_LEVEL) > 2)
 #define MODLOG_WARN(ml_mod_, ml_msg_, ...) \
-    printf((ml_msg_), ##__VA_ARGS__)
+        modlog_dummy((ml_msg_), ##__VA_ARGS__)
 #else
-#define MODLOG_WARN(ml_mod_, ...)
+#define MODLOG_WARN(ml_mod_, ml_msg_, ...) \
+        console_printf((ml_msg_), ##__VA_ARGS__);
 #endif
 
-#if MYNEWT_VAL(LOG_LEVEL) <= LOG_LEVEL_ERROR || defined __DOXYGEN__
+#if (MYNEWT_VAL(LOG_LEVEL) > 3)
 #define MODLOG_ERROR(ml_mod_, ml_msg_, ...) \
-    printf((ml_msg_), ##__VA_ARGS__)
+        modlog_dummy((ml_msg_), ##__VA_ARGS__)
 #else
-#define MODLOG_ERROR(ml_mod_, ...)
+#define MODLOG_ERROR(ml_mod_, ml_msg_, ...) \
+        console_printf((ml_msg_), ##__VA_ARGS__);
 #endif
 
-#if MYNEWT_VAL(LOG_LEVEL) <= LOG_LEVEL_CRITICAL || defined __DOXYGEN__
+#if (MYNEWT_VAL(LOG_LEVEL) > 4)
 #define MODLOG_CRITICAL(ml_mod_, ml_msg_, ...) \
-    printf((ml_msg_), ##__VA_ARGS__)
+        modlog_dummy((ml_msg_), ##__VA_ARGS__)
 #else
-#define MODLOG_CRITICAL(ml_mod_, ...)
+#define MODLOG_CRITICAL(ml_mod_, ml_msg_, ...) \
+        console_printf((ml_msg_), ##__VA_ARGS__);
 #endif
 
 #endif
