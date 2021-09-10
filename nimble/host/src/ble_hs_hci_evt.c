@@ -429,7 +429,8 @@ ble_hs_hci_evt_le_adv_rpt_first_pass(const void *data, unsigned int len)
     if (len < sizeof(*ev)) {
         return BLE_HS_ECONTROLLER;
     }
-
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wpointer-arith"
     len -= sizeof(*ev);
     data += sizeof(*ev);
 
@@ -461,7 +462,7 @@ ble_hs_hci_evt_le_adv_rpt_first_pass(const void *data, unsigned int len)
     if (len) {
         return BLE_HS_ECONTROLLER;
     }
-
+#pragma GCC diagnostic pop
     return 0;
 }
 
@@ -479,7 +480,8 @@ ble_hs_hci_evt_le_adv_rpt(uint8_t subevent, const void *data, unsigned int len)
     if (rc != 0) {
         return rc;
     }
-
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wpointer-arith"
     data += sizeof(*ev);
 
     desc.direct_addr = *BLE_ADDR_ANY;
@@ -498,7 +500,7 @@ ble_hs_hci_evt_le_adv_rpt(uint8_t subevent, const void *data, unsigned int len)
 
         ble_gap_rx_adv_report(&desc);
     }
-
+#pragma GCC diagnostic pop
     return 0;
 }
 
