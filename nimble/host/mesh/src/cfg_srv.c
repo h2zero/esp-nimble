@@ -7,6 +7,8 @@
  */
 
 #include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#if MYNEWT_VAL(BLE_MESH)
+
 #define MESH_LOG_MODULE BLE_MESH_MODEL_LOG
 
 #include <string.h>
@@ -3617,3 +3619,4 @@ void bt_mesh_subnet_del(struct bt_mesh_subnet *sub, bool store)
 	memset(sub, 0, sizeof(*sub));
 	sub->net_idx = BT_MESH_KEY_UNUSED;
 }
+#endif

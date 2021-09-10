@@ -7,6 +7,8 @@
  */
 
 #include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#if MYNEWT_VAL(BLE_MESH)
+
 #define MESH_LOG_MODULE BLE_MESH_NET_LOG
 
 #include <string.h>
@@ -1431,3 +1433,4 @@ void bt_mesh_net_init(void)
 	k_work_init(&bt_mesh.local_work, bt_mesh_net_local);
 	net_buf_slist_init(&bt_mesh.local_queue);
 }
+#endif

@@ -7,6 +7,8 @@
  */
 
 #include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#if MYNEWT_VAL(BLE_MESH)
+
 #define MESH_LOG_MODULE BLE_MESH_TRANS_LOG
 
 #include <errno.h>
@@ -1666,3 +1668,4 @@ int bt_mesh_app_key_get(const struct bt_mesh_subnet *subnet, u16_t app_idx,
 
 	return 0;
 }
+#endif

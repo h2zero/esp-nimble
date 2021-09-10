@@ -5,6 +5,8 @@
  */
 
 #include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#if MYNEWT_VAL(BLE_MESH)
+
 #define MESH_LOG_MODULE BLE_MESH_PROV_LOG
 
 #if MYNEWT_VAL(BLE_MESH_PROVISIONER)
@@ -158,4 +160,5 @@ void bt_mesh_node_del(struct bt_mesh_node *node, bool store)
 	(void)memset(node->dev_key, 0, sizeof(node->dev_key));
 }
 
+#endif
 #endif

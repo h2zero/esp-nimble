@@ -7,6 +7,8 @@
  */
 
 #include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#if MYNEWT_VAL(BLE_MESH)
+
 #define MESH_LOG_MODULE BLE_MESH_ACCESS_LOG
 
 #include <errno.h>
@@ -853,4 +855,5 @@ int bt_mesh_model_extend(struct bt_mesh_model *mod,
 	mod->extends = base_mod;
 	return 0;
 }
+#endif
 #endif
