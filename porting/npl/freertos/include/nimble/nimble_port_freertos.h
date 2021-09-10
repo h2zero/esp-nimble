@@ -48,6 +48,11 @@ void npl_freertos_funcs_init(void);
 void npl_freertos_funcs_deinit(void);
 int npl_freertos_mempool_init(void);
 struct npl_funcs_t * npl_freertos_funcs_get(void);
+#ifndef ESP_PLATFORM
+UBaseType_t nimble_port_freertos_get_ll_hwm(void);
+#endif
+UBaseType_t nimble_port_freertos_get_hs_hwm(void);
+
 #ifdef __cplusplus
 }
 #endif
