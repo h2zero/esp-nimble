@@ -5,6 +5,8 @@
  */
 
 #include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#if MYNEWT_VAL(BLE_MESH)
+
 #define MESH_LOG_MODULE BLE_MESH_SETTINGS_LOG
 
 #if MYNEWT_VAL(BLE_MESH_SETTINGS)
@@ -214,3 +216,4 @@ void bt_mesh_settings_init(void)
 }
 
 #endif /* MYNEWT_VAL(BLE_MESH_SETTINGS) */
+#endif

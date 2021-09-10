@@ -8,6 +8,8 @@
 #include "nimble/porting/nimble/include/syscfg/syscfg.h"
 #define MESH_LOG_MODULE BLE_MESH_NET_KEYS_LOG
 
+#if MYNEWT_VAL(BLE_MESH)
+
 #include "nimble/porting/nimble/include/log/log.h"
 
 #include "crypto.h"
@@ -883,3 +885,4 @@ void bt_mesh_net_key_init(void)
 				 "Failed to register bt_mesh_net_key conf");
 #endif
 }
+#endif /* MYNEWT_VAL(BLE_MESH) */

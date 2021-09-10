@@ -7,6 +7,8 @@
  */
 
 #include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#if MYNEWT_VAL(BLE_MESH)
+
 #define MESH_LOG_MODULE BLE_MESH_MODEL_LOG
 #if MYNEWT_VAL(BLE_MESH_CFG_CLI)
 
@@ -2711,4 +2713,5 @@ struct bt_mesh_mod_id_vnd bt_mesh_comp_p0_elem_mod_vnd(struct bt_mesh_comp_p0_el
 
 	return mod;
 }
+#endif
 #endif

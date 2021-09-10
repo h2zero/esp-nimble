@@ -8,6 +8,8 @@
  */
 
 #include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#if MYNEWT_VAL(BLE_MESH)
+
 #define MESH_LOG_MODULE BLE_MESH_ADV_LOG
 
 #include "../include/mesh/mesh.h"
@@ -254,3 +256,4 @@ int bt_mesh_scan_disable(void)
 
 	return 0;
 }
+#endif

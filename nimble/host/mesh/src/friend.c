@@ -1686,9 +1686,9 @@ void bt_mesh_friend_enqueue_rx(struct bt_mesh_net_rx *rx,
 			continue;
 		}
 
-		if (friend_lpn_matches(frnd, rx->sub->net_idx,	
-					rx->ctx.addr)) {	
-			continue;	
+		if (friend_lpn_matches(frnd, rx->sub->net_idx,
+					rx->ctx.addr)) {
+			continue;
 		}
 
 		if (friend_lpn_matches(frnd, rx->sub->net_idx,

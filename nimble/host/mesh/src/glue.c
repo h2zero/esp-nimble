@@ -20,6 +20,8 @@
 #include "nimble/porting/nimble/include/syscfg/syscfg.h"
 #define MESH_LOG_MODULE BLE_MESH_LOG
 
+#if MYNEWT_VAL(BLE_MESH)
+
 #include "../include/mesh/glue.h"
 #include "adv.h"
 #include "../../src/ble_hs_conn_priv.h"
@@ -1037,3 +1039,4 @@ char *settings_str_from_bytes(const void *vp, int vp_len,
 }
 
 #endif /* MYNEWT_VAL(BLE_MESH_SETTINGS) */
+#endif /* MYNEWT_VAL(BLE_MESH) */

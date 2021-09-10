@@ -9,6 +9,9 @@
 
 #define MESH_LOG_MODULE BLE_MESH_PROV_LOG
 
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#if MYNEWT_VAL(BLE_MESH)
+
 #include "../include/mesh/mesh.h"
 #include "prov.h"
 #include "net.h"
@@ -172,3 +175,5 @@ const struct prov_bearer pb_gatt = {
 	.clear_tx = clear_tx,
 };
 #endif
+
+#endif /* MYNEWT_VAL(BLE_MESH) */
