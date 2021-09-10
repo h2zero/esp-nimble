@@ -28,6 +28,10 @@ extern "C" {
 
 void nimble_port_freertos_init(TaskFunction_t host_task_fn);
 void nimble_port_freertos_deinit(void);
+#ifndef ESP_PLATFORM
+UBaseType_t nimble_port_freertos_get_ll_hwm(void);
+#endif
+UBaseType_t nimble_port_freertos_get_hs_hwm(void);
 
 #ifdef __cplusplus
 }

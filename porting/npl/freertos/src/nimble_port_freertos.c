@@ -23,8 +23,21 @@
 #include "../../../nimble/include/nimble/nimble_port.h"
 
 #if NIMBLE_CFG_CONTROLLER
+#if MYNEWT_VAL(BLE_LL_CFG_FEAT_LL_EXT_ADV)
+#define NIMBLE_LL_TASK_STACK_SIZE   (120)
+#else
+#define NIMBLE_LL_TASK_STACK_SIZE   (90)
+#endif
+static StackType_t ll_xStack[ NIMBLE_LL_TASK_STACK_SIZE ];
+static StaticTask_t ll_xTaskBuffer;
 static TaskHandle_t ll_task_h;
 #endif
+
+#ifndef ESP_PLATFORM
+static StackType_t hs_xStack[ NIMBLE_HS_TASK_STACK_SIZE ];
+static StaticTask_t hs_xTaskBuffer;
+#endif
+
 static TaskHandle_t host_task_h;
 
 void
@@ -37,8 +50,8 @@ nimble_port_freertos_init(TaskFunction_t host_task_fn)
      * provided by NimBLE and in case of FreeRTOS it does not need to be wrapped
      * since it has compatible prototype.
      */
-    xTaskCreate(nimble_port_ll_task_func, "ll", configMINIMAL_STACK_SIZE + 400,
-                NULL, configMAX_PRIORITIES - 1, &ll_task_h);
+    ll_task_h = xTaskCreateStatic(nimble_port_ll_task_func, "ll", NIMBLE_LL_TASK_STACK_SIZE,
+                                  NULL, configMAX_PRIORITIES, ll_xStack, &ll_xTaskBuffer);
 #endif
 
     /*
@@ -48,10 +61,10 @@ nimble_port_freertos_init(TaskFunction_t host_task_fn)
      */
 #ifdef ESP_PLATFORM
     xTaskCreatePinnedToCore(host_task_fn, "ble", NIMBLE_STACK_SIZE,
-                NULL, (configMAX_PRIORITIES - 4), &host_task_h, NIMBLE_CORE);
+                            NULL, (configMAX_PRIORITIES - 4), &host_task_h, NIMBLE_CORE);
 #else
-    xTaskCreate(host_task_fn, "ble", configMINIMAL_STACK_SIZE + 400,
-                NULL, tskIDLE_PRIORITY + 1, &host_task_h);
+    host_task_h = xTaskCreateStatic(host_task_fn, "ble", NIMBLE_HS_TASK_STACK_SIZE,
+                                    NULL, (configMAX_PRIORITIES - 1), hs_xStack, &hs_xTaskBuffer);
 #endif
 }
 
@@ -61,4 +74,18 @@ nimble_port_freertos_deinit(void)
     if (host_task_h) {
         vTaskDelete(host_task_h);
     }
+}
+
+#if NIMBLE_CFG_CONTROLLER
+UBaseType_t
+nimble_port_freertos_get_ll_hwm(void)
+{
+    return uxTaskGetStackHighWaterMark(ll_task_h);
+}
+#endif
+
+UBaseType_t
+nimble_port_freertos_get_hs_hwm(void)
+{
+    return uxTaskGetStackHighWaterMark(host_task_h);
 }
