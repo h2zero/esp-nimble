@@ -1866,10 +1866,13 @@ ble_ll_init(void)
 #endif
 
     /* Initialize the HW error timer */
+    /* NOT USED WITH RAM HCI
+     * Commented out to prevent creating an unnecessary timer
     ble_npl_callout_init(&g_ble_ll_data.ll_hw_err_timer,
                          &g_ble_ll_data.ll_evq,
                          ble_ll_hw_err_timer_cb,
                          NULL);
+    */
 
     /* Initialize LL HCI */
     ble_ll_hci_init();

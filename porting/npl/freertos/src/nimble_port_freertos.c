@@ -37,7 +37,7 @@ static TaskHandle_t ll_task_h;
 #endif
 
 #ifndef ESP_PLATFORM
-static StackType_t hs_xStack[ NIMBLE_HS_TASK_STACK_SIZE ];
+static StackType_t hs_xStack[ NIMBLE_HS_STACK_SIZE ];
 static StaticTask_t hs_xTaskBuffer;
 #endif
 
