@@ -22,6 +22,7 @@
 #include "../include/sysinit/sysinit.h"
 #include "nimble/nimble/host/include/host/ble_hs.h"
 #include "../include/nimble/nimble_port.h"
+
 #if NIMBLE_CFG_CONTROLLER
 #include "nimble/nimble/controller/include/controller/ble_ll.h"
 #endif
@@ -38,7 +39,7 @@ void
 nimble_port_init(void)
 {
     void os_msys_init(void);
-    void ble_store_ram_init(void);
+
 #if NIMBLE_CFG_CONTROLLER
     void ble_hci_ram_init(void);
 #endif
@@ -49,13 +50,13 @@ nimble_port_init(void)
 
     ble_hs_init();
 
-    /* XXX Need to have template for store */
-    ble_store_ram_init();
-
 #if NIMBLE_CFG_CONTROLLER
     hal_timer_init(5, NULL);
+
     os_cputime_init(32768);
+
     ble_ll_init();
+
     ble_hci_ram_init();
 #endif
 }
