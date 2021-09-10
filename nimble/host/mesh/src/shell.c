@@ -10,6 +10,7 @@
  */
 
 #include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#if MYNEWT_VAL(BLE_MESH)
 
 #if MYNEWT_VAL(BLE_MESH_SHELL)
 
@@ -3686,3 +3687,4 @@ void ble_mesh_shell_init(void)
 
 #endif
 }
+#endif

@@ -7,6 +7,8 @@
  */
 
 #include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#if MYNEWT_VAL(BLE_MESH)
+
 #define MESH_LOG_MODULE BLE_MESH_MODEL_LOG
 
 #include <string.h>
@@ -2496,3 +2498,4 @@ void bt_mesh_cfg_reset(void)
 {
 	bt_mesh_model_foreach(mod_reset, NULL);
 }
+#endif

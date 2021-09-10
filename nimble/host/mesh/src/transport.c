@@ -7,6 +7,8 @@
  */
 
 #include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#if MYNEWT_VAL(BLE_MESH)
+
 #define MESH_LOG_MODULE BLE_MESH_TRANS_LOG
 
 #include <errno.h>
@@ -1748,3 +1750,4 @@ uint8_t *bt_mesh_va_label_get(uint16_t addr)
 
 	return NULL;
 }
+#endif

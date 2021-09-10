@@ -4,6 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#if MYNEWT_VAL(BLE_MESH)
+
 #define MESH_LOG_MODULE BLE_MESH_HEARTBEAT_LOG
 
 #include "mesh_priv.h"
@@ -349,3 +352,5 @@ void bt_mesh_hb_resume(void)
 		k_delayed_work_submit(&pub_timer, K_NO_WAIT);
 	}
 }
+
+#endif /* MYNEWT_VAL(BLE_MESH) */

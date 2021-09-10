@@ -9,6 +9,9 @@
 
 #define MESH_LOG_MODULE BLE_MESH_RPL_LOG
 
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#if MYNEWT_VAL(BLE_MESH)
+
 #include "nimble/porting/nimble/include/log/log.h"
 
 #include "mesh_priv.h"
@@ -160,3 +163,5 @@ void bt_mesh_rpl_reset(void)
 		}
 	}
 }
+
+#endif /* MYNEWT_VAL(BLE_MESH) */

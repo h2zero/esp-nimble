@@ -8,6 +8,8 @@
 #include "nimble/porting/nimble/include/syscfg/syscfg.h"
 #define MESH_LOG_MODULE BLE_MESH_NET_KEYS_LOG
 
+#if MYNEWT_VAL(BLE_MESH)
+
 #include "nimble/porting/nimble/include/log/log.h"
 
 #include "crypto.h"
@@ -664,3 +666,5 @@ bool bt_mesh_net_cred_find(struct bt_mesh_net_rx *rx, struct os_mbuf *in,
 
 	return false;
 }
+
+#endif /* MYNEWT_VAL(BLE_MESH) */

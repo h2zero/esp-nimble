@@ -7,6 +7,8 @@
  */
 
 #include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#if MYNEWT_VAL(BLE_MESH)
+
 #define MESH_LOG_MODULE BLE_MESH_PROXY_LOG
 
 #if MYNEWT_VAL(BLE_MESH_PROXY)
@@ -1566,3 +1568,4 @@ void bt_mesh_proxy_on_idle(struct bt_mesh_proxy_idle_cb *cb)
 }
 
 #endif /* MYNEWT_VAL(BLE_MESH_PROXY) */
+#endif

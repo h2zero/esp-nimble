@@ -7,6 +7,8 @@
  */
 
 #include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#if MYNEWT_VAL(BLE_MESH)
+
 #define MESH_LOG_MODULE BLE_MESH_BEACON_LOG
 
 #include <errno.h>
@@ -470,3 +472,4 @@ void bt_mesh_beacon_disable(void)
 		k_delayed_work_cancel(&beacon_timer);
 	}
 }
+#endif

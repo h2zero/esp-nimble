@@ -7,6 +7,8 @@
  */
 
 #include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#if MYNEWT_VAL(BLE_MESH)
+
 #define MESH_LOG_MODULE BLE_MESH_LOW_POWER_LOG
 
 #if MYNEWT_VAL(BLE_MESH_LOW_POWER)
@@ -1099,3 +1101,4 @@ int bt_mesh_lpn_init(void)
 }
 
 #endif /* MYNEWT_VAL(BLE_MESH_LOW_POWER) */
+#endif
