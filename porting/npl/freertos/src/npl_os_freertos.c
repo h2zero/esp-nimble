@@ -25,11 +25,12 @@
 
 #ifdef ESP_PLATFORM
 #include "freertos/portable.h"
+#include "esp_log.h"
 portMUX_TYPE ble_port_mutex = portMUX_INITIALIZER_UNLOCKED;
+static const char *TAG = "Timer";
 
 #else
 #include "nrf.h"
-
 static void *radio_isr_addr;
 static void *rng_isr_addr;
 static void *rtc0_isr_addr;
@@ -450,12 +451,14 @@ void
 npl_freertos_callout_deinit(struct ble_npl_callout *co)
 {
 #if CONFIG_BT_NIMBLE_USE_ESP_TIMER
-    ESP_ERROR_CHECK_WITHOUT_ABORT(esp_timer_stop(co->handle));
-    ESP_ERROR_CHECK_WITHOUT_ABORT(esp_timer_delete(co->handle));
+    if(esp_timer_stop(co->handle))
+	ESP_LOGW(TAG, "Timer not stopped");
+
+    if(esp_timer_delete(co->handle))
+	ESP_LOGW(TAG, "Timer not deleted");
 #else
     if (co->handle) {
         xTimerDelete(co->handle, portMAX_DELAY);
-        co->handle = NULL;
     }
 #endif
 }
@@ -470,11 +473,6 @@ npl_freertos_callout_reset(struct ble_npl_callout *co, ble_npl_time_t ticks)
 #else
 
     BaseType_t woken1, woken2, woken3;
-
-    if (co->handle == NULL) {
-        co->handle = xTimerCreate("co", 1, pdFALSE, co, os_callout_timer_cb);
-        assert(co->handle);
-    }
 
     if (ticks == 0) {
         ticks = 1;
