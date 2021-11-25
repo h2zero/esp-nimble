@@ -930,7 +930,12 @@ IRAM_ATTR npl_freertos_callout_is_active(struct ble_npl_callout *co)
 #if CONFIG_BT_NIMBLE_USE_ESP_TIMER
     return esp_timer_is_active(callout->handle);
 #else
-    return xTimerIsTimerActive(callout->handle) == pdTRUE;
+    /* Workaround for bug in xTimerIsTimerActive with FreeRTOS V10.2.0, fixed in V10.4.4
+     * See: https://github.com/FreeRTOS/FreeRTOS-Kernel/pull/305
+     * Sometimes xTimerIsTimerActive returns pdTRUE even though the timer has expired, so we double check.
+     */
+    return xTimerIsTimerActive(callout->handle) == pdTRUE &&
+           xTimerGetExpiryTime(callout->handle) > xTaskGetTickCountFromISR();
 #endif
 }
 
