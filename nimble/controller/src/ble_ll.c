@@ -1102,6 +1102,8 @@ ble_ll_hw_error(void)
  *
  * @param arg
  */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-function"
 static void
 ble_ll_hw_err_timer_cb(struct ble_npl_event *ev)
 {
@@ -1115,6 +1117,7 @@ ble_ll_hw_err_timer_cb(struct ble_npl_event *ev)
                          ble_npl_time_ms_to_ticks32(50));
     }
 }
+#pragma GCC diagnostic pop
 
 /**
  * Called upon start of received PDU
