@@ -25,7 +25,10 @@
 #include "nimble/nimble/include/nimble/ble.h"
 #include "nimble/nimble/host/include/host/ble_uuid.h"
 #include "ble_hs_priv.h"
+
+#ifdef ESP_PLATFORM
 #include "nimble/esp_port/port/include/esp_nimble_mem.h"
+#endif
 
 #if NIMBLE_BLE_CONNECT
 /**
