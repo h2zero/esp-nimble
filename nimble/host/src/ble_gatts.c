@@ -26,7 +26,7 @@
 #include "ble_hs_priv.h"
 
 #ifdef ESP_PLATFORM
-#include "nimble/esp/port/include/esp_nimble_mem.h"
+#include "nimble/esp_port/port/include/esp_nimble_mem.h"
 #endif
 
 #define BLE_GATTS_INCLUDE_SZ    6
