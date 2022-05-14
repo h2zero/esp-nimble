@@ -31,10 +31,10 @@
 #endif
 
 #if MYNEWT_VAL(BLE_DYNAMIC_SERVICE)
-#include "services/gatt/ble_svc_gatt.h"
+#include "nimble/nimble/host/services/gatt/include/services/gatt/ble_svc_gatt.h"
 #endif
 #if MYNEWT_VAL(BLE_SVC_HID_SERVICE)
-#include "services/hid/ble_svc_hid.h"
+#include "nimble/nimble/host/services/gatt/include/services/hid/ble_svc_hid.h"
 #endif
 
 #define BLE_GATTS_INCLUDE_SZ    6
