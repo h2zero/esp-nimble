@@ -93,7 +93,15 @@ nimble_port_init(void)
     os_msys_init();
 
     ble_hs_init();
+#endif
 
+#ifndef ESP_PLATFORM
+#  if NIMBLE_CFG_CONTROLLER
+    ble_hci_ram_init();
+    hal_timer_init(5, NULL);
+    os_cputime_init(32768);
+    ble_ll_init();
+#  endif
 #endif
 }
 
