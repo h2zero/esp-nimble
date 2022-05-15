@@ -25,7 +25,7 @@
 #include "esp_bt.h"
 #endif
 
-
+#ifndef ESP_PLATFORM
 #if NIMBLE_CFG_CONTROLLER
 #if MYNEWT_VAL(BLE_LL_CFG_FEAT_LL_EXT_ADV)
 #define NIMBLE_LL_TASK_STACK_SIZE   (130)
@@ -37,7 +37,6 @@ static StaticTask_t ll_xTaskBuffer;
 static TaskHandle_t ll_task_h;
 #endif
 
-#ifndef ESP_PLATFORM
 static StackType_t hs_xStack[ NIMBLE_HS_STACK_SIZE ];
 static StaticTask_t hs_xTaskBuffer;
 #endif
@@ -87,12 +86,14 @@ nimble_port_freertos_deinit(void)
 #endif
 }
 
+#ifndef ESP_PLATFORM
 #if NIMBLE_CFG_CONTROLLER
 UBaseType_t
 nimble_port_freertos_get_ll_hwm(void)
 {
     return uxTaskGetStackHighWaterMark(ll_task_h);
 }
+#endif
 #endif
 
 UBaseType_t
