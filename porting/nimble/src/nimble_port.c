@@ -91,10 +91,13 @@ esp_err_t esp_nimble_init(void)
     esp_err_t ret;
 #endif
 #if !SOC_ESP_NIMBLE_CONTROLLER || !CONFIG_BT_CONTROLLER_ENABLED
+
+#if CONFIG_NIMBLE_STACK_USE_MEM_POOLS
     /* Initialize the function pointers for OS porting */
     npl_freertos_funcs_init();
 
     npl_freertos_mempool_init();
+#endif
 
 #if CONFIG_BT_CONTROLLER_ENABLED
     if(esp_nimble_hci_init() != ESP_OK) {
@@ -154,7 +157,9 @@ esp_err_t esp_nimble_deinit(void)
 #endif
     ble_hs_deinit();
 #if !SOC_ESP_NIMBLE_CONTROLLER || !CONFIG_BT_CONTROLLER_ENABLED
+#if CONFIG_NIMBLE_STACK_USE_MEM_POOLS
     npl_freertos_funcs_deinit();
+#endif
 #endif
     return ESP_OK;
 }
@@ -173,6 +178,7 @@ nimble_port_init(void)
     esp_bt_controller_mem_release(ESP_BT_MODE_CLASSIC_BT);
 #endif
 #if CONFIG_BT_CONTROLLER_ENABLED
+#if false // Arduino disable
     esp_bt_controller_config_t config_opts = BT_CONTROLLER_INIT_CONFIG_DEFAULT();
 
     ret = esp_bt_controller_init(&config_opts);
@@ -191,6 +197,7 @@ nimble_port_init(void)
         ESP_LOGE(NIMBLE_PORT_LOG_TAG, "controller enable failed\n");
         return ret;
     }
+#endif
 #endif
 
     ret = esp_nimble_init();
