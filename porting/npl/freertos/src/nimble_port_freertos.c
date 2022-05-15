@@ -28,11 +28,11 @@
 #ifndef ESP_PLATFORM
 #if NIMBLE_CFG_CONTROLLER
 #if MYNEWT_VAL(BLE_LL_CFG_FEAT_LL_EXT_ADV)
-#define NIMBLE_LL_TASK_STACK_SIZE   (130)
+#define NIMBLE_LL_STACK_SIZE   (130)
 #else
-#define NIMBLE_LL_TASK_STACK_SIZE   (100)
+#define NIMBLE_LL_STACK_SIZE   (100)
 #endif
-static StackType_t ll_xStack[ NIMBLE_LL_TASK_STACK_SIZE ];
+static StackType_t ll_xStack[ NIMBLE_LL_STACK_SIZE ];
 static StaticTask_t ll_xTaskBuffer;
 static TaskHandle_t ll_task_h;
 #endif
@@ -56,7 +56,7 @@ nimble_port_freertos_init(TaskFunction_t host_task_fn)
 #ifdef ESP_PLATFORM
     esp_bt_controller_enable(ESP_BT_MODE_BLE);
 #else
-    ll_task_h = xTaskCreateStatic(nimble_port_ll_task_func, "ll", NIMBLE_LL_TASK_STACK_SIZE,
+    ll_task_h = xTaskCreateStatic(nimble_port_ll_task_func, "ll", NIMBLE_LL_STACK_SIZE,
                                   NULL, configMAX_PRIORITIES, ll_xStack, &ll_xTaskBuffer);
 #endif
 
