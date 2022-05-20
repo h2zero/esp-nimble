@@ -20,7 +20,11 @@
 #include <stddef.h>
 #include "../include/os/os.h"
 #include "../include/sysinit/sysinit.h"
+
+#if CONFIG_BT_NIMBLE_ENABLED
 #include "nimble/nimble/host/include/host/ble_hs.h"
+#endif //CONFIG_BT_NIMBLE_ENABLED
+
 #include "../include/nimble/nimble_port.h"
 #include "../../npl/freertos/include/nimble/nimble_port_freertos.h"
 #if NIMBLE_CFG_CONTROLLER
@@ -44,7 +48,7 @@
 #endif
 
 #ifdef CONFIG_BT_NIMBLE_CONTROL_USE_UART_HCI
-#include "transport/uart/ble_hci_uart.h"
+#include "nimble/nimble/transport/ram/include/transport/uart/ble_hci_uart.h"
 #else
 #include "nimble/nimble/transport/ram/include/transport/ram/ble_hci_ram.h"
 #endif
@@ -57,13 +61,16 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
-extern void ble_hs_deinit(void);
 #define NIMBLE_PORT_LOG_TAG          "BLE_INIT"
 
 extern void os_msys_init(void);
 
-static struct ble_npl_eventq g_eventq_dflt;
+#if CONFIG_BT_NIMBLE_ENABLED
+extern void ble_hs_deinit(void);
 static struct ble_hs_stop_listener stop_listener;
+#endif //CONFIG_BT_NIMBLE_ENABLED
+
+static struct ble_npl_eventq g_eventq_dflt;
 static struct ble_npl_sem ble_hs_stop_sem;
 static struct ble_npl_event ble_hs_ev_stop;
 
@@ -76,9 +83,11 @@ nimble_port_init(void)
         ESP_LOGE(NIMBLE_PORT_LOG_TAG, "controller init failed\n");
         return;
     }
+#if CONFIG_BT_NIMBLE_ENABLED
      /* Initialize the host */
      ble_hs_init();
-
+#endif
+ 
 #else //SOC_ESP_NIMBLE_CONTROLLER
 
 #if CONFIG_NIMBLE_STACK_USE_MEM_POOLS
@@ -114,7 +123,10 @@ void
 nimble_port_deinit(void)
 {
 #if SOC_ESP_NIMBLE_CONTROLLER
+
+#if CONFIG_BT_NIMBLE_ENABLED
    ble_hs_deinit();
+#endif //CONFIG_BT_NIMBLE_ENABLED
 
    esp_bt_controller_deinit();
 
@@ -146,9 +158,10 @@ nimble_port_stop_cb(struct ble_npl_event *ev)
 int
 nimble_port_stop(void)
 {
-    int rc;
+    int rc = 0;
 
     ble_npl_sem_init(&ble_hs_stop_sem, 0);
+#if CONFIG_BT_NIMBLE_ENABLED
     /* Initiate a host stop procedure. */
     rc = ble_hs_stop(&stop_listener, ble_hs_stop_cb,
             NULL);
@@ -156,6 +169,7 @@ nimble_port_stop(void)
         ble_npl_sem_deinit(&ble_hs_stop_sem);
         return rc;
     }
+#endif //CONFIG_BT_NIMBLE_ENABLED
 
     /* Wait till the host stop procedure is complete */
     ble_npl_sem_pend(&ble_hs_stop_sem, BLE_NPL_TIME_FOREVER);
