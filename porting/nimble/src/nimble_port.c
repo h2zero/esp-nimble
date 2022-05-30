@@ -47,8 +47,8 @@
 #endif
 #endif
 
-#ifdef CONFIG_BT_NIMBLE_CONTROL_USE_UART_HCI
-#include "nimble/nimble/transport/ram/include/transport/uart/ble_hci_uart.h"
+#ifdef CONFIG_BT_NIMBLE_HCI_INTERFACE_USE_UART
+#include "nimble/nimble/transport/uart/include/transport/uart/ble_hci_uart.h"
 #else
 #include "nimble/nimble/transport/ram/include/transport/ram/ble_hci_ram.h"
 #endif
