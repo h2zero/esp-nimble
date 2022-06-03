@@ -1385,7 +1385,9 @@ void npl_freertos_funcs_deinit(void)
 #include "freertos/portable.h"
 #include "esp_log.h"
 portMUX_TYPE ble_port_mutex = portMUX_INITIALIZER_UNLOCKED;
+#  if CONFIG_BT_NIMBLE_USE_ESP_TIMER
 static const char *TAG = "Timer";
+#  endif
 
 #else
 #include "nrf.h"

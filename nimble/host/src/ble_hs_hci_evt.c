@@ -536,6 +536,8 @@ ble_hs_hci_evt_le_conn_complete(uint8_t subevent, const void *data,
 }
 #endif
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wpointer-arith"
 static int
 ble_hs_hci_evt_le_adv_rpt_first_pass(const void *data, unsigned int len)
 {
@@ -647,6 +649,7 @@ ble_hs_hci_evt_le_adv_rpt(uint8_t subevent, const void *data, unsigned int len)
 
     return 0;
 }
+#pragma GCC diagnostic pop
 
 static int
 ble_hs_hci_evt_le_dir_adv_rpt(uint8_t subevent, const void *data, unsigned int len)

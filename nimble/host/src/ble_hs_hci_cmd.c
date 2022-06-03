@@ -24,6 +24,13 @@
 #include "nimble/porting/nimble/include/os/os.h"
 #include "nimble/nimble/include/nimble/hci_common.h"
 #include "ble_hs_priv.h"
+#ifdef ESP_PLATFORM
+#  if defined __has_include
+#    if __has_include ("soc/soc_caps.h")
+#      include "soc/soc_caps.h"
+#    endif
+#  endif
+#endif
 
 static int
 ble_hs_hci_cmd_transport(struct ble_hci_cmd *cmd)

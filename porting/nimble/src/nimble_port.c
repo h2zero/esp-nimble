@@ -30,7 +30,11 @@
 
 #ifdef ESP_PLATFORM
 #include "esp_log.h"
-#include "soc/soc_caps.h"
+#  if defined __has_include
+#    if __has_include ("soc/soc_caps.h")
+#      include "soc/soc_caps.h"
+#    endif
+#  endif
 #include "esp_intr_alloc.h"
 #if CONFIG_BT_CONTROLLER_ENABLED
 #include "esp_bt.h"
