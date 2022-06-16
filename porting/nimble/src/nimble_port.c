@@ -47,11 +47,6 @@
 #endif
 #endif
 
-#ifdef CONFIG_BT_LE_HCI_INTERFACE_USE_UART
-#include "nimble/nimble/transport/uart/include/transport/uart/ble_hci_uart.h"
-#else
-#include "nimble/nimble/transport/ram/include/transport/ram/ble_hci_ram.h"
-#endif
 #include "nimble/nimble/include/nimble/ble_hci_trans.h"
 
 #ifdef ESP_PLATFORM
@@ -99,10 +94,6 @@ nimble_port_init(void)
     /* Initialize default event queue */
 
     ble_npl_eventq_init(&g_eventq_dflt);
-
-#if NIMBLE_CFG_CONTROLLER
-    void ble_hci_ram_init(void);
-#endif
 
     os_msys_init();
 
