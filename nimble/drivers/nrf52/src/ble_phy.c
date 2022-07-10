@@ -2241,7 +2241,7 @@ void ble_phy_disable_dtm(void)
 void
 ble_phy_rfclk_enable(void)
 {
-#if MYNEWT
+#if MYNEWT || ARDUINO
     nrf52_clock_hfxo_request();
 #else
     nrf_clock_task_trigger(NRF_CLOCK, NRF_CLOCK_TASK_HFCLKSTART);
@@ -2251,7 +2251,7 @@ ble_phy_rfclk_enable(void)
 void
 ble_phy_rfclk_disable(void)
 {
-#if MYNEWT
+#if MYNEWT || ARDUINO
     nrf52_clock_hfxo_release();
 #else
     nrf_clock_task_trigger(NRF_CLOCK, NRF_CLOCK_TASK_HFCLKSTOP);
