@@ -186,23 +186,23 @@ ble_hs_hci_evt_disconn_complete(uint8_t event_code, const void *data,
     if (ev->reason == BLE_ERR_CONN_ESTABLISHMENT && (conn != NULL)) {
         BLE_HS_LOG(DEBUG, "Reattempt connection; reason = 0x%x, status = %d,"
                           " reattempt count = %d ", ev->reason, ev->status,
-                           reattempt_conn[ev->conn_handle]);
+                           reattempt_conn[ev->conn_handle-1]);
         if (conn->bhc_flags & BLE_HS_CONN_F_MASTER) {
-            if (reattempt_conn[ev->conn_handle] < MAX_REATTEMPT_ALLOWED) {
-                reattempt_conn[ev->conn_handle] += 1;
+            if (reattempt_conn[ev->conn_handle-1] < MAX_REATTEMPT_ALLOWED) {
+                reattempt_conn[ev->conn_handle-1] += 1;
                 rc = ble_gap_master_connect_reattempt(ev->conn_handle);
                 if (rc != 0) {
                     BLE_HS_LOG(DEBUG, "Master reconnect attempt failed; rc = %d", rc);
                 }
             } else {
-                reattempt_conn[ev->conn_handle] = 0;
+                reattempt_conn[ev->conn_handle-1] = 0;
             }
         }
     } else {
         /* Disconnect completed with some other reason than
          * BLE_ERR_CONN_ESTABLISHMENT, reset the corresponding reattempt count
          * */
-        reattempt_conn[ev->conn_handle] = 0;
+        reattempt_conn[ev->conn_handle-1] = 0;
     }
 #endif
 
