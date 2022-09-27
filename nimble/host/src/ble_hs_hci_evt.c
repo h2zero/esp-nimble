@@ -79,6 +79,9 @@ static ble_hs_hci_evt_le_fn ble_hs_hci_evt_le_periodic_adv_rpt;
 static ble_hs_hci_evt_le_fn ble_hs_hci_evt_le_periodic_adv_sync_lost;
 static ble_hs_hci_evt_le_fn ble_hs_hci_evt_le_scan_req_rcvd;
 static ble_hs_hci_evt_le_fn ble_hs_hci_evt_le_periodic_adv_sync_transfer;
+#if MYNEWT_VAL(BLE_CONN_SUBRATING)
+static ble_hs_hci_evt_le_fn ble_hs_hci_evt_le_subrate_change;
+#endif
 
 /* Statistics */
 struct host_hci_stats
@@ -135,6 +138,9 @@ static ble_hs_hci_evt_le_fn * const ble_hs_hci_evt_le_dispatch[] = {
     [BLE_HCI_LE_SUBEV_ADV_SET_TERMINATED] = ble_hs_hci_evt_le_adv_set_terminated,
     [BLE_HCI_LE_SUBEV_SCAN_REQ_RCVD] = ble_hs_hci_evt_le_scan_req_rcvd,
     [BLE_HCI_LE_SUBEV_PERIODIC_ADV_SYNC_TRANSFER] = ble_hs_hci_evt_le_periodic_adv_sync_transfer,
+#if MYNEWT_VAL(BLE_CONN_SUBRATING)
+    [BLE_HCI_LE_SUBEV_SUBRATE_CHANGE] = ble_hs_hci_evt_le_subrate_change,
+#endif
 };
 
 #define BLE_HS_HCI_EVT_LE_DISPATCH_SZ \
@@ -823,6 +829,23 @@ ble_hs_hci_evt_le_scan_req_rcvd(uint8_t subevent, const void *data,
 
     return 0;
 }
+
+#if MYNEWT_VAL(BLE_CONN_SUBRATING)
+static int
+ble_hs_hci_evt_le_subrate_change(uint8_t subevent, const void *data,
+                                 unsigned int len)
+{
+    const struct ble_hci_ev_le_subev_subrate_change *ev = data;
+
+    if (len != sizeof(*ev)) {
+        return BLE_HS_ECONTROLLER;
+    }
+
+    ble_gap_rx_subrate_change(ev);
+
+    return 0;
+}
+#endif
 
 #if NIMBLE_BLE_CONNECT
 static int
