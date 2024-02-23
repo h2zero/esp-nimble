@@ -620,11 +620,11 @@ ble_npl_sem_get_count(struct ble_npl_sem *sem)
     return uxSemaphoreGetCount(sem->handle);
 }
 
-static inline void
+static inline int
 ble_npl_callout_init(struct ble_npl_callout *co, struct ble_npl_eventq *evq,
                      ble_npl_event_fn *ev_cb, void *ev_arg)
 {
-    npl_freertos_callout_init(co, evq, ev_cb, ev_arg);
+    return npl_freertos_callout_init(co, evq, ev_cb, ev_arg);
 }
 
 static inline void

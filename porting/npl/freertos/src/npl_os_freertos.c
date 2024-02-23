@@ -1779,7 +1779,7 @@ os_callout_timer_cb(TimerHandle_t timer)
 }
 #endif
 
-void
+int
 npl_freertos_callout_init(struct ble_npl_callout *co, struct ble_npl_eventq *evq,
                           ble_npl_event_fn *ev_cb, void *ev_arg)
 {
@@ -1798,11 +1798,15 @@ npl_freertos_callout_init(struct ble_npl_callout *co, struct ble_npl_eventq *evq
 #else
     if (co->handle == NULL) {
         co->handle = xTimerCreate("co", 1, pdFALSE, co, os_callout_timer_cb);
+        if (co->handle == NULL) {
+            return -1;
+        }
     }
 
     co->evq = evq;
     ble_npl_event_init(&co->ev, ev_cb, ev_arg);
 #endif
+    return 0;
 }
 
 void
