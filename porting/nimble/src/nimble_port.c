@@ -178,11 +178,11 @@ nimble_port_init(void)
 {
     esp_err_t ret;
 
+#if false // Arduino disable
 #if CONFIG_IDF_TARGET_ESP32 && CONFIG_BT_CONTROLLER_ENABLED
     esp_bt_controller_mem_release(ESP_BT_MODE_CLASSIC_BT);
 #endif
 #if CONFIG_BT_CONTROLLER_ENABLED
-#if false // Arduino disable
     esp_bt_controller_config_t config_opts = BT_CONTROLLER_INIT_CONFIG_DEFAULT();
 
     ret = esp_bt_controller_init(&config_opts);
@@ -202,7 +202,7 @@ nimble_port_init(void)
         return ret;
     }
 #endif
-#endif
+#endif // Arduino disable
 
     ret = esp_nimble_init();
     if (ret != ESP_OK) {
