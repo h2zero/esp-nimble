@@ -63,6 +63,8 @@ void os_msys_buf_free(void);
                                        BLE_HCI_DATA_HDR_SZ, OS_ALIGNMENT))
 
 #if !SOC_ESP_NIMBLE_CONTROLLER || !CONFIG_BT_CONTROLLER_ENABLED
+
+#ifdef ESP_PLATFORM
 static os_membuf_t *pool_cmd_buf;
 static struct os_mempool pool_cmd;
 
@@ -75,6 +77,23 @@ static struct os_mempool pool_evt_lo;
 static os_membuf_t *pool_acl_buf;
 static struct os_mempool_ext pool_acl;
 static struct os_mbuf_pool mpool_acl;
+
+#else
+
+static uint8_t pool_cmd_buf[ OS_MEMPOOL_BYTES(POOL_CMD_COUNT, POOL_CMD_SIZE) ];
+static struct os_mempool pool_cmd;
+
+static uint8_t pool_evt_buf[ OS_MEMPOOL_BYTES(POOL_EVT_COUNT, POOL_EVT_SIZE) ];
+static struct os_mempool pool_evt;
+
+static uint8_t pool_evt_lo_buf[ OS_MEMPOOL_BYTES(POOL_EVT_LO_COUNT, POOL_EVT_SIZE) ];
+static struct os_mempool pool_evt_lo;
+
+static uint8_t pool_acl_buf[ OS_MEMPOOL_BYTES(POOL_ACL_COUNT, POOL_ACL_SIZE) ];
+static struct os_mempool_ext pool_acl;
+static struct os_mbuf_pool mpool_acl;
+
+#endif // ESP_PLATFORM
 
 static os_mempool_put_fn *transport_put_acl_from_ll_cb;
 
@@ -152,6 +171,7 @@ ble_transport_free(void *buf)
     }
 }
 
+#ifdef ESP_PLATFORM
 static os_error_t
 ble_transport_acl_put(struct os_mempool_ext *mpe, void *data, void *arg)
 {
@@ -185,6 +205,7 @@ ble_transport_acl_put(struct os_mempool_ext *mpe, void *data, void *arg)
 
     return err;
 }
+
 
 void ble_buf_free(void)
 {
@@ -228,6 +249,44 @@ esp_err_t ble_buf_alloc(void)
     return ESP_OK;
 }
 
+#else // ESP_PLATFORM
+
+static os_error_t
+ble_transport_acl_put(struct os_mempool_ext *mpe, void *data, void *arg)
+{
+    struct os_mbuf *om;
+    struct os_mbuf_pkthdr *pkthdr;
+    bool do_put;
+    bool from_ll;
+    os_error_t err;
+
+    om = data;
+    pkthdr = OS_MBUF_PKTHDR(om);
+
+    do_put = true;
+    from_ll = (pkthdr->omp_flags & OMP_FLAG_FROM_MASK) == OMP_FLAG_FROM_LL;
+    err = 0;
+
+    if (from_ll && transport_put_acl_from_ll_cb) {
+        err = transport_put_acl_from_ll_cb(mpe, data, arg);
+        do_put = false;
+    }
+
+    if (do_put) {
+        err = os_memblock_put_from_cb(&mpe->mpe_mp, data);
+    }
+
+#if MYNEWT_VAL(BLE_TRANSPORT_INT_FLOW_CTL)
+    if (from_ll && !err) {
+        ble_transport_int_flow_ctl_put();
+    }
+#endif
+
+    return err;
+}
+
+#endif // ESP_PLATFORM
+
 void
 ble_transport_init(void)
 {
@@ -258,6 +317,7 @@ ble_transport_init(void)
     pool_acl.mpe_put_cb = ble_transport_acl_put;
 }
 
+#ifdef ESP_PLATFORM
 void
 ble_transport_deinit(void)
 {
@@ -274,6 +334,8 @@ ble_transport_deinit(void)
     rc = os_mempool_clear(&pool_cmd);
     SYSINIT_PANIC_ASSERT(rc == 0);
 }
+#endif // ESP_PLATFORM
+
 int
 ble_transport_register_put_acl_from_ll_cb(os_mempool_put_fn (*cb))
 {

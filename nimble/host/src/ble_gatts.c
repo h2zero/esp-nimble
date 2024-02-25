@@ -25,10 +25,7 @@
 #include "nimble/nimble/host/include/host/ble_uuid.h"
 #include "nimble/nimble/host/include/host/ble_store.h"
 #include "ble_hs_priv.h"
-
-#ifdef ESP_PLATFORM
 #include "nimble/esp_port/port/include/esp_nimble_mem.h"
-#endif
 
 #if MYNEWT_VAL(BLE_DYNAMIC_SERVICE)
 #include "nimble/nimble/host/services/gatt/include/services/gatt/ble_svc_gatt.h"

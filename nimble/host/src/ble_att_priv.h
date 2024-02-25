@@ -212,7 +212,9 @@ int ble_att_svr_rx_read_mult(uint16_t conn_handle,
 int ble_att_svr_rx_write(uint16_t conn_handle,
                          struct os_mbuf **rxom);
 int ble_att_svr_rx_write_no_rsp(uint16_t conn_handle, struct os_mbuf **rxom);
+#ifdef ESP_PLATFORM
 int ble_att_svr_rx_signed_write(uint16_t conn_handle, struct os_mbuf **rxom);
+#endif
 int ble_att_svr_rx_prep_write(uint16_t conn_handle,
                               struct os_mbuf **rxom);
 int ble_att_svr_rx_exec_write(uint16_t conn_handle,

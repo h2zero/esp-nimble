@@ -4,14 +4,14 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
-#include <stdlib.h>
-#include "nimble/porting/nimble/include/syscfg/syscfg.h"
-#define MESH_LOG_MODULE BLE_MESH_NET_KEYS_LOG
 
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
 #if MYNEWT_VAL(BLE_MESH)
 
-#include "nimble/porting/nimble/include/log/log.h"
+#include <stdlib.h>
+#define MESH_LOG_MODULE BLE_MESH_NET_KEYS_LOG
 
+#include "nimble/porting/nimble/include/log/log.h"
 #include "crypto.h"
 #include "adv.h"
 #include "../include/mesh/mesh.h"

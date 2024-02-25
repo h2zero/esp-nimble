@@ -25,10 +25,7 @@
 #include "nimble/nimble/include/nimble/ble.h"
 #include "nimble/nimble/host/include/host/ble_uuid.h"
 #include "ble_hs_priv.h"
-
-#ifdef ESP_PLATFORM
 #include "nimble/esp_port/port/include/esp_nimble_mem.h"
-#endif
 
 #if NIMBLE_BLE_CONNECT
 /**
@@ -2345,6 +2342,7 @@ ble_att_svr_rx_write_no_rsp(uint16_t conn_handle, struct os_mbuf **rxom)
     return ble_att_svr_write_handle(conn_handle, handle, 0, rxom, &att_err);
 }
 
+#ifdef ESP_PLATFORM
 int
 ble_att_svr_rx_signed_write(uint16_t conn_handle, struct os_mbuf **rxom)
 {
@@ -2456,6 +2454,7 @@ err:
     if(message != NULL) nimble_platform_mem_free(message);
     return rc;
 }
+#endif
 
 int
 ble_att_svr_write_local(uint16_t attr_handle, struct os_mbuf *om)

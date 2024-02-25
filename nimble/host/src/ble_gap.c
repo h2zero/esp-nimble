@@ -42,6 +42,10 @@
 #define max(a, b) ((a) > (b) ? (a) : (b))
 #endif
 
+#ifndef BIT
+#define BIT(n)  (1UL << (n))
+#endif
+
 #if MYNEWT
 #include "bsp/bsp.h"
 #else

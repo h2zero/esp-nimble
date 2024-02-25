@@ -295,9 +295,11 @@ ble_store_config_persist_eads(void)
     return 0;
 }
 #endif
+
 int
 ble_store_config_persist_rpa_recs(void)
 {
+#ifdef ESP_PLATFORM
     char buf[BLE_STORE_CONFIG_RPA_REC_SET_ENCODE_SZ];
     int rc;
     ble_store_config_serialize_arr(ble_store_config_rpa_recs,
@@ -310,7 +312,16 @@ ble_store_config_persist_rpa_recs(void)
         return BLE_HS_ESTORE_FAIL;
     }
     return 0;
+#endif
+    return BLE_HS_ESTORE_FAIL;
 }
+
+#ifndef ESP_PLATFORM
+int ble_store_config_persist_local_irk(void){
+    return BLE_HS_ESTORE_FAIL;
+}
+#endif
+
 void
 ble_store_config_conf_init(void)
 {

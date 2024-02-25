@@ -20,7 +20,6 @@
 #ifndef _NIMBLE_PORT_H
 #define _NIMBLE_PORT_H
 
-#include "esp_err.h"
 #include "nimble/nimble/include/nimble/nimble_npl.h"
 
 #ifdef ESP_PLATFORM
@@ -41,6 +40,7 @@
 extern "C" {
 #endif
 
+#ifdef ESP_PLATFORM
 /**
 * @brief nimble_port_init - Initialize controller and NimBLE host stack
 *
@@ -75,6 +75,17 @@ esp_err_t esp_nimble_init(void);
  */
 esp_err_t esp_nimble_deinit(void);
 
+#else
+
+void nimble_port_init(void);
+
+void nimble_port_run(void);
+
+int nimble_port_stop(void);
+
+void nimble_port_deinit(void);
+
+#endif //ESP_PLATFORM
 
 struct ble_npl_eventq *nimble_port_get_dflt_eventq(void);
 

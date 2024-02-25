@@ -8,9 +8,9 @@
  */
 
 #include "nimble/porting/nimble/include/syscfg/syscfg.h"
-#define MESH_LOG_MODULE BLE_MESH_PROXY_LOG
-
 #if MYNEWT_VAL(BLE_MESH_PROXY)
+
+#define MESH_LOG_MODULE BLE_MESH_PROXY_LOG
 
 #include "../include/mesh/mesh.h"
 #include "nimble/nimble/host/include/host/ble_att.h"

@@ -112,7 +112,7 @@ ble_hs_hci_cmd_send(uint16_t opcode, uint8_t len, const void *cmddata)
     struct ble_hci_cmd *cmd;
     int rc;
 
-    cmd = (void *) ble_hci_trans_buf_alloc(BLE_HCI_TRANS_BUF_CMD);
+    cmd = ble_transport_alloc_cmd();
     BLE_HS_DBG_ASSERT(cmd != NULL);
 
     cmd->opcode = htole16(opcode);

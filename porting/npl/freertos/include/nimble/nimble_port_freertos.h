@@ -30,6 +30,7 @@
 extern "C" {
 #endif
 
+#ifdef ESP_PLATFORM
 /**
  * @brief esp_nimble_enable - Initialize the NimBLE host task
  *
@@ -44,6 +45,8 @@ esp_err_t esp_nimble_enable(void *host_task);
  * @return esp_err_t
  */
 esp_err_t esp_nimble_disable(void);
+
+#endif // ESP_PLATFORM
 
 void nimble_port_freertos_init(TaskFunction_t host_task_fn);
 void nimble_port_freertos_deinit(void);

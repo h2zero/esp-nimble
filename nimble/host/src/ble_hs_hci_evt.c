@@ -192,8 +192,6 @@ ble_hs_hci_evt_dispatch_find(uint8_t event_code)
     return NULL;
 }
 
-static const uint8_t ble_hs_conn_null_addr[6];
-
 static ble_hs_hci_evt_le_fn *
 ble_hs_hci_evt_le_dispatch_find(uint8_t event_code)
 {
@@ -425,6 +423,11 @@ static struct ble_gap_conn_complete pend_conn_complete;
 #endif
 
 #if NIMBLE_BLE_CONNECT
+
+#if MYNEWT_VAL(BLE_HOST_BASED_PRIVACY)
+static const uint8_t ble_hs_conn_null_addr[6];
+#endif
+
 static int
 ble_hs_hci_evt_le_enh_conn_complete(uint8_t subevent, const void *data,
                                     unsigned int len)

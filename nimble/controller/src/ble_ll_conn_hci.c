@@ -37,6 +37,11 @@
 
 #if MYNEWT_VAL(BLE_LL_ROLE_CENTRAL) || MYNEWT_VAL(BLE_LL_ROLE_PERIPHERAL)
 
+#ifndef ARRAY_SIZE
+#define ARRAY_SIZE(array) \
+        (sizeof(array) / sizeof((array)[0]))
+#endif
+
 /*
  * Used to limit the rate at which we send the number of completed packets
  * event to the host. This is the os time at which we can send an event.

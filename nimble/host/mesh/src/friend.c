@@ -7,6 +7,8 @@
  */
 
 #include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#if MYNEWT_VAL(BLE_MESH)
+
 #define MESH_LOG_MODULE BLE_MESH_FRIEND_LOG
 
 #if MYNEWT_VAL(BLE_MESH_FRIEND)
@@ -1789,3 +1791,5 @@ void bt_mesh_friend_clear_incomplete(struct bt_mesh_subnet *sub, uint16_t src,
 }
 
 #endif /* MYNEWT_VAL(BLE_MESH_FRIEND) */
+
+#endif /* MYNEWT_VAL(BLE_MESH) */

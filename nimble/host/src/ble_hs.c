@@ -145,7 +145,7 @@ ble_hs_locked_by_cur_task(void)
 #elif ESP_PLATFORM
     return (ble_hs_mutex_locked && ble_hs_task_handle == xTaskGetCurrentTaskHandle());
 #else
-    return 1;
+    return ble_hs_dbg_mutex_locked;
 #endif
 }
 #endif

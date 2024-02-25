@@ -37,6 +37,14 @@
 
 #if MYNEWT_VAL(BLE_LL_ROLE_PERIPHERAL) || MYNEWT_VAL(BLE_LL_ROLE_CENTRAL)
 
+#ifndef min
+#define min(a, b) ((a) < (b) ? (a) : (b))
+#endif
+
+#ifndef max
+#define max(a, b) ((a) > (b) ? (a) : (b))
+#endif
+
 /* To use spec sample data for testing */
 #undef BLE_LL_ENCRYPT_USE_TEST_DATA
 
