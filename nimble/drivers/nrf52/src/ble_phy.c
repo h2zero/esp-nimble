@@ -1977,9 +1977,31 @@ ble_phy_txpwr_set(int dbm)
  */
 int ble_phy_txpower_round(int dbm)
 {
-    /* TODO this should be per nRF52XXX */
-
     /* "Rail" power level if outside supported range */
+#ifdef RADIO_TXPOWER_TXPOWER_Pos8dBm
+    if (dbm >= (int8_t)RADIO_TXPOWER_TXPOWER_Pos8dBm) {
+        return (int8_t)RADIO_TXPOWER_TXPOWER_Pos8dBm;
+    }
+#endif
+
+#ifdef RADIO_TXPOWER_TXPOWER_Pos7dBm
+    if (dbm >= (int8_t)RADIO_TXPOWER_TXPOWER_Pos7dBm) {
+        return (int8_t)RADIO_TXPOWER_TXPOWER_Pos7dBm;
+    }
+#endif
+
+#ifdef RADIO_TXPOWER_TXPOWER_Pos6dBm
+    if (dbm >= (int8_t)RADIO_TXPOWER_TXPOWER_Pos6dBm) {
+        return (int8_t)RADIO_TXPOWER_TXPOWER_Pos6dBm;
+    }
+#endif
+
+#ifdef RADIO_TXPOWER_TXPOWER_Pos5dBm
+    if (dbm >= (int8_t)RADIO_TXPOWER_TXPOWER_Pos5dBm) {
+        return (int8_t)RADIO_TXPOWER_TXPOWER_Pos5dBm;
+    }
+#endif
+
     if (dbm >= (int8_t)RADIO_TXPOWER_TXPOWER_Pos4dBm) {
         return (int8_t)RADIO_TXPOWER_TXPOWER_Pos4dBm;
     }
