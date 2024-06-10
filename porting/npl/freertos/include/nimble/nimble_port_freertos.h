@@ -50,6 +50,8 @@ esp_err_t esp_nimble_disable(void);
 
 void nimble_port_freertos_init(TaskFunction_t host_task_fn);
 void nimble_port_freertos_deinit(void);
+UBaseType_t nimble_port_freertos_get_hs_hwm(void);
+
 #if CONFIG_NIMBLE_STACK_USE_MEM_POOLS
 void npl_freertos_funcs_init(void);
 void npl_freertos_funcs_deinit(void);
