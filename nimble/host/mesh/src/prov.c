@@ -6,12 +6,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
 #define MESH_LOG_MODULE BLE_MESH_PROV_LOG
 
 #include <errno.h>
 
-#include "mesh/mesh.h"
+#include "../include/mesh/mesh.h"
 #include "mesh_priv.h"
 
 #include "crypto.h"
@@ -20,7 +20,7 @@
 #include "access.h"
 #include "foundation.h"
 #include "prov.h"
-#include "testing.h"
+#include "../include/mesh/testing.h"
 
 struct bt_mesh_prov_link bt_mesh_prov_link;
 const struct bt_mesh_prov *bt_mesh_prov;

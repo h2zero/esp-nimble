@@ -20,10 +20,10 @@
 #include <assert.h>
 #include <string.h>
 #include <errno.h>
-#include "nimble/nimble_opt.h"
-#include "host/ble_gap.h"
-#include "host/ble_hs_adv.h"
-#include "host/ble_hs_hci.h"
+#include "nimble/nimble/include/nimble/nimble_opt.h"
+#include "nimble/nimble/host/include/host/ble_gap.h"
+#include "nimble/nimble/host/include/host/ble_hs_adv.h"
+#include "nimble/nimble/host/include/host/ble_hs_hci.h"
 #include "ble_hs_priv.h"
 #include "ble_gap_priv.h"
 #include "ble_hs_resolv_priv.h"
@@ -31,8 +31,8 @@
 #include "ble_gattc_cache_priv.h"
 #endif
 
-#include "host/ble_hs_pvcy.h"
-#include "host/util/util.h"
+#include "../include/host/ble_hs_pvcy.h"
+#include "../util/include/host/util/util.h"
 
 #ifndef min
 #define min(a, b) ((a) < (b) ? (a) : (b))
@@ -5059,10 +5059,10 @@ ble_gap_disc_cancel(void)
        return BLE_HS_EDISABLED;
     }
 
-#if MYNEWT_VAL(BLE_QUEUE_CONG_CHECK) 
+#if MYNEWT_VAL(BLE_QUEUE_CONG_CHECK)
     ble_adv_list_refresh();
 #endif
-    
+
     ble_hs_lock();
     rc = ble_gap_disc_cancel_no_lock();
     ble_hs_unlock();
@@ -5288,7 +5288,7 @@ ble_gap_disc(uint8_t own_addr_type, int32_t duration_ms,
 
 #if MYNEWT_VAL(BLE_QUEUE_CONG_CHECK)
     ble_adv_list_refresh();
-#endif 
+#endif
 
 #if MYNEWT_VAL(BLE_EXT_ADV)
     struct ble_gap_ext_disc_params p = {0};
@@ -5712,7 +5712,7 @@ ble_gap_ext_connect(uint8_t own_addr_type, const ble_addr_t *peer_addr,
     STATS_INC(ble_gap_stats, initiate);
 
 #if MYNEWT_VAL(OPTIMIZE_MULTI_CONN)
-    /* If the optimization is enabled, we disallow to invoke this API directly. 
+    /* If the optimization is enabled, we disallow to invoke this API directly.
      * See @ble_gap_multi_connect()
      */
     if (ble_gap_multi_conn.enabled && !ble_gap_multi_conn.scheduling_len_set) {
@@ -5889,7 +5889,7 @@ ble_gap_connect(uint8_t own_addr_type, const ble_addr_t *peer_addr,
     STATS_INC(ble_gap_stats, initiate);
 
 #if MYNEWT_VAL(OPTIMIZE_MULTI_CONN)
-    /* If the optimization is enabled, we disallow to invoke this API directly. 
+    /* If the optimization is enabled, we disallow to invoke this API directly.
      * See @ble_gap_multi_connect()
      */
     if (ble_gap_multi_conn.enabled && !ble_gap_multi_conn.scheduling_len_set) {
@@ -6097,7 +6097,7 @@ ble_gap_common_factor_set(bool enable, uint32_t common_factor)
 
 #if MYNEWT_VAL(BLE_ROLE_CENTRAL)
 int
-ble_gap_multi_connect(struct ble_gap_multi_conn_params *multi_conn_params, 
+ble_gap_multi_connect(struct ble_gap_multi_conn_params *multi_conn_params,
                       ble_gap_event_fn *cb, void *cb_arg)
 {
     int rc;
@@ -6125,22 +6125,22 @@ ble_gap_multi_connect(struct ble_gap_multi_conn_params *multi_conn_params,
 
     scheduling_len_us = multi_conn_params->scheduling_len_us;
     /* `scheduling_len_us == 0` is allowed.  It indicates that the optimization for this connection
-     * is disabled. The connection interval must be an integer multiple of `common factor`.  Note 
+     * is disabled. The connection interval must be an integer multiple of `common factor`.  Note
      * that the unit of the connection interval is 1.25ms, while the common factor's unit is 0.625ms.
      */
     if (scheduling_len_us != 0) {
 #if MYNEWT_VAL(BLE_EXT_ADV)
         if (phy_mask & BLE_GAP_LE_PHY_1M_MASK) {
             conn_params = multi_conn_params->phy_1m_conn_params;
-            if ((conn_params == NULL) || 
-                !ble_gap_interval_is_integer_multiple(conn_params->itvl_min << 1, 
+            if ((conn_params == NULL) ||
+                !ble_gap_interval_is_integer_multiple(conn_params->itvl_min << 1,
                                                       conn_params->itvl_max << 1)) {
                 return BLE_HS_EINVAL;
             }
         }
         if (phy_mask & BLE_GAP_LE_PHY_2M_MASK) {
             conn_params = multi_conn_params->phy_2m_conn_params;
-            if ((conn_params == NULL) || 
+            if ((conn_params == NULL) ||
                 !ble_gap_interval_is_integer_multiple(conn_params->itvl_min << 1,
                                                       conn_params->itvl_max << 1)) {
                 return BLE_HS_EINVAL;
@@ -6148,7 +6148,7 @@ ble_gap_multi_connect(struct ble_gap_multi_conn_params *multi_conn_params,
         }
         if (phy_mask & BLE_GAP_LE_PHY_CODED_MASK) {
             conn_params = multi_conn_params->phy_coded_conn_params;
-            if ((conn_params == NULL) || 
+            if ((conn_params == NULL) ||
                 !ble_gap_interval_is_integer_multiple(conn_params->itvl_min << 1,
                                                       conn_params->itvl_max << 1)) {
                 return BLE_HS_EINVAL;
@@ -6156,8 +6156,8 @@ ble_gap_multi_connect(struct ble_gap_multi_conn_params *multi_conn_params,
         }
 #else
         conn_params = multi_conn_params->phy_1m_conn_params;
-        if ((conn_params == NULL) || 
-            !ble_gap_interval_is_integer_multiple(conn_params->itvl_min << 1, 
+        if ((conn_params == NULL) ||
+            !ble_gap_interval_is_integer_multiple(conn_params->itvl_min << 1,
                                                   conn_params->itvl_max << 1)) {
             return BLE_HS_EINVAL;
         }

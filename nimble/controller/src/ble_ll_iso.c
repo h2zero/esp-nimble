@@ -18,10 +18,10 @@
  */
 
 #include <stdint.h>
-#include "syscfg/syscfg.h"
-#include "nimble/ble.h"
-#include "nimble/hci_common.h"
-#include "controller/ble_ll_iso.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/nimble/include/nimble/ble.h"
+#include "nimble/nimble/include/nimble/hci_common.h"
+#include "../include/controller/ble_ll_iso.h"
 
 #if MYNEWT_VAL(BLE_LL_CFG_FEAT_LL_ISO)
 

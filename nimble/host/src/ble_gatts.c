@@ -20,12 +20,12 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
-#include "nimble/ble.h"
-#include "host/ble_gatt.h"
-#include "host/ble_uuid.h"
-#include "host/ble_store.h"
+#include "nimble/nimble/include/nimble/ble.h"
+#include "nimble/nimble/host/include/host/ble_gatt.h"
+#include "nimble/nimble/host/include/host/ble_uuid.h"
+#include "nimble/nimble/host/include/host/ble_store.h"
 #include "ble_hs_priv.h"
-#include "esp_nimble_mem.h"
+#include "nimble/esp_port/port/include/esp_nimble_mem.h"
 #if MYNEWT_VAL(BLE_DYNAMIC_SERVICE)
 #include "services/gatt/ble_svc_gatt.h"
 #endif
@@ -1049,11 +1049,11 @@ ble_gatts_cpfd_access(uint16_t conn_handle, uint16_t attr_handle,
     int rc;
 
     BLE_HS_DBG_ASSERT(op == BLE_ATT_ACCESS_OP_READ);
-    
+
     STATS_INC(ble_gatts_stats, dsc_reads);
 
     cpfd = arg;
-    
+
     rc = 0;
     rc += os_mbuf_append(*om, &(cpfd->format), sizeof(cpfd->format));
     rc += os_mbuf_append(*om, &(cpfd->exponent), sizeof(cpfd->exponent));
@@ -1097,7 +1097,7 @@ ble_gatts_register_cpfds(const struct ble_gatt_cpfd *cpfds)
         if (first_cpfd_entry == NULL) {
             return BLE_HS_ENOENT;
         }
-        
+
         /**
          * The First CPFD entry will contain it's handle,
          * Using that and the handle of this descriptor we can

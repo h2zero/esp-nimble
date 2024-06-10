@@ -17,23 +17,25 @@
  * under the License.
  */
 
+#if defined(ARDUINO_ARCH_NRF5) && defined(NRF52)
+
 #include <stdint.h>
 #include <assert.h>
 #include <string.h>
-#include "syscfg/syscfg.h"
-#include "os/os.h"
-#include "ble/xcvr.h"
-#include "nimble/ble.h"
-#include "nimble/nimble_opt.h"
-#include "nrfx.h"
-#include "controller/ble_hw.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/os/os.h"
+#include "../include/ble/xcvr.h"
+#include "nimble/nimble/include/nimble/ble.h"
+#include "nimble/nimble/include/nimble/nimble_opt.h"
+#include "nrf.h"
+#include "nimble/nimble/controller/include/controller/ble_hw.h"
 #if MYNEWT
 #include "mcu/cmsis_nvic.h"
 #else
 #include "core_cm4.h"
-#include <nimble/nimble_npl_os.h>
+#include "nimble/porting/npl/freertos/include/nimble/nimble_npl_os.h"
 #endif
-#include "os/os_trace_api.h"
+#include "nimble/porting/nimble/include/os/os_trace_api.h"
 #include <hal/nrf_rng.h>
 #include "hal/nrf_ecb.h"
 
@@ -508,4 +510,5 @@ ble_hw_resolv_list_match(void)
 
     return -1;
 }
+#endif
 #endif

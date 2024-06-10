@@ -27,8 +27,8 @@
 #ifndef H_BLE_HCI_COMMON_
 #define H_BLE_HCI_COMMON_
 
-#include "ble.h"
-#include "nimble/transport.h"
+#include "nimble/nimble/include/nimble/ble.h"
+#include "nimble/nimble/transport/include/nimble/transport.h"
 
 #ifdef __cplusplus
 extern "C" {

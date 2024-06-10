@@ -21,17 +21,17 @@
 #include <string.h>
 #include <assert.h>
 #include <errno.h>
-#include "syscfg/syscfg.h"
-#include "os/os.h"
-#include "nimble/ble.h"
-#include "nimble/hci_common.h"
-#include "controller/ble_ll.h"
-#include "controller/ble_ll_utils.h"
-#include "controller/ble_ll_hci.h"
-#include "controller/ble_ll_conn.h"
-#include "controller/ble_ll_ctrl.h"
-#include "controller/ble_ll_scan.h"
-#include "controller/ble_ll_adv.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/os/os.h"
+#include "nimble/nimble/include/nimble/ble.h"
+#include "nimble/nimble/include/nimble/hci_common.h"
+#include "../include/controller/ble_ll.h"
+#include "../include/controller/ble_ll_utils.h"
+#include "../include/controller/ble_ll_hci.h"
+#include "../include/controller/ble_ll_conn.h"
+#include "../include/controller/ble_ll_ctrl.h"
+#include "../include/controller/ble_ll_scan.h"
+#include "../include/controller/ble_ll_adv.h"
 #include "ble_ll_conn_priv.h"
 
 #if MYNEWT_VAL(BLE_LL_ROLE_CENTRAL) || MYNEWT_VAL(BLE_LL_ROLE_PERIPHERAL)

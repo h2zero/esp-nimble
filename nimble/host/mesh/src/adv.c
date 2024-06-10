@@ -7,15 +7,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
 #define MESH_LOG_MODULE BLE_MESH_ADV_LOG
 
-#include "mesh/mesh.h"
-#include "host/ble_hs_adv.h"
-#include "host/ble_gap.h"
-#include "mesh/porting.h"
-#include "nimble/nimble_port.h"
-
+#include "../include/mesh/mesh.h"
+#include "nimble/nimble/host/include/host/ble_hs_adv.h"
+#include "nimble/nimble/host/include/host/ble_gap.h"
+#include "../include/mesh/porting.h"
+#include "nimble/porting/nimble/include/nimble/nimble_port.h"
 #include "adv.h"
 #include "net.h"
 #include "foundation.h"

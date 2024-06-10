@@ -17,9 +17,9 @@
  * under the License.
  */
 
-#include "host/ble_hs.h"
-#include "host/util/util.h"
-#include "../src/ble_hs_hci_priv.h"
+#include "nimble/nimble/host/include/host/ble_hs.h"
+#include "../include/host/util/util.h"
+#include "../../src/ble_hs_hci_priv.h"
 
 #if SOC_ESP_NIMBLE_CONTROLLER && CONFIG_BT_CONTROLLER_ENABLED
 #include "esp_bt.h"

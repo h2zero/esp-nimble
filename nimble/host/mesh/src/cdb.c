@@ -5,7 +5,7 @@
  */
 
 #define MESH_LOG_MODULE BLE_MESH_LOG
-#include "log/log.h"
+#include "nimble/porting/nimble/include/log/log.h"
 #include <stdlib.h>
 
 #include "cdb_priv.h"
@@ -13,7 +13,7 @@
 #include "rpl.h"
 #include "settings.h"
 #include "mesh_priv.h"
-#include "mesh/glue.h"
+#include "../include/mesh/glue.h"
 
 #if MYNEWT_VAL(BLE_MESH_CDB)
 /* Tracking of what storage changes are pending for App and Net Keys. We

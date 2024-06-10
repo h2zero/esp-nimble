@@ -20,10 +20,10 @@
 #ifndef H_BLE_LL_SCAN_
 #define H_BLE_LL_SCAN_
 
-#include "controller/ble_ll_sched.h"
-#include "controller/ble_ll_tmr.h"
-#include "syscfg/syscfg.h"
-#include "nimble/nimble_npl.h"
+#include "ble_ll_sched.h"
+#include "ble_ll_tmr.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/nimble/include/nimble/nimble_npl.h"
 
 #ifdef __cplusplus
 extern "C" {

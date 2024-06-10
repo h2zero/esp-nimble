@@ -9,7 +9,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
 
 #if MYNEWT_VAL(BLE_MESH_SHELL)
 
@@ -21,7 +21,7 @@
 #include "mesh/mesh.h"
 #include "mesh/main.h"
 #include "mesh/glue.h"
-#include "mesh/testing.h"
+#include "../include/mesh/testing.h"
 
 /* Private includes for raw Network & Transport layer access */
 #include "net.h"
@@ -31,7 +31,6 @@
 #include "lpn.h"
 #include "transport.h"
 #include "foundation.h"
-#include "testing.h"
 #include "settings.h"
 
 #if MYNEWT_VAL(BLE_MESH_SHELL_MODELS)

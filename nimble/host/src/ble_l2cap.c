@@ -19,11 +19,11 @@
 
 #include <string.h>
 #include <errno.h>
-#include "syscfg/syscfg.h"
-#include "os/os.h"
-#include "host/ble_l2cap.h"
-#include "nimble/ble.h"
-#include "nimble/hci_common.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/os/os.h"
+#include "../include/host/ble_l2cap.h"
+#include "nimble/nimble/include/nimble/ble.h"
+#include "nimble/nimble/include/nimble/hci_common.h"
 #include "ble_hs_priv.h"
 #include "ble_l2cap_coc_priv.h"
 

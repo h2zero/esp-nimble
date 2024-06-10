@@ -17,7 +17,7 @@
  * under the License.
  */
 
-#include <syscfg/syscfg.h>
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
 
 #if MYNEWT_VAL(BLE_LL_ROLE_OBSERVER) && MYNEWT_VAL(BLE_LL_CFG_FEAT_LL_EXT_ADV)
 
@@ -25,19 +25,19 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
-#include "os/os.h"
-#include "nimble/ble.h"
-#include "nimble/hci_common.h"
-#include "controller/ble_phy.h"
-#include "controller/ble_hw.h"
-#include "controller/ble_ll.h"
-#include "controller/ble_ll_sched.h"
-#include "controller/ble_ll_scan.h"
-#include "controller/ble_ll_scan_aux.h"
-#include "controller/ble_ll_hci.h"
-#include "controller/ble_ll_whitelist.h"
-#include "controller/ble_ll_resolv.h"
-#include "controller/ble_ll_sync.h"
+#include "nimble/porting/nimble/include/os/os.h"
+#include "nimble/nimble/include/nimble/ble.h"
+#include "nimble/nimble/include/nimble/hci_common.h"
+#include "../include/controller/ble_phy.h"
+#include "../include/controller/ble_hw.h"
+#include "../include/controller/ble_ll.h"
+#include "../include/controller/ble_ll_sched.h"
+#include "../include/controller/ble_ll_scan.h"
+#include "../include/controller/ble_ll_scan_aux.h"
+#include "../include/controller/ble_ll_hci.h"
+#include "../include/controller/ble_ll_whitelist.h"
+#include "../include/controller/ble_ll_resolv.h"
+#include "../include/controller/ble_ll_sync.h"
 
 #define BLE_LL_SCAN_AUX_F_AUX_ADV           0x0001
 #define BLE_LL_SCAN_AUX_F_AUX_CHAIN         0x0002

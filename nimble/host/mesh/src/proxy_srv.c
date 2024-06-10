@@ -9,10 +9,10 @@
 
 #define MESH_LOG_MODULE BLE_MESH_PROXY_LOG
 
-#include "mesh/slist.h"
-#include "mesh/mesh.h"
-#include "../../host/src/ble_hs_priv.h"
-#include "services/gatt/ble_svc_gatt.h"
+#include "../include/mesh/slist.h"
+#include "../include/mesh/mesh.h"
+#include "nimble/nimble/host/src/ble_hs_priv.h"
+#include "nimble/nimble/host/services/gatt/include/services/gatt/ble_svc_gatt.h"
 
 #include "mesh_priv.h"
 #include "adv.h"

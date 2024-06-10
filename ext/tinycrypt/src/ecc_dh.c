@@ -54,9 +54,9 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-#include <tinycrypt/constants.h>
-#include <tinycrypt/ecc.h>
-#include <tinycrypt/ecc_dh.h>
+#include "../include/tinycrypt/constants.h"
+#include "../include/tinycrypt/ecc.h"
+#include "../include/tinycrypt/ecc_dh.h"
 #include <string.h>
 
 #if default_RNG_defined

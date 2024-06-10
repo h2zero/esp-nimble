@@ -18,11 +18,14 @@
  */
 
 #include <assert.h>
-#include "os/os.h"
-#include "mem/mem.h"
-#include "sysinit/sysinit.h"
-#include "esp_nimble_mem.h"
+#include "../include/os/os.h"
+#include "../include/mem/mem.h"
+#include "../include/sysinit/sysinit.h"
+
+#ifdef ESP32_PLATFORM
+#include "nimble/esp_port/port/include/esp_nimble_mem.h"
 #include "esp_err.h"
+#endif
 
 static STAILQ_HEAD(, os_mbuf_pool) g_msys_pool_list =
     STAILQ_HEAD_INITIALIZER(g_msys_pool_list);

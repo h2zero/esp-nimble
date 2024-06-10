@@ -15,7 +15,7 @@
 #include "beacon.h"
 #include "prov.h"
 #include "proxy.h"
-#include "mesh/glue.h"
+#include "../include/mesh/glue.h"
 #include "pb_gatt_srv.h"
 
 #ifndef min

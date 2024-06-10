@@ -28,10 +28,10 @@
  */
 
 #include <inttypes.h>
-#include "host/ble_att.h"
-#include "host/ble_uuid.h"
-#include "host/ble_esp_gatt.h"
-#include "syscfg/syscfg.h"
+#include "ble_att.h"
+#include "ble_uuid.h"
+#include "ble_esp_gatt.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -83,7 +83,7 @@ struct ble_hs_cfg;
 #define BLE_GATT_SVC_TYPE_PRIMARY                       1
 #define BLE_GATT_SVC_TYPE_SECONDARY                     2
 
-/** 
+/**
  * Client Presentation Format
  * GATT Format Types
  * Ref: Assigned Numbers Specification

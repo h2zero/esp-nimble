@@ -67,8 +67,8 @@
 #ifndef __TC_CTR_MODE_H__
 #define __TC_CTR_MODE_H__
 
-#include <tinycrypt/aes.h>
-#include <tinycrypt/constants.h>
+#include "aes.h"
+#include "constants.h"
 
 #ifdef __cplusplus
 extern "C" {

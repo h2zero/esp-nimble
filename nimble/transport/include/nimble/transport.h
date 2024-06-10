@@ -24,10 +24,10 @@
 extern "C" {
 #endif
 
-#include <nimble/transport_impl.h>
-#include <nimble/transport/monitor.h>
+#include "transport_impl.h"
+#include "transport/monitor.h"
 #include <inttypes.h>
-#include "os/os_mempool.h"
+#include "nimble/porting/nimble/include/os/os_mempool.h"
 
 #define BLE_HCI_TRANS_CMD_SZ        260
 /*** Type of buffers for holding commands and events. */

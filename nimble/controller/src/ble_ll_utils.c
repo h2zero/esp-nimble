@@ -19,10 +19,18 @@
 
 #include <assert.h>
 #include <stdlib.h>
-#include "nimble/ble.h"
-#include "controller/ble_ll.h"
-#include "controller/ble_ll_tmr.h"
-#include "controller/ble_ll_utils.h"
+#include "nimble/nimble/include/nimble/ble.h"
+#include "../include/controller/ble_ll.h"
+#include "../include/controller/ble_ll_tmr.h"
+#include "../include/controller/ble_ll_utils.h"
+
+#ifndef min
+#define min(a, b) ((a) < (b) ? (a) : (b))
+#endif
+
+#ifndef max
+#define max(a, b) ((a) > (b) ? (a) : (b))
+#endif
 
 /* 37 bits require 5 bytes */
 #define BLE_LL_CHMAP_LEN (5)

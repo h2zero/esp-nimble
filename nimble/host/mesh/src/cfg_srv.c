@@ -6,14 +6,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
 #define MESH_LOG_MODULE BLE_MESH_MODEL_LOG
 
 #include <string.h>
 #include <errno.h>
 #include <stdbool.h>
 
-#include "mesh/mesh.h"
+#include "../include/mesh/mesh.h"
 
 #include "mesh_priv.h"
 #include "adv.h"
@@ -29,7 +29,6 @@
 #include "proxy.h"
 #include "foundation.h"
 #include "friend.h"
-#include "testing.h"
 #include "settings.h"
 #include "cfg.h"
 
@@ -1963,10 +1962,6 @@ static int mod_app_bind(struct bt_mesh_model *model,
 
 	status = mod_bind(mod, key_app_idx);
 
-	if (IS_ENABLED(CONFIG_BT_TESTING) && status == STATUS_SUCCESS) {
-		bt_test_mesh_model_bound(ctx->addr, mod, key_app_idx);
-	}
-
 send_status:
 	BT_DBG("status 0x%02x", status);
 	create_mod_app_status(msg, mod, vnd, elem_addr, key_app_idx, status,
@@ -2024,10 +2019,6 @@ static int mod_app_unbind(struct bt_mesh_model *model,
 	}
 
 	status = mod_unbind(mod, key_app_idx, true);
-
-	if (IS_ENABLED(CONFIG_BT_TESTING) && status == STATUS_SUCCESS) {
-		bt_test_mesh_model_unbound(ctx->addr, mod, key_app_idx);
-	}
 
 send_status:
 	BT_DBG("status 0x%02x", status);

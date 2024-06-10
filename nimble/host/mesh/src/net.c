@@ -6,15 +6,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
 #define MESH_LOG_MODULE BLE_MESH_NET_LOG
 
 #include <string.h>
 #include <errno.h>
 #include <stdbool.h>
 
-#include "os/os_mbuf.h"
-#include "mesh/mesh.h"
+#include "nimble/porting/nimble/include/os/os_mbuf.h"
+#include "../include/mesh/mesh.h"
 
 #include "crypto.h"
 #include "adv.h"
@@ -31,8 +31,8 @@
 #include "settings.h"
 #include "prov.h"
 #include "cfg.h"
-#include "mesh/glue.h"
-#include "mesh/slist.h"
+#include "../include/mesh/glue.h"
+#include "../include/mesh/slist.h"
 
 #define LOOPBACK_MAX_PDU_LEN (BT_MESH_NET_HDR_LEN + 16)
 #define LOOPBACK_USER_DATA_SIZE sizeof(struct bt_mesh_subnet *)

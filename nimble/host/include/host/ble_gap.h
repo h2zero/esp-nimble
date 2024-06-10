@@ -28,10 +28,10 @@
  */
 
 #include <inttypes.h>
-#include "host/ble_hs.h"
-#include "host/ble_hs_adv.h"
-#include "syscfg/syscfg.h"
-#include "host/ble_esp_gap.h"
+#include "ble_hs.h"
+#include "ble_hs_adv.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "ble_esp_gap.h"
 
 #if MYNEWT_VAL(ENC_ADV_DATA)
 #include "../../src/ble_hs_hci_priv.h"
@@ -1219,29 +1219,29 @@ struct ble_gap_multi_conn_params {
     /** The duration of the discovery procedure. */
     int32_t duration_ms;
 
-    /** 
-     * Additional arguments specifying the particulars of the connect procedure. When extended 
-     * adv is disabled or BLE_GAP_LE_PHY_1M_MASK is set in phy_mask this parameter can't be 
+    /**
+     * Additional arguments specifying the particulars of the connect procedure. When extended
+     * adv is disabled or BLE_GAP_LE_PHY_1M_MASK is set in phy_mask this parameter can't be
      * specified to null.
      */
     const struct ble_gap_conn_params *phy_1m_conn_params;
 
 #if MYNEWT_VAL(BLE_EXT_ADV)
-    /** 
+    /**
      * Additional arguments specifying the particulars of the connect procedure. When
      * BLE_GAP_LE_PHY_2M_MASK is set in phy_mask this parameter can't be specified to null.
      */
     const struct ble_gap_conn_params *phy_2m_conn_params;
-    
-    /** 
+
+    /**
      * Additional arguments specifying the particulars of the connect procedure. When
      * BLE_GAP_LE_PHY_CODED_MASK is set in phy_mask this parameter can't be specified to null.
      */
     const struct ble_gap_conn_params *phy_coded_conn_params;
 #endif // MYNEWT_VAL(BLE_EXT_ADV)
 
-    /** 
-     * The minimum length occupied by this connection in scheduler. 0 means disable the 
+    /**
+     * The minimum length occupied by this connection in scheduler. 0 means disable the
      * optimization for this connection.
      */
     uint32_t scheduling_len_us;
@@ -2168,11 +2168,11 @@ int ble_gap_ext_connect(uint8_t own_addr_type, const ble_addr_t *peer_addr,
 #if MYNEWT_VAL(OPTIMIZE_MULTI_CONN)
 /**
  * @brief Enable the optimization of multiple connections.
- * 
+ *
  * @param enable                Enable or disable the optimization.
  * @param common_factor         The greatest common factor of all intervals in 0.625ms units.
- * @return                      0 on success; 
- * 
+ * @return                      0 on success;
+ *
  */
 int ble_gap_common_factor_set(bool enable, uint32_t common_factor);
 
@@ -2189,7 +2189,7 @@ int ble_gap_common_factor_set(bool enable, uint32_t common_factor);
  *                                  callback as its event-reporting mechanism.
  * @param cb_arg                The optional argument to pass to the callback
  *                                  function.
- * 
+ *
  * @return                      0 on success;
  *                              BLE_HS_EALREADY if a connection attempt is
  *                                  already in progress;
@@ -2199,7 +2199,7 @@ int ble_gap_common_factor_set(bool enable, uint32_t common_factor);
  *                                  connected;
  *                              Other nonzero on error.
  */
-int ble_gap_multi_connect(struct ble_gap_multi_conn_params *multi_conn_params, 
+int ble_gap_multi_connect(struct ble_gap_multi_conn_params *multi_conn_params,
                           ble_gap_event_fn *cb, void *cb_arg);
 #endif
 

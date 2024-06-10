@@ -19,26 +19,33 @@
 #include <stdint.h>
 #include <assert.h>
 #include <string.h>
-#include "syscfg/syscfg.h"
-#include "os/os.h"
-#include "nimble/ble.h"
-#include "nimble/nimble_opt.h"
-#include "nimble/hci_common.h"
-#include "controller/ble_hw.h"
-#include "controller/ble_ll_adv.h"
-#include "controller/ble_ll_scan.h"
-#include "controller/ble_ll.h"
-#include "controller/ble_ll_hci.h"
-#include "controller/ble_ll_whitelist.h"
-#include "controller/ble_ll_resolv.h"
-#include "controller/ble_ll_sync.h"
-#include "controller/ble_ll_iso.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/os/os.h"
+#include "nimble/nimble/include/nimble/ble.h"
+#include "nimble/nimble/include/nimble/hci_common.h"
+#include "../include/controller/ble_hw.h"
+#include "../include/controller/ble_ll_adv.h"
+#include "../include/controller/ble_ll_scan.h"
+#include "../include/controller/ble_ll.h"
+#include "../include/controller/ble_ll_hci.h"
+#include "../include/controller/ble_ll_whitelist.h"
+#include "../include/controller/ble_ll_resolv.h"
+#include "../include/controller/ble_ll_sync.h"
+#include "../include/controller/ble_ll_iso.h"
 #include "ble_ll_priv.h"
 #include "ble_ll_conn_priv.h"
 #include "ble_ll_hci_priv.h"
 
 #if MYNEWT_VAL(BLE_LL_DTM)
 #include "ble_ll_dtm_priv.h"
+#endif
+
+#ifndef min
+#define min(a, b) ((a) < (b) ? (a) : (b))
+#endif
+
+#ifndef max
+#define max(a, b) ((a) > (b) ? (a) : (b))
 #endif
 
 static void ble_ll_hci_cmd_proc(struct ble_npl_event *ev);

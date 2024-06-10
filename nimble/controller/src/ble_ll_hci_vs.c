@@ -18,13 +18,13 @@
  */
 
 #include <stdint.h>
-#include "syscfg/syscfg.h"
-#include "controller/ble_ll.h"
-#include "controller/ble_ll_hci.h"
-#include "controller/ble_ll_sync.h"
-#include "controller/ble_ll_adv.h"
-#include "controller/ble_ll_scan.h"
-#include "controller/ble_hw.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "../include/controller/ble_ll.h"
+#include "../include/controller/ble_ll_hci.h"
+#include "../include/controller/ble_ll_sync.h"
+#include "../include/controller/ble_ll_adv.h"
+#include "../include/controller/ble_ll_scan.h"
+#include "../include/controller/ble_hw.h"
 #include "ble_ll_conn_priv.h"
 #include "ble_ll_priv.h"
 

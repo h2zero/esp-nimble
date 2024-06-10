@@ -9,12 +9,12 @@
 
 #define MESH_LOG_MODULE BLE_MESH_PROV_LOG
 
-#include "mesh/mesh.h"
+#include "../include/mesh/mesh.h"
 #include "prov.h"
 #include "net.h"
 #include "proxy.h"
 #include "adv.h"
-#include "syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
 #include "pb_gatt_srv.h"
 
 #if MYNEWT_VAL(BLE_MESH_PB_GATT)

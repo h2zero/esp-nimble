@@ -6,7 +6,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "mesh/mesh.h"
+#include "../include/mesh/mesh.h"
 
 void bt_mesh_model_msg_init(struct os_mbuf *msg, uint32_t opcode)
 {

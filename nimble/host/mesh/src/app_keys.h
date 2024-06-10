@@ -7,7 +7,7 @@
 #ifndef _BT_MESH_APP_KEYS_H_
 #define _BT_MESH_APP_KEYS_H_
 
-#include "mesh/mesh.h"
+#include "../include/mesh/mesh.h"
 #include "subnet.h"
 
 /** @brief Reset the app keys module. */

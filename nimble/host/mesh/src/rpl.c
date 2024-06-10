@@ -9,7 +9,7 @@
 
 #define MESH_LOG_MODULE BLE_MESH_RPL_LOG
 
-#include "log/log.h"
+#include "nimble/porting/nimble/include/log/log.h"
 #include <stdlib.h>
 
 #include "mesh_priv.h"

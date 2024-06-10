@@ -23,12 +23,12 @@
 #include <stdint.h>
 #include <assert.h>
 #include <string.h>
-#include "syscfg/syscfg.h"
-#include "os/os.h"
-#include "nimble/ble.h"
-#include "nimble/nimble_opt.h"
-#include "controller/ble_hw.h"
-#include "controller/ble_ll.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/os/os.h"
+#include "nimble/nimble/include/nimble/ble.h"
+#include "nimble/nimble/include/nimble/nimble_opt.h"
+#include "../include/controller/ble_hw.h"
+#include "../include/controller/ble_ll.h"
 #if MYNEWT_VAL(TRNG)
 #include "trng/trng.h"
 #endif

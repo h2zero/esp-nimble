@@ -7,11 +7,10 @@
 #ifndef H_BLE_EAD_
 #define H_BLE_EAD_
 
-#include "os/queue.h"
+#include "nimble/porting/nimble/include/os/queue.h"
 #include <inttypes.h>
-#include "syscfg/syscfg.h"
-#include "host/ble_gap.h"
-
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/nimble/host/include/host/ble_gap.h"
 #ifdef __cplusplus
 extern "C" {
 #endif

@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: Unlicense OR CC0-1.0
  */
 
-#include "os/queue.h"
-#include "host/ble_ead.h"
-#include "host/ble_aes_ccm.h"
+#include "nimble/porting/nimble/include/os/queue.h"
+#include "../include/host/ble_ead.h"
+#include "../include/host/ble_aes_ccm.h"
 
 #if MYNEWT_VAL(ENC_ADV_DATA)
 

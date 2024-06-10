@@ -19,8 +19,8 @@
 
 #include <string.h>
 #include <errno.h>
-#include "nimble/ble.h"
-#include "host/ble_hs_adv.h"
+#include "nimble/nimble/include/nimble/ble.h"
+#include "nimble/nimble/host/include/host/ble_hs_adv.h"
 #include "ble_hs_priv.h"
 
 struct find_field_data {

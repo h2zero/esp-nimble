@@ -19,16 +19,16 @@
 * under the License.
 */
 
-
-#include "syscfg/syscfg.h"
+#ifdef ESP_PLATFORM
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
 
 #if MYNEWT_VAL(BLE_STORE_CONFIG_PERSIST)
 
 #include <string.h>
 #include <esp_system.h>
-#include "sysinit/sysinit.h"
-#include "host/ble_hs.h"
-#include "store/config/ble_store_config.h"
+#include "nimble/porting/nimble/include/sysinit/sysinit.h"
+#include "nimble/nimble/host/include/host/ble_hs.h"
+#include "../include/store/config/ble_store_config.h"
 #include "ble_store_config_priv.h"
 #include "esp_log.h"
 #include "nvs.h"
@@ -671,13 +671,13 @@ int ble_store_config_persist_cccds(void)
 int ble_store_config_persist_eads(void)
 {
     int nvs_count, nvs_idx;
-    union ble_store_value val; 
+    union ble_store_value val;
 
     nvs_count = get_nvs_db_attribute(BLE_STORE_OBJ_TYPE_ENC_ADV_DATA, 0, NULL, 0);
     if (nvs_count == -1) {
         ESP_LOGE(TAG, "NVS operation failed while persisting EAD");
         return BLE_HS_ESTORE_FAIL;
-    } 
+    }
 
     if (nvs_count < ble_store_config_num_eads) {
         /* NVS db count less than RAM count, write operation */
@@ -873,3 +873,4 @@ void ble_store_config_conf_init(void)
 
 /***************************************************************************************/
 #endif /* MYNEWT_VAL(BLE_STORE_CONFIG_PERSIST) */
+#endif /* ESP_PLATFORM */

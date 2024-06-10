@@ -17,18 +17,20 @@
  * under the License.
  */
 
+ #if defined(ARDUINO_ARCH_NRF5) && defined(NRF51)
+
 #include <stdint.h>
 #include <string.h>
 #include <assert.h>
-#include "syscfg/syscfg.h"
-#include "os/os.h"
-#include "ble/xcvr.h"
-#include "nimble/ble.h"
-#include "nimble/nimble_opt.h"
-#include "controller/ble_phy.h"
-#include "controller/ble_phy_trace.h"
-#include "controller/ble_ll.h"
-#include "nrfx.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/os/os.h"
+#include "../include/ble/xcvr.h"
+#include "nimble/nimble/include/nimble/ble.h"
+#include "nimble/nimble/include/nimble/nimble_opt.h"
+#include "nimble/nimble/controller/include/controller/ble_phy.h"
+#include "nimble/nimble/controller/include/controller/ble_phy_trace.h"
+#include "nimble/nimble/controller/include/controller/ble_ll.h"
+#include "nrf.h"
 
 #if MYNEWT
 #include "mcu/nrf51_clock.h"
@@ -1522,3 +1524,4 @@ ble_phy_rfclk_disable(void)
     NRF_CLOCK->TASKS_HFCLKSTOP = 1;
 #endif
 }
+#endif

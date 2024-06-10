@@ -19,17 +19,17 @@
  * under the License.
  */
 
-#include "syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
 #if MYNEWT_VAL(BLE_HOST_BASED_PRIVACY)
 
 #include <stdint.h>
 #include <string.h>
 #include "ble_hs_priv.h"
-#include "host/ble_hs_id.h"
-#include "nimble/ble.h"
-#include "nimble/nimble_opt.h"
+#include "nimble/nimble/host/include/host/ble_hs_id.h"
+#include "nimble/nimble/include/nimble/ble.h"
+#include "nimble/nimble/include/nimble/nimble_opt.h"
 #include "ble_hs_resolv_priv.h"
-#include "store/config/ble_store_config.h"
+#include "../store/config/include/store/config/ble_store_config.h"
 #include "../store/config/src/ble_store_config_priv.h"
 
 /* Resolve list size, additional space to save local device's configuration */

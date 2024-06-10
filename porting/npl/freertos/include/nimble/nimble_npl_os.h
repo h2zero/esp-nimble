@@ -53,6 +53,8 @@ extern int ets_printf(const char *fmt, ...);
 
 #define BLE_NPL_TIME_FOREVER    ble_npl_get_time_forever()
 
+#define NIMBLE_CFG_CONTROLLER 1
+
 /* This should be compatible with TickType_t */
 typedef uint32_t ble_npl_time_t;
 typedef int32_t ble_npl_stime_t;
@@ -363,6 +365,8 @@ ble_npl_hw_set_isr(int irqn, uint32_t addr)
 }
 #endif
 
+#ifdef ESP32_PLATFORM
+//critical section
 static inline uint32_t
 ble_npl_hw_enter_critical(void)
 {
@@ -384,6 +388,23 @@ static inline bool ble_npl_hw_is_in_critical(void)
 #define ble_npl_callout_mem_reset (*npl_funcs->p_ble_npl_callout_mem_reset)
 #define ble_npl_event_deinit (*npl_funcs->p_ble_npl_event_deinit)
 #define ble_npl_event_reset (*npl_funcs->p_ble_npl_event_reset)
+}
+
+#else
+static inline uint32_t
+ble_npl_hw_enter_critical(void)
+{
+    vPortEnterCritical();
+    return 0;
+}
+
+static inline void
+ble_npl_hw_exit_critical(uint32_t ctx)
+{
+    (void)ctx; // silence warning
+    vPortExitCritical();
+}
+#endif
 
 #ifdef __cplusplus
 }

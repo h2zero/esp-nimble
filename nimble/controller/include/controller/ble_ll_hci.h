@@ -24,8 +24,8 @@
 extern "C" {
 #endif
 
-#include "nimble/hci_common.h"
-#include "nimble/transport.h"
+#include "nimble/nimble/include/nimble/hci_common.h"
+#include "nimble/nimble/transport/include/nimble/transport.h"
 
 /* For supported commands */
 #define BLE_LL_SUPP_CMD_LEN (47)

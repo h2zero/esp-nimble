@@ -24,7 +24,7 @@
 extern "C" {
 #endif
 
-#include "syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
 
 #if MYNEWT_VAL(BLE_LL_PA)
 void ble_ll_plna_pa_init(void);

@@ -20,17 +20,22 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
-#include "ble/xcvr.h"
-#include "controller/ble_phy.h"
-#include "controller/ble_ll.h"
-#include "controller/ble_ll_sched.h"
-#include "controller/ble_ll_adv.h"
-#include "controller/ble_ll_scan.h"
-#include "controller/ble_ll_scan_aux.h"
-#include "controller/ble_ll_rfmgmt.h"
-#include "controller/ble_ll_trace.h"
-#include "controller/ble_ll_tmr.h"
-#include "controller/ble_ll_sync.h"
+#if defined(ARDUINO_ARCH_NRF5) && defined(NRF51)
+#include "nimble/nimble/drivers/nrf51/include/ble/xcvr.h"
+#elif defined(ARDUINO_ARCH_NRF5) && defined(NRF52)
+#include "nimble/nimble/drivers/nrf52/include/ble/xcvr.h"
+#endif
+
+#include "../include/controller/ble_phy.h"
+#include "../include/controller/ble_ll.h"
+#include "../include/controller/ble_ll_sched.h"
+#include "../include/controller/ble_ll_adv.h"
+#include "../include/controller/ble_ll_scan.h"
+#include "../include/controller/ble_ll_scan_aux.h"
+#include "../include/controller/ble_ll_rfmgmt.h"
+#include "../include/controller/ble_ll_trace.h"
+#include "../include/controller/ble_ll_tmr.h"
+#include "../include/controller/ble_ll_sync.h"
 #include "ble_ll_priv.h"
 #include "ble_ll_conn_priv.h"
 
@@ -1175,6 +1180,9 @@ ble_ll_sched_init(void)
      * This is the offset from the start of the scheduled item until the actual
      * tx/rx should occur, in ticks. We also "round up" to the nearest tick.
      */
+#ifndef XCVR_TX_SCHED_DELAY_USECS
+#define XCVR_TX_SCHED_DELAY_USECS 160
+#endif
     g_ble_ll_sched_offset_ticks = ble_ll_tmr_u2t_up(XCVR_TX_SCHED_DELAY_USECS);
 
     /* Initialize cputimer for the scheduler */

@@ -10,11 +10,9 @@
 
 #define MESH_LOG_MODULE BLE_MESH_PROV_LOG
 
-#include "testing.h"
-
 #include "crypto.h"
 #include "adv.h"
-#include "mesh/mesh.h"
+#include "../include/mesh/mesh.h"
 #include "net.h"
 #include "rpl.h"
 #include "beacon.h"

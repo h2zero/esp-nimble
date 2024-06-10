@@ -6,7 +6,7 @@
 
 #include <inttypes.h>
 #include <stddef.h>
-#include "host/ble_aes_ccm.h"
+#include "../include/host/ble_aes_ccm.h"
 #include "../src/ble_hs_conn_priv.h"
 
 #if MYNEWT_VAL(ENC_ADV_DATA)

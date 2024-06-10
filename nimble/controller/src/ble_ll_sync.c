@@ -22,25 +22,25 @@
 #include <assert.h>
 #include <stdlib.h>
 
-#include "syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
 
-#include "controller/ble_ll.h"
-#include "controller/ble_ll_hci.h"
-#include "controller/ble_ll_sync.h"
-#include "controller/ble_ll_utils.h"
-#include "controller/ble_ll_sched.h"
-#include "controller/ble_ll_whitelist.h"
-#include "controller/ble_ll_scan.h"
-#include "controller/ble_ll_resolv.h"
-#include "controller/ble_ll_rfmgmt.h"
-#include "controller/ble_ll_tmr.h"
+#include "../include/controller/ble_ll.h"
+#include "../include/controller/ble_ll_hci.h"
+#include "../include/controller/ble_ll_sync.h"
+#include "../include/controller/ble_ll_utils.h"
+#include "../include/controller/ble_ll_sched.h"
+#include "../include/controller/ble_ll_whitelist.h"
+#include "../include/controller/ble_ll_scan.h"
+#include "../include/controller/ble_ll_resolv.h"
+#include "../include/controller/ble_ll_rfmgmt.h"
+#include "../include/controller/ble_ll_tmr.h"
 
-#include "nimble/ble.h"
-#include "nimble/hci_common.h"
+#include "nimble/nimble/include/nimble/ble.h"
+#include "nimble/nimble/include/nimble/hci_common.h"
 
 #include "ble_ll_conn_priv.h"
 
-#include "stats/stats.h"
+#include "nimble/porting/nimble/include/stats/stats.h"
 
 #if MYNEWT_VAL(BLE_LL_CFG_FEAT_LL_PERIODIC_ADV) && MYNEWT_VAL(BLE_LL_ROLE_OBSERVER)
 

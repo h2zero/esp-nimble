@@ -21,14 +21,9 @@
 #include <string.h>
 #include <errno.h>
 #include <stdio.h>
-#include "os/os.h"
-#include "nimble/hci_common.h"
+#include "nimble/porting/nimble/include/os/os.h"
+#include "nimble/nimble/include/nimble/hci_common.h"
 #include "ble_hs_priv.h"
-#include "bt_common.h"
-#if (BT_HCI_LOG_INCLUDED == TRUE)
-#include "hci_log/bt_hci_log.h"
-#endif // (BT_HCI_LOG_INCLUDED == TRUE)
-
 
 /*
  * HCI Command Header
@@ -89,16 +84,6 @@ ble_hs_hci_cmd_send(uint16_t opcode, uint8_t len, const void *cmddata)
 
 #if !(SOC_ESP_NIMBLE_CONTROLLER) && CONFIG_BT_CONTROLLER_ENABLED
     buf--;
-#endif
-
-#if (BT_HCI_LOG_INCLUDED == TRUE)
-    uint8_t *data;
-#if !(SOC_ESP_NIMBLE_CONTROLLER) && CONFIG_BT_CONTROLLER_ENABLED
-    data = (uint8_t *)buf + 1;
-#else
-    data = (uint8_t *)buf;
-#endif
-    bt_hci_log_record_hci_data(0x01, data, len + BLE_HCI_CMD_HDR_LEN);
 #endif
 
     rc = ble_hs_hci_cmd_transport((void *) buf);

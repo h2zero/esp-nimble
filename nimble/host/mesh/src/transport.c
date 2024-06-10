@@ -6,15 +6,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
 #define MESH_LOG_MODULE BLE_MESH_TRANS_LOG
 
 #include <errno.h>
 #include <string.h>
 #include <stdlib.h>
 
-#include "mesh/mesh.h"
-#include "mesh/glue.h"
+#include "../include/mesh/mesh.h"
+#include "../include/mesh/glue.h"
 #include "mesh_priv.h"
 
 #include "crypto.h"
@@ -29,7 +29,7 @@
 #include "settings.h"
 #include "heartbeat.h"
 #include "transport.h"
-#include "testing.h"
+#include "../include/mesh/testing.h"
 
 #define AID_MASK                    ((uint8_t)(BIT_MASK(6)))
 
@@ -1161,10 +1161,6 @@ static void seg_ack(struct ble_npl_event *work)
 		BT_WARN("Incomplete timer expired");
 		seg_rx_reset(rx, false);
 
-		if (IS_ENABLED(CONFIG_BT_TESTING)) {
-			bt_test_mesh_trans_incomp_timer_exp();
-		}
-
 		return;
 	}
 
@@ -1576,11 +1572,6 @@ int bt_mesh_trans_recv(struct os_mbuf *buf, struct bt_mesh_net_rx *rx)
 	net_buf_simple_pull(buf, BT_MESH_NET_HDR_LEN);
 
 	BT_DBG("Payload %s", bt_hex(buf->om_data, buf->om_len));
-
-	if (IS_ENABLED(CONFIG_BT_TESTING)) {
-		bt_test_mesh_net_recv(rx->ctx.recv_ttl, rx->ctl, rx->ctx.addr,
-				      rx->ctx.recv_dst, buf->om_data, buf->om_len);
-	}
 
 	/* If LPN mode is enabled messages are only accepted when we've
 	 * requested the Friend to send them. The messages must also

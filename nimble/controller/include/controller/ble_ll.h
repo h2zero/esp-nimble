@@ -20,13 +20,13 @@
 #ifndef H_BLE_LL_
 #define H_BLE_LL_
 
-#include "stats/stats.h"
-#include "nimble/nimble_opt.h"
-#include "nimble/nimble_npl.h"
-#include "controller/ble_phy.h"
+#include "nimble/porting/nimble/include/stats/stats.h"
+#include "nimble/nimble/include/nimble/nimble_opt.h"
+#include "nimble/nimble/include/nimble/nimble_npl.h"
+#include "ble_phy.h"
 
 #ifdef MYNEWT
-#include "controller/ble_ll_ctrl.h"
+#include "./ble_ll_ctrl.h"
 #include "hal/hal_system.h"
 #endif
 #ifdef RIOT_VERSION
@@ -50,7 +50,9 @@ void ble_ll_assert(const char *file, unsigned line) __attribute((noreturn));
     }
 #endif
 #else
+#ifndef BLE_LL_ASSERT
 #define BLE_LL_ASSERT(cond) assert(cond)
+#endif
 #endif
 
 #if MYNEWT_VAL(BLE_LL_CFG_FEAT_LE_2M_PHY) || MYNEWT_VAL(BLE_LL_CFG_FEAT_LE_CODED_PHY)

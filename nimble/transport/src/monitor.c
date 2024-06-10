@@ -17,7 +17,7 @@
  * under the License.
  */
 
-#include <syscfg/syscfg.h>
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
 
 #if MYNEWT_VAL(BLE_MONITOR_RTT) || MYNEWT_VAL(BLE_MONITOR_UART)
 
@@ -29,10 +29,10 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <inttypes.h>
-#include "os/os.h"
-#include "log/log.h"
+#include "nimble/porting/nimble/include/os/os.h"
+#include "nimble/porting/nimble/include/log/log.h"
 #if MYNEWT_VAL(BLE_MONITOR_UART)
-#include "uart/uart.h"
+#include "nimble/porting/nimble/include/uart/uart.h"
 #endif
 #if MYNEWT_VAL(BLE_MONITOR_RTT)
 #include "rtt/SEGGER_RTT.h"

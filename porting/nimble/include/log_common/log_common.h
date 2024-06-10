@@ -21,7 +21,7 @@
 #define H_LOG_COMMON_
 
 #include <stdint.h>
-#include "log_common/ignore.h"
+#include "ignore.h"
 
 #ifdef __cplusplus
 extern "C" {

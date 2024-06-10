@@ -7,20 +7,20 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
 #define MESH_LOG_MODULE BLE_MESH_PROV_LOG
 
 #include <stdint.h>
 #include <string.h>
-#include "mesh/mesh.h"
-#include <os/os_mbuf.h>
-#include "testing.h"
+#include "../include/mesh/mesh.h"
+#include "nimble/porting/nimble/include/os/os_mbuf.h"
+#include "../include/mesh/testing.h"
 #include "net.h"
 #include "prov.h"
 #include "adv.h"
 #include "crypto.h"
 #include "beacon.h"
-#include "mesh/glue.h"
+#include "../include/mesh/glue.h"
 
 #define GPCF(gpc)           (gpc & 0x03)
 #define GPC_START(last_seg) (((last_seg) << 2) | 0x00)
@@ -518,11 +518,6 @@ static void gen_prov_ctl(struct prov_rx *rx, struct os_mbuf *buf)
 		break;
 	default:
 		BT_ERR("Unknown bearer opcode: 0x%02x", BEARER_CTL(rx->gpc));
-
-		if (IS_ENABLED(CONFIG_BT_TESTING)) {
-			bt_test_mesh_prov_invalid_bearer(BEARER_CTL(rx->gpc));
-		}
-
 		return;
 	}
 }

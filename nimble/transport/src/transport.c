@@ -18,14 +18,14 @@
  */
 
 #include <stdint.h>
-#include <syscfg/syscfg.h>
-#include <sysinit/sysinit.h>
-#include <os/os_mbuf.h>
-#include <os/os_mempool.h>
-#include <nimble/ble.h>
-#include <nimble/hci_common.h>
-#include <nimble/transport.h>
-#include "esp_nimble_mem.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/sysinit/sysinit.h"
+#include "nimble/porting/nimble/include/os/os_mbuf.h"
+#include "nimble/porting/nimble/include/os/os_mempool.h"
+#include "nimble/nimble/include/nimble/ble.h"
+#include "nimble/nimble/include/nimble/hci_common.h"
+#include "nimble/nimble/transport/include/nimble/transport.h"
+#include "nimble/esp_port/port/include/esp_nimble_mem.h"
 
 int os_msys_buf_alloc(void);
 void os_msys_buf_free(void);

@@ -17,8 +17,8 @@
  * under the License.
  */
 
-#include "host/ble_hs.h"
-#include "host/ble_hs_mbuf.h"
+#include "nimble/nimble/host/include/host/ble_hs.h"
+#include "nimble/nimble/host/include/host/ble_hs_mbuf.h"
 #include "ble_hs_priv.h"
 
 /**

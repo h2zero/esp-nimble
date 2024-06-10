@@ -21,11 +21,17 @@
 #define _NIMBLE_PORT_H
 
 #include "esp_err.h"
-#include "nimble/nimble_npl.h"
+#include "nimble/nimble/include/nimble/nimble_npl.h"
 
+#ifdef ESP_PLATFORM
+#include "esp_err.h"
+#include "nimconfig.h"
 #define NIMBLE_CORE (CONFIG_BT_NIMBLE_PINNED_TO_CORE < portNUM_PROCESSORS ? CONFIG_BT_NIMBLE_PINNED_TO_CORE : tskNO_AFFINITY)
-
 #define NIMBLE_HS_STACK_SIZE CONFIG_BT_NIMBLE_HOST_TASK_STACK_SIZE
+#else
+#include "../syscfg/syscfg.h"
+#define NIMBLE_HS_STACK_SIZE (CONFIG_BT_NIMBLE_HOST_TASK_STACK_SIZE / 4)
+#endif
 
 #if SOC_ESP_NIMBLE_CONTROLLER && CONFIG_BT_CONTROLLER_ENABLED
 #define NIMBLE_LL_STACK_SIZE CONFIG_BT_LE_CONTROLLER_TASK_STACK_SIZE
@@ -57,15 +63,15 @@ int nimble_port_stop(void);
 
 /**
  * @brief esp_nimble_init - Initialize the NimBLE host stack
- * 
- * @return esp_err_t 
+ *
+ * @return esp_err_t
  */
 esp_err_t esp_nimble_init(void);
 
 /**
  * @brief esp_nimble_deinit - Deinitialize the NimBLE host stack
- * 
- * @return esp_err_t 
+ *
+ * @return esp_err_t
  */
 esp_err_t esp_nimble_deinit(void);
 

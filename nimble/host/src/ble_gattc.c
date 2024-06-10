@@ -54,11 +54,11 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <string.h>
-#include "os/os_mempool.h"
-#include "nimble/ble.h"
-#include "host/ble_gatt.h"
-#include "host/ble_uuid.h"
-#include "host/ble_gap.h"
+#include "nimble/porting/nimble/include/os/os_mempool.h"
+#include "nimble/nimble/include/nimble/ble.h"
+#include "nimble/nimble/host/include/host/ble_gatt.h"
+#include "nimble/nimble/host/include/host/ble_uuid.h"
+#include "nimble/nimble/host/include/host/ble_gap.h"
 #include "ble_hs_priv.h"
 #include "ble_gattc_cache_priv.h"
 

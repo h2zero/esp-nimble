@@ -19,8 +19,8 @@
 
 #include <stddef.h>
 #include <string.h>
-#include "host/ble_hs.h"
-#include "host/ble_hs_hci.h"
+#include "nimble/nimble/host/include/host/ble_hs.h"
+#include "nimble/nimble/host/include/host/ble_hs_hci.h"
 #include "ble_hs_priv.h"
 
 #if !MYNEWT_VAL(BLE_CONTROLLER)

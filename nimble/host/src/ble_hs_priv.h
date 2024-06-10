@@ -41,9 +41,9 @@
 #include "ble_hs_id_priv.h"
 #include "ble_hs_periodic_sync_priv.h"
 #include "ble_uuid_priv.h"
-#include "host/ble_hs.h"
-#include "nimble/nimble_opt.h"
-#include "stats/stats.h"
+#include "nimble/nimble/host/include/host/ble_hs.h"
+#include "nimble/nimble/include/nimble/nimble_opt.h"
+#include "nimble/porting/nimble/include/stats/stats.h"
 #if MYNEWT_VAL(BLE_GATT_CACHING)
 #include "ble_gattc_cache_priv.h"
 #endif

@@ -27,24 +27,24 @@
  */
 
 #include <inttypes.h>
-#include "nimble/hci_common.h"
-#include "host/ble_att.h"
-#include "host/ble_eddystone.h"
-#include "host/ble_gap.h"
-#include "host/ble_gatt.h"
-#include "host/ble_hs_adv.h"
-#include "host/ble_hs_id.h"
-#include "host/ble_hs_hci.h"
-#include "host/ble_hs_log.h"
-#include "host/ble_hs_mbuf.h"
-#include "host/ble_hs_stop.h"
-#include "host/ble_ibeacon.h"
-#include "host/ble_l2cap.h"
-#include "host/ble_sm.h"
-#include "host/ble_store.h"
-#include "host/ble_uuid.h"
-#include "nimble/nimble_npl.h"
-#include "host/ble_esp_hs.h"
+#include "nimble/nimble/include/nimble/hci_common.h"
+#include "ble_att.h"
+#include "ble_eddystone.h"
+#include "ble_gap.h"
+#include "ble_gatt.h"
+#include "ble_hs_adv.h"
+#include "ble_hs_id.h"
+#include "ble_hs_hci.h"
+#include "ble_hs_log.h"
+#include "ble_hs_mbuf.h"
+#include "ble_hs_stop.h"
+#include "ble_ibeacon.h"
+#include "ble_l2cap.h"
+#include "ble_sm.h"
+#include "ble_store.h"
+#include "ble_uuid.h"
+#include "nimble/nimble/include/nimble/nimble_npl.h"
+#include "ble_esp_hs.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -374,7 +374,7 @@ void ble_hs_init(void);
  *                                  HAL_RESET_[...] codes or an
  *                                  implementation-defined value.
  *
- * @return                      SYSDOWN_IN_PROGRESS. 
+ * @return                      SYSDOWN_IN_PROGRESS.
  */
 int ble_hs_shutdown(int reason);
 

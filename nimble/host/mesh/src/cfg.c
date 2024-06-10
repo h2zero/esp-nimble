@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "mesh/mesh.h"
+#include "../include/mesh/mesh.h"
 #include "mesh_priv.h"
 #include "net.h"
 #include "rpl.h"
@@ -13,10 +13,10 @@
 #include "heartbeat.h"
 #include "friend.h"
 #include "cfg.h"
-#include "mesh/glue.h"
+#include "../include/mesh/glue.h"
 
 #define MESH_LOG_MODULE BLE_MESH_LOG
-#include "log/log.h"
+#include "nimble/porting/nimble/include/log/log.h"
 
 /* Miscellaneous configuration server model states */
 struct cfg_val {

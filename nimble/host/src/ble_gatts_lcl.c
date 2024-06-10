@@ -19,10 +19,10 @@
 
 #include <stddef.h>
 #include <string.h>
-#include "host/ble_gatt.h"
-#include "host/ble_uuid.h"
-#include "console/console.h"
-#include "nimble/ble.h"
+#include "nimble/nimble/host/include/host/ble_gatt.h"
+#include "nimble/nimble/host/include/host/ble_uuid.h"
+#include "nimble/console/console.h"
+#include "nimble/nimble/include/nimble/ble.h"
 #include "ble_hs_priv.h"
 
 #if NIMBLE_BLE_CONNECT

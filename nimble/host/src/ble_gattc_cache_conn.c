@@ -20,7 +20,7 @@
 #include <assert.h>
 #include <string.h>
 #include <stdlib.h>
-#include "host/ble_hs.h"
+#include "../include/host/ble_hs.h"
 #include "ble_hs_priv.h"
 #include "ble_gattc_cache_priv.h"
 

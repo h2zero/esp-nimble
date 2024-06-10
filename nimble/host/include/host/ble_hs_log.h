@@ -20,12 +20,12 @@
 #ifndef H_BLE_HS_LOG_
 #define H_BLE_HS_LOG_
 
-#include "modlog/modlog.h"
-#include "log/log.h"
+#include "nimble/porting/nimble/include/modlog/modlog.h"
+#include "nimble/porting/nimble/include/log/log.h"
 
 /* Only include the logcfg header if this version of newt can generate it. */
 #if MYNEWT_VAL(NEWT_FEATURE_LOGCFG)
-#include "logcfg/logcfg.h"
+#include "nimble/porting/nimble/include/logcfg/logcfg.h"
 #endif
 
 #ifdef __cplusplus

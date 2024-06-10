@@ -7,14 +7,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
 #define MESH_LOG_MODULE BLE_MESH_PROXY_LOG
 
 #if MYNEWT_VAL(BLE_MESH_PROXY)
 
-#include "mesh/mesh.h"
-#include "host/ble_att.h"
-#include "services/gatt/ble_svc_gatt.h"
+#include "../include/mesh/mesh.h"
+#include "nimble/nimble/host/include/host/ble_att.h"
+#include "nimble/nimble/host/services/gatt/include/services/gatt/ble_svc_gatt.h"
 #include "../../host/src/ble_hs_priv.h"
 
 #include "mesh_priv.h"

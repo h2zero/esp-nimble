@@ -7,14 +7,14 @@
 #ifndef _BLE_AES_CCM_
 #define _BLE_AES_CCM_
 
-#include "syscfg/syscfg.h"
-#include "os/queue.h"
-#include "host/ble_hs.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/os/queue.h"
+#include "ble_hs.h"
 
 #if MYNEWT_VAL(BLE_CRYPTO_STACK_MBEDTLS)
 #include "mbedtls/aes.h"
 #else
-#include "tinycrypt/aes.h"
+#include "nimble/ext/tinycrypt/include/tinycrypt/aes.h"
 #endif
 
 #ifdef __cplusplus

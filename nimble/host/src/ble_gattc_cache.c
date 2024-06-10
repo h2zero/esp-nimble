@@ -19,14 +19,14 @@
 
 #include <assert.h>
 #include <string.h>
-#include "host/ble_hs.h"
+#include "../include/host/ble_hs.h"
 #include "ble_hs_conn_priv.h"
 #include "ble_hs_priv.h"
 #include "ble_gattc_cache_priv.h"
 
-#include "nimble/storage_port.h"
-#include "host/ble_gatt.h"
-#include "esp_nimble_mem.h"
+#include "nimble/porting/nimble/include/nimble/storage_port.h"
+#include "nimble/nimble/host/include/host/ble_gatt.h"
+#include "nimble/esp_port/port/include/esp_nimble_mem.h"
 
 #define GATT_CACHE_PREFIX "gatt_"
 #define INVALID_ADDR_NUM 0xff

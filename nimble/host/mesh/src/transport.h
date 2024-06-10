@@ -6,8 +6,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "syscfg/syscfg.h"
-#include "mesh/mesh.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "../include/mesh/mesh.h"
 
 #define TRANS_SEQ_AUTH_NVAL 0xffffffffffffffff
 
