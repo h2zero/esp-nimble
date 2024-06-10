@@ -17,6 +17,8 @@
  * under the License.
  */
 
+#ifndef ESP_PLATFORM
+
 #include "nimble/porting/nimble/include/syscfg/syscfg.h"
 
 #if MYNEWT_VAL(BLE_LL_ROLE_OBSERVER) && MYNEWT_VAL(BLE_LL_CFG_FEAT_LL_EXT_ADV)
@@ -1765,3 +1767,5 @@ ble_ll_scan_aux_init(void)
 }
 
 #endif /* BLE_LL_CFG_FEAT_LL_EXT_ADV */
+
+#endif /* !ESP_PLATFORM */
