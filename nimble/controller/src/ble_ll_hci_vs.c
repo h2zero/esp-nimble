@@ -32,6 +32,11 @@
 
 #if MYNEWT_VAL(BLE_LL_HCI_VS)
 
+#ifndef ARRAY_SIZE
+#define ARRAY_SIZE(array) \
+        (sizeof(array) / sizeof((array)[0]))
+#endif
+
 SLIST_HEAD(ble_ll_hci_vs_list, ble_ll_hci_vs_cmd);
 static struct ble_ll_hci_vs_list g_ble_ll_hci_vs_list;
 

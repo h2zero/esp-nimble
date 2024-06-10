@@ -106,7 +106,11 @@
 #define MYNEWT_VAL_BLE_TRANSPORT_ACL_FROM_HS_COUNT (10)
 #endif
 
+#ifndef MYNEWT_VAL_BLE_LL_HCI_VS
+#define MYNEWT_VAL_BLE_LL_HCI_VS (1)
 #endif
+
+#endif /* !ESP_PLATFORM */
 
 #if 0
 
