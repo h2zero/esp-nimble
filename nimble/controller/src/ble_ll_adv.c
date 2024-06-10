@@ -57,6 +57,10 @@
         (sizeof(array) / sizeof((array)[0]))
 #endif
 
+#ifndef min
+#define min(a, b) ((a) < (b) ? (a) : (b))
+#endif
+
 /* XXX: TODO
  * 1) Need to look at advertising and scan request PDUs. Do I allocate these
  * once? Do I use a different pool for smaller ones? Do I statically declare

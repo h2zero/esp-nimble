@@ -56,6 +56,10 @@
 #define BLE_LL_SCAN_AUX_H_DONE              0x02
 #define BLE_LL_SCAN_AUX_H_TRUNCATED         0x04
 
+#ifndef min
+#define min(a, b) ((a) < (b) ? (a) : (b))
+#endif
+
 struct ble_ll_scan_aux_data {
     uint16_t flags;
     uint8_t hci_state;
@@ -562,7 +566,7 @@ ble_ll_hci_ev_send_ext_adv_report(struct os_mbuf *rxpdu,
         switch (report->evt_type & BLE_HCI_ADV_DATA_STATUS_MASK) {
         case BLE_HCI_ADV_DATA_STATUS_TRUNCATED:
             truncated = true;
-            /* no break */
+            /* Else falls through. */
         case BLE_HCI_ADV_DATA_STATUS_COMPLETE:
             BLE_LL_ASSERT(!hci_ev_next);
             break;

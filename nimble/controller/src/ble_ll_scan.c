@@ -2100,6 +2100,8 @@ ble_ll_scan_check_phy_params(uint8_t type, uint16_t itvl, uint16_t window)
         return BLE_ERR_INV_HCI_CMD_PARMS;
     }
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wtype-limits"
     /* Check interval and window */
     if ((itvl < BLE_HCI_SCAN_ITVL_MIN) ||
         (itvl > BLE_HCI_SCAN_ITVL_MAX_EXT) ||
@@ -2108,7 +2110,7 @@ ble_ll_scan_check_phy_params(uint8_t type, uint16_t itvl, uint16_t window)
         (itvl < window)) {
         return BLE_ERR_INV_HCI_CMD_PARMS;
     }
-
+#pragma GCC diagnostic pop
     return 0;
 }
 
