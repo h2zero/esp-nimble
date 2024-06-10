@@ -789,7 +789,7 @@ int ble_gap_get_local_used_addr(ble_addr_t *addr)
     int rc;
 
     if (addr == NULL) {
-        return ESP_FAIL;
+        return BLE_HS_EINVAL;
     }
 
     own_addr_type = ble_gap_slave[0].our_addr_type;
