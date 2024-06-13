@@ -40,7 +40,7 @@ static void *ble_hci_rx_acl_hs_arg;
 
 
 static SemaphoreHandle_t vhci_send_sem;
-const static char *TAG = "NimBLE";
+const static char *LOG_TAG = "NimBLE";
 
 int os_msys_buf_alloc(void);
 void os_msys_buf_free(void);
@@ -67,7 +67,7 @@ int ble_hci_trans_hs_cmd_tx(uint8_t *cmd)
     *cmd = BLE_HCI_UART_H4_CMD;
     len = BLE_HCI_CMD_HDR_LEN + cmd[3] + 1;
     if (!esp_vhci_host_check_send_available()) {
-        ESP_LOGD(TAG, "Controller not ready to receive packets");
+        ESP_LOGD(LOG_TAG, "Controller not ready to receive packets");
     }
 
     if (xSemaphoreTake(vhci_send_sem, NIMBLE_VHCI_TIMEOUT_MS / portTICK_PERIOD_MS) == pdTRUE) {
@@ -101,7 +101,7 @@ int ble_hci_trans_hs_acl_tx(struct os_mbuf *om)
     }
 
     if (!esp_vhci_host_check_send_available()) {
-        ESP_LOGD(TAG, "Controller not ready to receive packets");
+        ESP_LOGD(LOG_TAG, "Controller not ready to receive packets");
     }
 
     len = 1 + OS_MBUF_PKTLEN(om);
@@ -149,14 +149,14 @@ static void ble_hci_rx_acl(uint8_t *data, uint16_t len)
         m = ble_transport_alloc_acl_from_ll();
 
         if (!m) {
-            ESP_LOGD(TAG,"Failed to allocate buffer, retrying ");
+            ESP_LOGD(LOG_TAG,"Failed to allocate buffer, retrying ");
             /* Give some time to free buffer and try again */
             vTaskDelay(1);
 	    }
     } while(!m);
 
     if ((rc = os_mbuf_append(m, data, len)) != 0) {
-        ESP_LOGE(TAG, "%s failed to os_mbuf_append; rc = %d", __func__, rc);
+        ESP_LOGE(LOG_TAG, "%s failed to os_mbuf_append; rc = %d", __func__, rc);
         os_mbuf_free_chain(m);
         return;
     }
@@ -183,7 +183,7 @@ static int host_rcv_pkt(uint8_t *data, uint16_t len)
 {
     if(!ble_hs_enabled_state) {
         /* If host is not enabled, drop the packet */
-        ESP_LOGE(TAG, "Host not enabled. Dropping the packet!");
+        ESP_LOGE(LOG_TAG, "Host not enabled. Dropping the packet!");
         return 0;
     }
 
@@ -196,7 +196,7 @@ static int host_rcv_pkt(uint8_t *data, uint16_t len)
         assert(totlen <= UINT8_MAX + BLE_HCI_EVENT_HDR_LEN);
 
         if (totlen > MYNEWT_VAL(BLE_TRANSPORT_EVT_SIZE)) {
-            ESP_LOGE(TAG, "Received HCI data length at host (%d) exceeds maximum configured HCI event buffer size (%d).",
+            ESP_LOGE(LOG_TAG, "Received HCI data length at host (%d) exceeds maximum configured HCI event buffer size (%d).",
                      totlen, MYNEWT_VAL(BLE_TRANSPORT_EVT_SIZE));
             ble_hs_sched_reset(BLE_HS_ECONTROLLER);
             return 0;

@@ -55,7 +55,7 @@ static void *rtc0_isr_addr;
 #endif
 
 #if CONFIG_BT_NIMBLE_USE_ESP_TIMER
-static const char *TAG = "Timer";
+static const char *LOG_TAG = "Timer";
 #endif
 
 #define OS_MEM_ALLOC (1)
@@ -892,10 +892,10 @@ npl_freertos_callout_deinit(struct ble_npl_callout *co)
     ble_npl_event_deinit(&callout->ev);
 #if CONFIG_BT_NIMBLE_USE_ESP_TIMER
     if(esp_timer_stop(callout->handle))
-        ESP_LOGD(TAG, "Timer not stopped");
+        ESP_LOGD(LOG_TAG, "Timer not stopped");
 
     if(esp_timer_delete(callout->handle))
-        ESP_LOGW(TAG, "Timer not deleted");
+        ESP_LOGW(LOG_TAG, "Timer not deleted");
 #else
     xTimerDelete(callout->handle, portMAX_DELAY);
 #endif
@@ -1386,7 +1386,7 @@ void npl_freertos_funcs_deinit(void)
 #include "esp_log.h"
 portMUX_TYPE ble_port_mutex = portMUX_INITIALIZER_UNLOCKED;
 #  if CONFIG_BT_NIMBLE_USE_ESP_TIMER
-static const char *TAG = "Timer";
+static const char *LOG_TAG = "Timer";
 #  endif
 
 #else
@@ -1820,10 +1820,10 @@ npl_freertos_callout_deinit(struct ble_npl_callout *co)
 
 #if CONFIG_BT_NIMBLE_USE_ESP_TIMER
     if(esp_timer_stop(co->handle))
-	ESP_LOGW(TAG, "Timer not stopped");
+	ESP_LOGW(LOG_TAG, "Timer not stopped");
 
     if(esp_timer_delete(co->handle))
-	ESP_LOGW(TAG, "Timer not deleted");
+	ESP_LOGW(LOG_TAG, "Timer not deleted");
 #else
     xTimerDelete(co->handle, portMAX_DELAY);
     ble_npl_event_deinit(&co->ev);
