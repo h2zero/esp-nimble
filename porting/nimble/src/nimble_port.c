@@ -103,6 +103,7 @@ esp_err_t esp_nimble_init(void)
     npl_freertos_mempool_init();
 #endif
 
+#if false // Arduino disable
 #if CONFIG_BT_CONTROLLER_ENABLED
     if(esp_nimble_hci_init() != ESP_OK) {
         ESP_LOGE(NIMBLE_PORT_LOG_TAG, "hci inits failed\n");
@@ -119,6 +120,7 @@ esp_err_t esp_nimble_init(void)
     ble_adv_list_init();
 #endif
 #endif
+#endif // Arduino disable
 
     /* Initialize default event queue */
     ble_npl_eventq_init(&g_eventq_dflt);
