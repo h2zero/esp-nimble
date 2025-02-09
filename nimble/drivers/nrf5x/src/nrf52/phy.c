@@ -19,8 +19,8 @@
 
 #include <stdint.h>
 #include <nrfx.h>
-#include <controller/ble_fem.h>
-#include "../phy_priv.h"
+#include <nimble/nimble/controller/include/controller/ble_fem.h>
+#include "nimble/nimble/drivers/nrf5x/src/phy_priv.h"
 
 #if PHY_USE_DEBUG
 void

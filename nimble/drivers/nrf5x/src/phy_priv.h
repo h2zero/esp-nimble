@@ -80,17 +80,17 @@ void phy_fem_disable(void);
 void phy_ppi_init(void);
 
 #ifdef NRF52_SERIES
-#include "nrf52/phy_ppi.h"
+#include "nimble/nimble/drivers/nrf5x/src/nrf52/phy_ppi.h"
 #endif
 
 void phy_txpower_set(int8_t dbm);
 int8_t phy_txpower_round(int8_t dbm);
 
 #ifdef NRF52_SERIES
-#include "nrf52/phy_ppi.h"
+#include "nimble/nimble/drivers/nrf5x/src/nrf52/phy_ppi.h"
 #endif
 #ifdef NRF53_SERIES
-#include "nrf53/phy_ppi.h"
+#include "nimble/nimble/drivers/nrf5x/src/nrf52/phy_ppi.h"
 #endif
 
 #endif /* H_PHY_PRIV_ */

@@ -19,15 +19,15 @@
 
 #include <stddef.h>
 #include <stdbool.h>
-#include "os/os.h"
-#include "sysinit/sysinit.h"
+#include "nimble/porting/nimble/include/os/os.h"
+#include "nimble/porting/nimble/include/sysinit/sysinit.h"
 
 #if CONFIG_BT_NIMBLE_ENABLED
-#include "host/ble_hs.h"
+#include "nimble/nimble/host/include/host/ble_hs.h"
 #endif //CONFIG_BT_NIMBLE_ENABLED
 
-#include "nimble/nimble_port.h"
-#include "nimble/nimble_port_freertos.h"
+#include "nimble/porting/nimble/include/nimble/nimble_port.h"
+#include "nimble/porting/npl/freertos/include/nimble/nimble_port_freertos.h"
 #ifdef ESP_PLATFORM
 #include "esp_log.h"
 #endif
@@ -43,7 +43,7 @@
 #include "esp_nimble_hci.h"
 #endif
 #if !CONFIG_BT_CONTROLLER_ENABLED
-#include "nimble/transport.h"
+#include "nimble/nimble/host/mesh/src/transport.h"
 #endif
 #if (BT_HCI_LOG_INCLUDED == TRUE)
 #include "hci_log/bt_hci_log.h"

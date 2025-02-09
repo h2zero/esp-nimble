@@ -20,19 +20,19 @@
 */
 
 
-#include "syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
 
 #if MYNEWT_VAL(BLE_STORE_CONFIG_PERSIST)
 
 #include <string.h>
 #include <esp_system.h>
-#include "sysinit/sysinit.h"
-#include "host/ble_hs.h"
-#include "store/config/ble_store_config.h"
+#include "nimble/porting/nimble/include/sysinit/sysinit.h"
+#include "nimble/nimble/host/include/host/ble_hs.h"
+#include "nimble/nimble/host/store/config/include/store/config/ble_store_config.h"
 #include "ble_store_config_priv.h"
 #include "esp_log.h"
 #include "nvs.h"
-#include "../../../src/ble_hs_resolv_priv.h"
+#include "nimble/nimble/host/src/ble_hs_resolv_priv.h"
 
 
 #define NIMBLE_NVS_STR_NAME_MAX_LEN              16

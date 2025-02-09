@@ -19,9 +19,9 @@
 
 #include <assert.h>
 
-#include "sysinit/sysinit.h"
-#include "host/ble_hs.h"
-#include "services/gatt/ble_svc_gatt.h"
+#include "nimble/porting/nimble/include/sysinit/sysinit.h"
+#include "nimble/nimble/host/include/host/ble_hs.h"
+#include "nimble/nimble/host/services/gatt/include/services/gatt/ble_svc_gatt.h"
 
 #if MYNEWT_VAL(BLE_GATTS)
 #if MYNEWT_VAL(BLE_GATT_CACHING)

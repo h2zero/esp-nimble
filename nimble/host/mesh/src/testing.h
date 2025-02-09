@@ -9,8 +9,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "mesh/glue.h"
-#include "mesh/access.h"
+#include "nimble/nimble/host/mesh/include/mesh/glue.h"
+#include "nimble/nimble/host/mesh/include/mesh/access.h"
 
 void bt_test_mesh_model_bound(uint16_t addr, struct bt_mesh_model *model,
 			      uint16_t key_idx);

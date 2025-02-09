@@ -20,16 +20,16 @@
 #include <stdint.h>
 #include <string.h>
 #include <assert.h>
-#include "syscfg/syscfg.h"
-#include "os/os.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/os/os.h"
 /* Keep os_cputime explicitly to enable build on non-Mynewt platforms */
-#include "os/os_cputime.h"
-#include "ble/xcvr.h"
-#include "nimble/ble.h"
-#include "nimble/nimble_opt.h"
-#include "controller/ble_phy.h"
-#include "controller/ble_phy_trace.h"
-#include "controller/ble_ll.h"
+#include "nimble/porting/nimble/include/os/os_cputime.h"
+#include "nimble/nimble/drivers/nrf51/include/ble/xcvr.h"
+#include "nimble/nimble/include/nimble/ble.h"
+#include "nimble/nimble/include/nimble/nimble_opt.h"
+#include "nimble/nimble/controller/include/controller/ble_phy.h"
+#include "nimble/nimble/controller/include/controller/ble_phy_trace.h"
+#include "nimble/nimble/controller/include/controller/ble_ll.h"
 #include "nrfx.h"
 
 #if MYNEWT

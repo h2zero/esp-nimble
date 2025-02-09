@@ -7,10 +7,10 @@
 #include <stddef.h>
 
 #include "console/console.h"
-#include "mesh/testing.h"
-#include "mesh/slist.h"
-#include "mesh/glue.h"
-#include "mesh/access.h"
+#include "nimble/nimble/host/mesh/include/mesh/testing.h"
+#include "nimble/nimble/host/mesh/include/mesh/slist.h"
+#include "nimble/nimble/host/mesh/include/mesh/glue.h"
+#include "nimble/nimble/host/mesh/include/mesh/access.h"
 
 #include "net.h"
 #include "app_keys.h"

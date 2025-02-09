@@ -24,7 +24,7 @@
 #include <stdint.h>
 #include <string.h>
 #include "freertos/FreeRTOS.h"
-#include "freertos/queue.h"
+#include "nimble/porting/nimble/include/os/queue.h"
 #include "freertos/semphr.h"
 #include "freertos/task.h"
 #include "freertos/timers.h"

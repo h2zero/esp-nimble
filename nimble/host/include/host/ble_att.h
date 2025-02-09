@@ -27,7 +27,7 @@
  * @{
  */
 
-#include "os/queue.h"
+#include "nimble/porting/nimble/include/os/queue.h"
 #ifdef __cplusplus
 extern "C" {
 #endif

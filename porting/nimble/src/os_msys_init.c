@@ -18,9 +18,9 @@
  */
 
 #include <assert.h>
-#include "os/os.h"
-#include "mem/mem.h"
-#include "sysinit/sysinit.h"
+#include "nimble/porting/nimble/include/os/os.h"
+#include "nimble/porting/nimble/include/mem/mem.h"
+#include "nimble/porting/nimble/include/sysinit/sysinit.h"
 #include "esp_nimble_mem.h"
 #include "esp_err.h"
 

@@ -20,12 +20,12 @@
 #include <string.h>
 #include <errno.h>
 #include <stdio.h>
-#include "os/os.h"
-#include "mem/mem.h"
+#include "nimble/porting/nimble/include/os/os.h"
+#include "nimble/porting/nimble/include/mem/mem.h"
 #include "ble_hs_priv.h"
 #include "esp_nimble_mem.h"
 
-#include "nimble/transport.h"
+#include "nimble/nimble/host/mesh/src/transport.h"
 #include "bt_common.h"
 #if (BT_HCI_LOG_INCLUDED == TRUE)
 #include "hci_log/bt_hci_log.h"

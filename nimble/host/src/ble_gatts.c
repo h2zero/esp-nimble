@@ -20,17 +20,17 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
-#include "nimble/ble.h"
-#include "host/ble_gatt.h"
-#include "host/ble_uuid.h"
-#include "host/ble_store.h"
+#include "nimble/nimble/include/nimble/ble.h"
+#include "nimble/nimble/host/include/host/ble_gatt.h"
+#include "nimble/nimble/host/include/host/ble_uuid.h"
+#include "nimble/nimble/host/include/host/ble_store.h"
 #include "ble_hs_priv.h"
 #include "esp_nimble_mem.h"
 
 #if MYNEWT_VAL(BLE_GATTS)
 
 #if MYNEWT_VAL(BLE_DYNAMIC_SERVICE)
-#include "services/gatt/ble_svc_gatt.h"
+#include "nimble/nimble/host/services/gatt/include/services/gatt/ble_svc_gatt.h"
 #endif
 #if MYNEWT_VAL(BLE_SVC_HID_SERVICE)
 #include "services/hid/ble_svc_hid.h"

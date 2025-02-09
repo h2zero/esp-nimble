@@ -20,7 +20,7 @@
 #ifndef H_BLE_UUID_PRIV_
 #define H_BLE_UUID_PRIV_
 
-#include "host/ble_uuid.h"
+#include "nimble/nimble/host/include/host/ble_uuid.h"
 
 #ifdef __cplusplus
 extern "C" {

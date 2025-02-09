@@ -17,15 +17,14 @@
  * under the License.
  */
 
-#include "os/os.h"
-#include "os/os_trace_api.h"
+#include "nimble/porting/nimble/include/os/os.h"
+#include "nimble/porting/nimble/include/os/os_trace_api.h"
 
 #include <string.h>
 #include <assert.h>
 #include <stdbool.h>
-#include "syscfg/syscfg.h"
-#include "modlog/modlog.h"
-#include "esp_nimble_mem.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/modlog/modlog.h"
 #if !MYNEWT_VAL(OS_SYSVIEW_TRACE_MEMPOOL)
 #define OS_TRACE_DISABLE_FILE_API
 #endif

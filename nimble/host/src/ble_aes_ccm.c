@@ -6,8 +6,8 @@
 
 #include <inttypes.h>
 #include <stddef.h>
-#include "host/ble_aes_ccm.h"
-#include "../src/ble_hs_conn_priv.h"
+#include "nimble/nimble/host/include/host/ble_aes_ccm.h"
+#include "nimble/nimble/host/src/ble_hs_conn_priv.h"
 
 #if MYNEWT_VAL(BLE_CRYPTO_STACK_MBEDTLS)
 #if CONFIG_MBEDTLS_VER_4_X_SUPPORT

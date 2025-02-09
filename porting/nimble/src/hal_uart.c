@@ -7,9 +7,9 @@
 #include <string.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
-#include "freertos/queue.h"
+#include "nimble/porting/nimble/include/os/queue.h"
 #include "driver/uart.h"
-#include "hal/hal_uart.h"
+#include "nimble/porting/nimble/include/hal/hal_uart.h"
 #include "esp_log.h"
 #include "esp_attr.h"
 #include "esp_nimble_mem.h"

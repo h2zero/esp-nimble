@@ -20,12 +20,12 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <assert.h>
-#include "syscfg/syscfg.h"
-#include "controller/ble_phy.h"
-#include "controller/ble_ll.h"
-#include "controller/ble_ll_sched.h"
-#include "controller/ble_ll_rfmgmt.h"
-#include "controller/ble_ll_tmr.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/nimble/controller/include/controller/ble_phy.h"
+#include "nimble/nimble/controller/include/controller/ble_ll.h"
+#include "nimble/nimble/controller/include/controller/ble_ll_sched.h"
+#include "nimble/nimble/controller/include/controller/ble_ll_rfmgmt.h"
+#include "nimble/nimble/controller/include/controller/ble_ll_tmr.h"
 #include "ble_ll_priv.h"
 
 #if MYNEWT_VAL(BLE_LL_RFMGMT_ENABLE_TIME) > 0

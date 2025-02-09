@@ -28,13 +28,13 @@
  */
 
 #include <inttypes.h>
-#include "host/ble_hs.h"
-#include "host/ble_hs_adv.h"
-#include "syscfg/syscfg.h"
-#include "host/ble_esp_gap.h"
+#include "nimble/nimble/host/include/host/ble_hs.h"
+#include "nimble/nimble/host/include/host/ble_hs_adv.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/nimble/host/include/host/ble_esp_gap.h"
 
 #if MYNEWT_VAL(ENC_ADV_DATA)
-#include "../../src/ble_hs_hci_priv.h"
+#include "nimble/nimble/host/src/ble_hs_hci_priv.h"
 #endif
 
 #ifdef __cplusplus

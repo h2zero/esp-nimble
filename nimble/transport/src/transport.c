@@ -18,15 +18,15 @@
  */
 
 #include <stdint.h>
-#include <syscfg/syscfg.h>
-#include <sysinit/sysinit.h>
-#include <os/os_mbuf.h>
-#include <os/os_mempool.h>
-#include <nimble/ble.h>
-#include <nimble/hci_common.h>
-#include <nimble/transport.h>
+#include <nimble/porting/nimble/include/syscfg/syscfg.h>
+#include <nimble/porting/nimble/include/sysinit/sysinit.h>
+#include <nimble/porting/nimble/include/os/os_mbuf.h>
+#include <nimble/porting/nimble/include/os/os_mempool.h>
+#include <nimble/nimble/include/nimble/ble.h>
+#include <nimble/nimble/include/nimble/hci_common.h>
+#include <nimble/nimble/host/mesh/src/transport.h>
 #if BLE_TRANSPORT_IPC
-#include <nimble/transport/hci_ipc.h>
+#include <nimble/nimble/transport/common/hci_ipc/include/nimble/transport/hci_ipc.h>
 #endif
 #include "esp_nimble_mem.h"
 

@@ -22,8 +22,8 @@
 
 #include <inttypes.h>
 #include <string.h>
-#include "syscfg/syscfg.h"
-#include "os/os.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/os/os.h"
 
 #ifdef __cplusplus
 extern "C" {

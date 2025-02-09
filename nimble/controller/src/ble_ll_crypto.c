@@ -18,11 +18,11 @@
  */
 
 #include <stdint.h>
-#include <nimble/ble.h>
-#include <controller/ble_ll_crypto.h>
-#include <controller/ble_hw.h>
-#include <tinycrypt/constants.h>
-#include <tinycrypt/cmac_mode.h>
+#include <nimble/nimble/include/nimble/ble.h>
+#include <nimble/nimble/controller/include/controller/ble_ll_crypto.h>
+#include <nimble/nimble/controller/include/controller/ble_hw.h>
+#include <nimble/ext/tinycrypt/include/tinycrypt/constants.h>
+#include <nimble/ext/tinycrypt/include/tinycrypt/cmac_mode.h>
 
 int
 ble_ll_crypto_cmac(const uint8_t *key, const uint8_t *in, int len,

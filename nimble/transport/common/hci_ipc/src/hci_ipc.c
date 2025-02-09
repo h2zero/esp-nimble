@@ -20,11 +20,11 @@
 #include <assert.h>
 #include <stdint.h>
 #include <string.h>
-#include <syscfg/syscfg.h>
-#include <os/os.h>
-#include <os/os_mbuf.h>
-#include <nimble/transport.h>
-#include <nimble/transport/hci_ipc.h>
+#include <nimble/porting/nimble/include/syscfg/syscfg.h>
+#include <nimble/porting/nimble/include/os/os.h>
+#include <nimble/porting/nimble/include/os/os_mbuf.h>
+#include <nimble/nimble/host/mesh/src/transport.h>
+#include <nimble/nimble/transport/common/hci_ipc/include/nimble/transport/hci_ipc.h>
 
 volatile struct hci_ipc_shm *g_ipc_shm;
 

@@ -21,11 +21,11 @@
 #define H_L2CAP_PRIV_
 
 #include "ble_l2cap_coc_priv.h"
-#include "host/ble_l2cap.h"
+#include "nimble/nimble/host/include/host/ble_l2cap.h"
 #include <inttypes.h>
-#include "stats/stats.h"
-#include "os/queue.h"
-#include "os/os_mbuf.h"
+#include "nimble/porting/nimble/include/stats/stats.h"
+#include "nimble/porting/nimble/include/os/queue.h"
+#include "nimble/porting/nimble/include/os/os_mbuf.h"
 #ifdef __cplusplus
 extern "C" {
 #endif

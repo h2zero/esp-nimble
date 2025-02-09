@@ -17,20 +17,20 @@
  * under the License.
  */
 
-#include "syscfg/syscfg.h"
-#include "sysinit/sysinit.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/sysinit/sysinit.h"
 
 #if MYNEWT_VAL(BLE_LL_DTM)
 
 #include <assert.h>
-#include "os/os.h"
-#include "stats/stats.h"
-#include "controller/ble_ll.h"
-#include "controller/ble_ll_pdu.h"
-#include "controller/ble_phy.h"
-#include "controller/ble_ll_sched.h"
-#include "controller/ble_ll_rfmgmt.h"
-#include "controller/ble_ll_tmr.h"
+#include "nimble/porting/nimble/include/os/os.h"
+#include "nimble/porting/nimble/include/stats/stats.h"
+#include "nimble/nimble/controller/include/controller/ble_ll.h"
+#include "nimble/nimble/controller/include/controller/ble_ll_pdu.h"
+#include "nimble/nimble/controller/include/controller/ble_phy.h"
+#include "nimble/nimble/controller/include/controller/ble_ll_sched.h"
+#include "nimble/nimble/controller/include/controller/ble_ll_rfmgmt.h"
+#include "nimble/nimble/controller/include/controller/ble_ll_tmr.h"
 #include "ble_ll_dtm_priv.h"
 #include "ble_ll_priv.h"
 

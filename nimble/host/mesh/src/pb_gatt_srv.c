@@ -19,9 +19,9 @@
 #include "proxy.h"
 #include "proxy_msg.h"
 #include "pb_gatt_srv.h"
-#include "syscfg/syscfg.h"
-#include "services/gatt/ble_svc_gatt.h"
-#include "../../host/src/ble_hs_priv.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/nimble/host/services/gatt/include/services/gatt/ble_svc_gatt.h"
+#include "nimble/nimble/host/src/ble_hs_priv.h"
 
 #if defined(CONFIG_BT_MESH_PB_GATT_USE_DEVICE_NAME)
 #define ADV_OPT_USE_NAME BT_LE_ADV_OPT_USE_NAME

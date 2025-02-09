@@ -30,10 +30,10 @@
 #include <inttypes.h>
 #include <string.h>
 
-#include "sysinit/sysinit.h"
-#include "syscfg/syscfg.h"
-#include "host/ble_hs.h"
-#include "store/ram/ble_store_ram.h"
+#include "nimble/porting/nimble/include/sysinit/sysinit.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/nimble/host/include/host/ble_hs.h"
+#include "nimble/nimble/host/store/ram/include/store/ram/ble_store_ram.h"
 
 #if !MYNEWT_VAL(BLE_USED_IN_IDF)
 #if MYNEWT_VAL(BLE_STORE_MAX_BONDS)

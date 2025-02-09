@@ -20,17 +20,17 @@
 #include <assert.h>
 #include <stddef.h>
 #include <string.h>
-#include "syscfg/syscfg.h"
-#include "nimble/nimble_npl.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/nimble/include/nimble/nimble_npl.h"
 #include "freertos/FreeRTOS.h"
-#include "freertos/queue.h"
+#include "nimble/porting/nimble/include/os/queue.h"
 #include "freertos/semphr.h"
 #include "freertos/task.h"
 #include "freertos/timers.h"
 #include "freertos/portable.h"
-#include "nimble/npl_freertos.h"
+#include "nimble/porting/npl/freertos/include/nimble/npl_freertos.h"
 
-#include "os/os_mempool.h"
+#include "nimble/porting/nimble/include/os/os_mempool.h"
 
 #include "esp_log.h"
 

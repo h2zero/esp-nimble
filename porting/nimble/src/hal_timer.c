@@ -21,10 +21,10 @@
 #include <stdint.h>
 #include <assert.h>
 #include <errno.h>
-#include "os/os.h"
+#include "nimble/porting/nimble/include/os/os.h"
 #include "nrfx.h"
-#include "hal/hal_timer.h"
-#include "os/os_trace_api.h"
+#include "nimble/porting/nimble/include/hal/hal_timer.h"
+#include "nimble/porting/nimble/include/os/os_trace_api.h"
 
 /* IRQ prototype */
 typedef void (*hal_timer_irq_handler_t)(void);

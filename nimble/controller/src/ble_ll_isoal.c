@@ -18,11 +18,11 @@
  */
 
 #include <stdint.h>
-#include <syscfg/syscfg.h>
-#include <nimble/hci_common.h>
-#include <controller/ble_ll.h>
-#include <controller/ble_ll_isoal.h>
-#include <controller/ble_ll_iso_big.h>
+#include <nimble/porting/nimble/include/syscfg/syscfg.h>
+#include <nimble/nimble/include/nimble/hci_common.h>
+#include <nimble/nimble/controller/include/controller/ble_ll.h>
+#include <nimble/nimble/controller/include/controller/ble_ll_isoal.h>
+#include <nimble/nimble/controller/include/controller/ble_ll_iso_big.h>
 
 #if MYNEWT_VAL(BLE_LL_ISO)
 

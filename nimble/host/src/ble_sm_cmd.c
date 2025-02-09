@@ -19,9 +19,9 @@
 
 #include <string.h>
 #include <errno.h>
-#include "nimble/ble.h"
-#include "nimble/nimble_opt.h"
-#include "host/ble_sm.h"
+#include "nimble/nimble/include/nimble/ble.h"
+#include "nimble/nimble/include/nimble/nimble_opt.h"
+#include "nimble/nimble/host/include/host/ble_sm.h"
 #include "ble_hs_priv.h"
 
 #if NIMBLE_BLE_CONNECT

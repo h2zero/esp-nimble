@@ -24,8 +24,8 @@
 extern "C" {
 #endif
 
-#include "nimble/hci_common.h"
-#include "nimble/transport.h"
+#include "nimble/nimble/include/nimble/hci_common.h"
+#include "nimble/nimble/host/mesh/src/transport.h"
 
 /* The largest event the controller will send. */
 #define BLE_LL_MAX_EVT_LEN  MYNEWT_VAL(BLE_TRANSPORT_EVT_SIZE)

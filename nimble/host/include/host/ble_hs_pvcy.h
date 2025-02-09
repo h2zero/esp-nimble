@@ -22,7 +22,7 @@
 #ifndef H_BLE_HS_PVCY_
 #define H_BLE_HS_PVCY_
 
-#include "host/ble_hs.h"
+#include "nimble/nimble/host/include/host/ble_hs.h"
 
 #ifdef __cplusplus
 extern "C" {

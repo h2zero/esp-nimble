@@ -21,8 +21,8 @@
 #define H_BLE_HS_ADV_
 
 #include <inttypes.h>
-#include "host/ble_uuid.h"
-#include "syscfg/syscfg.h"
+#include "nimble/nimble/host/include/host/ble_uuid.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
 
 #ifdef __cplusplus
 extern "C" {

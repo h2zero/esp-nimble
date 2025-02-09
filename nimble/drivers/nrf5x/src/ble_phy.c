@@ -20,23 +20,23 @@
 #include <stdint.h>
 #include <string.h>
 #include <assert.h>
-#include <controller/ble_fem.h>
+#include <nimble/nimble/controller/include/controller/ble_fem.h>
 #include <hal/nrf_radio.h>
 #include <hal/nrf_ccm.h>
 #include <hal/nrf_aar.h>
 #include <hal/nrf_timer.h>
 #include <hal/nrf_rtc.h>
-#include "syscfg/syscfg.h"
-#include "os/os.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/os/os.h"
 /* Keep os_cputime explicitly to enable build on non-Mynewt platforms */
-#include "os/os_cputime.h"
-#include "ble/xcvr.h"
-#include "nimble/ble.h"
-#include "nimble/nimble_opt.h"
-#include "nimble/nimble_npl.h"
-#include "controller/ble_phy.h"
-#include "controller/ble_phy_trace.h"
-#include "controller/ble_ll.h"
+#include "nimble/porting/nimble/include/os/os_cputime.h"
+#include "nimble/nimble/drivers/nrf51/include/ble/xcvr.h"
+#include "nimble/nimble/include/nimble/ble.h"
+#include "nimble/nimble/include/nimble/nimble_opt.h"
+#include "nimble/nimble/include/nimble/nimble_npl.h"
+#include "nimble/nimble/controller/include/controller/ble_phy.h"
+#include "nimble/nimble/controller/include/controller/ble_phy_trace.h"
+#include "nimble/nimble/controller/include/controller/ble_ll.h"
 #include "nrfx.h"
 #if MYNEWT
 #ifdef NRF52_SERIES
@@ -46,7 +46,7 @@
 #include <mcu/nrf5340_net_clock.h>
 #endif
 #include "mcu/cmsis_nvic.h"
-#include "hal/hal_gpio.h"
+#include "nimble/porting/nimble/include/hal/hal_gpio.h"
 #else
 #include <hal/nrf_clock.h>
 #ifdef NRF52_SERIES
@@ -68,7 +68,7 @@
 extern void tm_tick(void);
 #endif
 
-#include <controller/ble_ll_pdu.h>
+#include <nimble/nimble/controller/include/controller/ble_ll_pdu.h>
 
 /*
  * NOTE: This code uses a couple of PPI channels so care should be taken when
