@@ -20,7 +20,7 @@
 #include <stddef.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
-#include "nimble/nimble_port.h"
+#include "nimble/porting/nimble/include/nimble/nimble_port.h"
 #if CONFIG_BT_CONTROLLER_ENABLED
 #include "esp_bt.h"
 #endif

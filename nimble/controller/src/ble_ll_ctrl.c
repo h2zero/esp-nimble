@@ -20,18 +20,18 @@
 #include <assert.h>
 #include <string.h>
 #include <errno.h>
-#include "syscfg/syscfg.h"
-#include "nimble/ble.h"
-#include "nimble/nimble_opt.h"
-#include "nimble/hci_common.h"
-#include "controller/ble_ll_utils.h"
-#include "controller/ble_ll.h"
-#include "controller/ble_ll_hci.h"
-#include "controller/ble_ll_ctrl.h"
-#include "controller/ble_ll_trace.h"
-#include "controller/ble_hw.h"
-#include "controller/ble_ll_sync.h"
-#include "controller/ble_ll_tmr.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/nimble/include/nimble/ble.h"
+#include "nimble/nimble/include/nimble/nimble_opt.h"
+#include "nimble/nimble/include/nimble/hci_common.h"
+#include "nimble/nimble/controller/include/controller/ble_ll_utils.h"
+#include "nimble/nimble/controller/include/controller/ble_ll.h"
+#include "nimble/nimble/controller/include/controller/ble_ll_hci.h"
+#include "nimble/nimble/controller/include/controller/ble_ll_ctrl.h"
+#include "nimble/nimble/controller/include/controller/ble_ll_trace.h"
+#include "nimble/nimble/controller/include/controller/ble_hw.h"
+#include "nimble/nimble/controller/include/controller/ble_ll_sync.h"
+#include "nimble/nimble/controller/include/controller/ble_ll_tmr.h"
 #include "ble_ll_conn_priv.h"
 
 #if MYNEWT_VAL(BLE_LL_ROLE_PERIPHERAL) || MYNEWT_VAL(BLE_LL_ROLE_CENTRAL)

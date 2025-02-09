@@ -56,8 +56,8 @@ int ble_ll_is_busy(unsigned int flags);
 
 #ifdef MYNEWT
 
-#include "syscfg/syscfg.h"
-#include "hal/hal_gpio.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/hal/hal_gpio.h"
 
 #define BLE_LL_DEBUG_GPIO_INIT(_name)                                       \
     if (MYNEWT_VAL(BLE_LL_DEBUG_GPIO_ ## _name) >= 0) {                     \

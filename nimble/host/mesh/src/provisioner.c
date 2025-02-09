@@ -14,7 +14,7 @@
 
 #include "crypto.h"
 #include "adv.h"
-#include "mesh/mesh.h"
+#include "nimble/nimble/host/mesh/include/mesh/mesh.h"
 #include "net.h"
 #include "rpl.h"
 #include "beacon.h"

@@ -22,9 +22,9 @@
 
 #include <stdio.h>
 
-#include "log_common/log_common.h"
-#include "log/log.h"
-#include "log_common/log_common.h"
+#include "nimble/porting/nimble/include/log_common/log_common.h"
+#include "nimble/porting/nimble/include/log/log.h"
+#include "nimble/porting/nimble/include/log_common/log_common.h"
 
 #ifdef ESP_PLATFORM
 #include "esp_log.h"

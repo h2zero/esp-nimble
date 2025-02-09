@@ -19,11 +19,11 @@
 
 #include <string.h>
 #include <errno.h>
-#include "nimble/ble.h"
-#include "host/ble_hs_adv.h"
+#include "nimble/nimble/include/nimble/ble.h"
+#include "nimble/nimble/host/include/host/ble_hs_adv.h"
 #include "ble_hs_priv.h"
 #if MYNEWT_VAL(ENC_ADV_DATA)
-#include "host/ble_ead.h"
+#include "nimble/nimble/host/include/host/ble_ead.h"
 #endif
 
 struct find_field_data {

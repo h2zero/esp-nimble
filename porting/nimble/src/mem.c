@@ -18,8 +18,8 @@
  */
 
 #include <stdlib.h>
-#include "os/os.h"
-#include "mem/mem.h"
+#include "nimble/porting/nimble/include/os/os.h"
+#include "nimble/porting/nimble/include/mem/mem.h"
 #include "esp_nimble_mem.h"
 
 /**

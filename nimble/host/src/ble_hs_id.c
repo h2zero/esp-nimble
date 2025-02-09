@@ -18,7 +18,7 @@
  */
 
 #include <string.h>
-#include "host/ble_hs_id.h"
+#include "nimble/nimble/host/include/host/ble_hs_id.h"
 #include "ble_hs_priv.h"
 #include "ble_hs_resolv_priv.h"
 

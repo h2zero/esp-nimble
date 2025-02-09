@@ -30,9 +30,9 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <tinycrypt/sha256.h>
-#include <tinycrypt/constants.h>
-#include <tinycrypt/utils.h>
+#include <nimble/ext/tinycrypt/include/tinycrypt/sha256.h>
+#include <nimble/ext/tinycrypt/include/tinycrypt/constants.h>
+#include <nimble/ext/tinycrypt/include/tinycrypt/utils.h>
 
 static void compress(unsigned int *iv, const uint8_t *data);
 

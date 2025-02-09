@@ -17,18 +17,18 @@
  * under the License.
  */
 
-#include "syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
 
 #if MYNEWT_VAL(BLE_EATT_CHAN_NUM) > 0
 
 #include <stddef.h>
 #include <errno.h>
-#include "host/ble_hs_log.h"
+#include "nimble/nimble/host/include/host/ble_hs_log.h"
 #include "ble_att_cmd_priv.h"
 #include "ble_hs_priv.h"
 #include "ble_l2cap_priv.h"
 #include "ble_eatt_priv.h"
-#include "services/gatt/ble_svc_gatt.h"
+#include "nimble/nimble/host/services/gatt/include/services/gatt/ble_svc_gatt.h"
 
 struct ble_eatt {
     SLIST_ENTRY(ble_eatt) next;

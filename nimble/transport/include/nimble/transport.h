@@ -24,13 +24,13 @@
 extern "C" {
 #endif
 
-#include <nimble/transport_impl.h>
-#include <nimble/transport/monitor.h>
+#include <nimble/nimble/transport/include/nimble/transport_impl.h>
+#include <nimble/nimble/transport/include/nimble/transport/monitor.h>
 #if MYNEWT_PKG_apache_mynewt_nimble__nimble_transport_common_hci_ipc
-#include <nimble/transport/transport_ipc.h>
+#include <nimble/nimble/transport/include/nimble/transport/transport_ipc.h>
 #endif
 #include <inttypes.h>
-#include "os/os_mempool.h"
+#include "nimble/porting/nimble/include/os/os_mempool.h"
 
 #define BLE_HCI_TRANS_CMD_SZ        260
 /*** Type of buffers for holding commands and events. */

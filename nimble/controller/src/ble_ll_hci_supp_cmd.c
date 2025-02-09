@@ -19,9 +19,9 @@
 
 #include <stdint.h>
 #include <string.h>
-#include <syscfg/syscfg.h>
-#include <controller/ble_ll.h>
-#include <controller/ble_ll_hci.h>
+#include <nimble/porting/nimble/include/syscfg/syscfg.h>
+#include <nimble/nimble/controller/include/controller/ble_ll.h>
+#include <nimble/nimble/controller/include/controller/ble_ll_hci.h>
 
 /* Magic macros */
 #define BIT(n)      (1 << (n)) |

@@ -21,8 +21,8 @@
 #include <string.h>
 #include <errno.h>
 #include <stdio.h>
-#include "os/os.h"
-#include "nimble/hci_common.h"
+#include "nimble/porting/nimble/include/os/os.h"
+#include "nimble/nimble/include/nimble/hci_common.h"
 #include "ble_hs_priv.h"
 #include "bt_common.h"
 #if (BT_HCI_LOG_INCLUDED == TRUE)

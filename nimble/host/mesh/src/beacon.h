@@ -9,7 +9,7 @@
 #ifndef __BEACON_H__
 #define __BEACON_H__
 
-#include "os/os_mbuf.h"
+#include "nimble/porting/nimble/include/os/os_mbuf.h"
 
 void bt_mesh_beacon_enable(void);
 void bt_mesh_beacon_disable(void);

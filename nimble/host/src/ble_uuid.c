@@ -21,10 +21,10 @@
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
-#include "os/os_mbuf.h"
-#include "nimble/ble.h"
+#include "nimble/porting/nimble/include/os/os_mbuf.h"
+#include "nimble/nimble/include/nimble/ble.h"
 #include "ble_hs_priv.h"
-#include "host/ble_uuid.h"
+#include "nimble/nimble/host/include/host/ble_uuid.h"
 
 #define BLE_UUID16_STR_MAX_LEN          6
 #define BLE_UUID32_STR_MAX_LEN          10

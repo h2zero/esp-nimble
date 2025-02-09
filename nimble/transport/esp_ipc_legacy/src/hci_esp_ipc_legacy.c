@@ -7,9 +7,9 @@
 #include <string.h>
 #include <errno.h>
 #include <stdint.h>
-#include <sysinit/sysinit.h>
-#include <syscfg/syscfg.h>
-#include "nimble/transport.h"
+#include <nimble/porting/nimble/include/sysinit/sysinit.h>
+#include <nimble/porting/nimble/include/syscfg/syscfg.h>
+#include "nimble/nimble/host/mesh/src/transport.h"
 #include "esp_nimble_hci.h"
 
 /* This file is only used by ESP32, ESP32C3 and ESP32S3. */

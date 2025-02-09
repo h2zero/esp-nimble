@@ -6,7 +6,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
 #define MESH_LOG_MODULE BLE_MESH_FRIEND_LOG
 
 #if MYNEWT_VAL(BLE_MESH_FRIEND)
@@ -15,8 +15,8 @@
 #include <errno.h>
 #include <assert.h>
 
-#include "mesh/mesh.h"
-#include "mesh/slist.h"
+#include "nimble/nimble/host/mesh/include/mesh/mesh.h"
+#include "nimble/nimble/host/mesh/include/mesh/slist.h"
 #include "mesh_priv.h"
 #include "crypto.h"
 #include "adv.h"

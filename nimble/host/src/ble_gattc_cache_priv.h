@@ -20,11 +20,11 @@
 #ifndef H_BLE_GATTC_CACHE_PRIV_
 #define H_BLE_GATTC_CACHE_PRIV_
 
-#include "modlog/modlog.h"
-#include "sys/queue.h"
-#include "host/ble_gatt.h"
-#include "nimble/ble.h"
-#include "services/gatt/ble_svc_gatt.h"
+#include "nimble/porting/nimble/include/modlog/modlog.h"
+#include "nimble/porting/nimble/include/os/queue.h"
+#include "nimble/nimble/host/include/host/ble_gatt.h"
+#include "nimble/nimble/include/nimble/ble.h"
+#include "nimble/nimble/host/services/gatt/include/services/gatt/ble_svc_gatt.h"
 
 #ifdef __cplusplus
 extern "C" {

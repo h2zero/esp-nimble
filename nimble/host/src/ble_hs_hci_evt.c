@@ -20,9 +20,9 @@
 #include <string.h>
 #include <errno.h>
 #include <stdio.h>
-#include "os/os.h"
-#include "nimble/hci_common.h"
-#include "host/ble_gap.h"
+#include "nimble/porting/nimble/include/os/os.h"
+#include "nimble/nimble/include/nimble/hci_common.h"
+#include "nimble/nimble/host/include/host/ble_gap.h"
 #include "ble_hs_priv.h"
 #include "ble_hs_resolv_priv.h"
 #include "esp_nimble_mem.h"

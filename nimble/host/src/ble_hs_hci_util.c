@@ -18,8 +18,8 @@
  */
 
 #include <string.h>
-#include "nimble/hci_common.h"
-#include "host/ble_hs_hci.h"
+#include "nimble/nimble/include/nimble/hci_common.h"
+#include "nimble/nimble/host/include/host/ble_hs_hci.h"
 #include "ble_hs_priv.h"
 
 #ifndef min

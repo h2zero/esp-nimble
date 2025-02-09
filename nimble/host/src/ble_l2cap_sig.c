@@ -44,7 +44,7 @@
 
 #include <string.h>
 #include <errno.h>
-#include "nimble/ble.h"
+#include "nimble/nimble/include/nimble/ble.h"
 #include "ble_hs_priv.h"
 
 #if NIMBLE_BLE_CONNECT

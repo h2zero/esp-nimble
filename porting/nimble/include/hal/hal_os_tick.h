@@ -18,7 +18,7 @@
 extern "C" {
 #endif
 
-#include "os/os.h"
+#include "nimble/porting/nimble/include/os/os.h"
 
 typedef long os_time_t;
 

@@ -30,9 +30,9 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <tinycrypt/ccm_mode.h>
-#include <tinycrypt/constants.h>
-#include <tinycrypt/utils.h>
+#include <nimble/ext/tinycrypt/include/tinycrypt/ccm_mode.h>
+#include <nimble/ext/tinycrypt/include/tinycrypt/constants.h>
+#include <nimble/ext/tinycrypt/include/tinycrypt/utils.h>
 
 #include <stdio.h>
 

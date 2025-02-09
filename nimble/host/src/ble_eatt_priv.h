@@ -17,9 +17,9 @@
  * under the License.
  */
 
-#include "syscfg/syscfg.h"
-#include "os/os_mbuf.h"
-#include "host/ble_l2cap.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/os/os_mbuf.h"
+#include "nimble/nimble/host/include/host/ble_l2cap.h"
 
 #ifndef BLE_EATT_H_
 #define BLE_EATT_H_

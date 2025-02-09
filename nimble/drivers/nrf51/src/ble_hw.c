@@ -20,20 +20,20 @@
 #include <stdint.h>
 #include <assert.h>
 #include <string.h>
-#include "syscfg/syscfg.h"
-#include "os/os.h"
-#include "ble/xcvr.h"
-#include "nimble/ble.h"
-#include "nimble/nimble_opt.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/os/os.h"
+#include "nimble/nimble/drivers/nrf51/include/ble/xcvr.h"
+#include "nimble/nimble/include/nimble/ble.h"
+#include "nimble/nimble/include/nimble/nimble_opt.h"
 #include "nrfx.h"
-#include "controller/ble_hw.h"
+#include "nimble/nimble/controller/include/controller/ble_hw.h"
 #if MYNEWT
 #include "mcu/cmsis_nvic.h"
 #else
 #include "core_cm0.h"
-#include <nimble/nimble_npl_os.h>
+#include <nimble/porting/npl/freertos/include/nimble/nimble_npl_os.h>
 #endif
-#include "os/os_trace_api.h"
+#include "nimble/porting/nimble/include/os/os_trace_api.h"
 
 /* Total number of resolving list elements */
 #define BLE_HW_RESOLV_LIST_SIZE     (16)

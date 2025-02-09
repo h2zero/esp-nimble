@@ -28,11 +28,11 @@
  */
 
 #include <inttypes.h>
-#include "nimble/ble.h"
-#include "host/ble_att.h"
-#include "host/ble_uuid.h"
-#include "host/ble_esp_gatt.h"
-#include "syscfg/syscfg.h"
+#include "nimble/nimble/include/nimble/ble.h"
+#include "nimble/nimble/host/include/host/ble_att.h"
+#include "nimble/nimble/host/include/host/ble_uuid.h"
+#include "nimble/nimble/host/include/host/ble_esp_gatt.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
 #ifdef __cplusplus
 extern "C" {
 #endif

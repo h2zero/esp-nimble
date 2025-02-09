@@ -20,22 +20,22 @@
 #include <stdint.h>
 #include <assert.h>
 #include <string.h>
-#include "syscfg/syscfg.h"
-#include "os/os.h"
-#include "ble/xcvr.h"
-#include "nimble/ble.h"
-#include "nimble/nimble_opt.h"
+#include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/porting/nimble/include/os/os.h"
+#include "nimble/nimble/drivers/nrf51/include/ble/xcvr.h"
+#include "nimble/nimble/include/nimble/ble.h"
+#include "nimble/nimble/include/nimble/nimble_opt.h"
 #include "nrfx.h"
-#include "controller/ble_hw.h"
+#include "nimble/nimble/controller/include/controller/ble_hw.h"
 #if MYNEWT
 #include "mcu/cmsis_nvic.h"
 #else
 #ifdef NRF52_SERIES
 #include "core_cm4.h"
 #endif
-#include <nimble/nimble_npl_os.h>
+#include <nimble/porting/npl/freertos/include/nimble/nimble_npl_os.h>
 #endif
-#include "os/os_trace_api.h"
+#include "nimble/porting/nimble/include/os/os_trace_api.h"
 #include <hal/nrf_rng.h>
 #include "hal/nrf_ecb.h"
 

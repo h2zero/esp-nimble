@@ -20,10 +20,10 @@
 #include <assert.h>
 #include <string.h>
 #include <errno.h>
-#include "nimble/nimble_opt.h"
-#include "host/ble_gap.h"
-#include "host/ble_hs_adv.h"
-#include "host/ble_hs_hci.h"
+#include "nimble/nimble/include/nimble/nimble_opt.h"
+#include "nimble/nimble/host/include/host/ble_gap.h"
+#include "nimble/nimble/host/include/host/ble_hs_adv.h"
+#include "nimble/nimble/host/include/host/ble_hs_hci.h"
 #include "ble_hs_priv.h"
 #include "ble_gap_priv.h"
 #include "ble_hs_resolv_priv.h"
@@ -31,8 +31,8 @@
 #include "ble_gattc_cache_priv.h"
 #endif
 
-#include "host/ble_hs_pvcy.h"
-#include "host/util/util.h"
+#include "nimble/nimble/host/include/host/ble_hs_pvcy.h"
+#include "nimble/nimble/host/util/include/host/util/util.h"
 
 #ifndef min
 #define min(a, b) ((a) < (b) ? (a) : (b))
