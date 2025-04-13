@@ -17,6 +17,8 @@
  * under the License.
  */
 
+#ifndef ESP_PLATFORM
+
 #include <stdint.h>
 #include <string.h>
 #include <assert.h>
@@ -1519,3 +1521,5 @@ ble_phy_rfclk_disable(void)
     NRF_CLOCK->TASKS_HFCLKSTOP = 1;
 #endif
 }
+
+#endif /* ESP_PLATFORM */

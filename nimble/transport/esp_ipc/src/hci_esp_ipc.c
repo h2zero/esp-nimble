@@ -3,16 +3,20 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
+
+#include <nimble/porting/nimble/include/syscfg/syscfg.h>
+#ifdef ESP_PLATFORM
+#if !defined(CONFIG_IDF_TARGET_ESP32) && !defined(CONFIG_IDF_TARGET_ESP32C3) && !defined(CONFIG_IDF_TARGET_ESP32S3)
+
 #include <assert.h>
 #include <string.h>
 #include <errno.h>
 #include <stdint.h>
 #include <nimble/porting/nimble/include/sysinit/sysinit.h>
-#include <nimble/porting/nimble/include/syscfg/syscfg.h>
 #include "nimble/porting/nimble/include/os/os_mbuf.h"
 #include "nimble/nimble/host/mesh/src/transport.h"
-#include "esp_hci_transport.h"
-#include "esp_hci_internal.h"
+#include "nimble/esp_port/port/transport/include/esp_hci_transport.h"
+#include "nimble/esp_port/port/transport/include/esp_hci_internal.h"
 
 static int
 ble_transport_dummy_host_recv_cb(hci_trans_pkt_ind_t type, uint8_t *data, uint16_t len)
@@ -69,3 +73,6 @@ ble_transport_free(void *buf)
 {
     r_ble_hci_trans_buf_free(buf);
 }
+
+#endif /* !CONFIG_IDF_TARGET_ESP32 && !CONFIG_IDF_TARGET_ESP32C3 && !CONFIG_IDF_TARGET_ESP32S3 */
+#endif /* ESP_PLATFORM */

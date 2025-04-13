@@ -39,21 +39,21 @@
 #include "esp_bt.h"
 #endif
 #if !SOC_ESP_NIMBLE_CONTROLLER && CONFIG_BT_CONTROLLER_ENABLED
-#include "esp_nimble_hci.h"
+#include "nimble/esp_port/esp-hci/include/esp_nimble_hci.h"
 #endif
 #if !CONFIG_BT_CONTROLLER_ENABLED
 #include "nimble/nimble/host/mesh/src/transport.h"
 #endif
-#if (BT_HCI_LOG_INCLUDED == TRUE)
-#include "hci_log/bt_hci_log.h"
-#endif // (BT_HCI_LOG_INCLUDED == TRUE)
-#include "bt_common.h"
+// #if (BT_HCI_LOG_INCLUDED == TRUE)
+// #include "hci_log/bt_hci_log.h"
+// #endif // (BT_HCI_LOG_INCLUDED == TRUE)
+// #include "bt_common.h"
 
 #define NIMBLE_PORT_LOG_TAG          "BLE_INIT"
 
 extern void os_msys_init(void);
 
-#if CONFIG_BT_NIMBLE_ENABLED 
+#if CONFIG_BT_NIMBLE_ENABLED
 
 extern void ble_hs_deinit(void);
 static struct ble_hs_stop_listener stop_listener;
@@ -84,8 +84,8 @@ nimble_port_stop_cb(struct ble_npl_event *ev)
 
 /**
  * @brief esp_nimble_init - Initialize the NimBLE host stack
- * 
- * @return esp_err_t 
+ *
+ * @return esp_err_t
  */
 esp_err_t esp_nimble_init(void)
 {
@@ -132,8 +132,8 @@ esp_err_t esp_nimble_init(void)
 
 /**
  * @brief esp_nimble_deinit - Deinitialize the NimBLE host stack
- * 
- * @return esp_err_t 
+ *
+ * @return esp_err_t
  */
 esp_err_t esp_nimble_deinit(void)
 {
@@ -214,9 +214,9 @@ nimble_port_init(void)
         return ret;
     }
 
-#if MYNEWT_VAL(BT_HCI_LOG_INCLUDED)
-    bt_hci_log_init();
-#endif // (BT_HCI_LOG_INCLUDED == TRUE)
+// #if MYNEWT_VAL(BT_HCI_LOG_INCLUDED)
+//     bt_hci_log_init();
+// #endif // (BT_HCI_LOG_INCLUDED == TRUE)
 
     return ESP_OK;
 }
@@ -252,9 +252,9 @@ nimble_port_deinit(void)
     }
 #endif
 
-#if (BT_HCI_LOG_INCLUDED == TRUE)
-    bt_hci_log_deinit();
-#endif // (BT_HCI_LOG_INCLUDED == TRUE)
+// #if (BT_HCI_LOG_INCLUDED == TRUE)
+//     //bt_hci_log_deinit();
+// #endif // (BT_HCI_LOG_INCLUDED == TRUE)
 
     return ESP_OK;
 }

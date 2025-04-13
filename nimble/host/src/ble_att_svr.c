@@ -25,7 +25,7 @@
 #include "nimble/nimble/include/nimble/ble.h"
 #include "nimble/nimble/host/include/host/ble_uuid.h"
 #include "ble_hs_priv.h"
-#include "esp_nimble_mem.h"
+#include "nimble/esp_port/port/include/esp_nimble_mem.h"
 
 #if NIMBLE_BLE_CONNECT
 /**

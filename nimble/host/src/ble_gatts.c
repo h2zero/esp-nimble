@@ -25,7 +25,7 @@
 #include "nimble/nimble/host/include/host/ble_uuid.h"
 #include "nimble/nimble/host/include/host/ble_store.h"
 #include "ble_hs_priv.h"
-#include "esp_nimble_mem.h"
+#include "nimble/esp_port/port/include/esp_nimble_mem.h"
 
 static uint8_t perm_flags = BLE_ATT_F_READ | BLE_ATT_F_WRITE ;
 
@@ -179,7 +179,7 @@ ble_gatts_clt_cfg_free(struct ble_gatts_clt_cfg *cfg)
 #endif
 
 void ble_gatts_set_clt_cfg_perm_flags(uint8_t flags)
-{ 
+{
    perm_flags = flags ;
 }
 
@@ -1061,11 +1061,11 @@ ble_gatts_cpfd_access(uint16_t conn_handle, uint16_t attr_handle,
     int rc;
 
     BLE_HS_DBG_ASSERT(op == BLE_ATT_ACCESS_OP_READ);
-    
+
     STATS_INC(ble_gatts_stats, dsc_reads);
 
     cpfd = arg;
-    
+
     rc = 0;
     rc += os_mbuf_append(*om, &(cpfd->format), sizeof(cpfd->format));
     rc += os_mbuf_append(*om, &(cpfd->exponent), sizeof(cpfd->exponent));
@@ -1109,7 +1109,7 @@ ble_gatts_register_cpfds(const struct ble_gatt_cpfd *cpfds)
         if (first_cpfd_entry == NULL) {
             return BLE_HS_ENOENT;
         }
-        
+
         /**
          * The First CPFD entry will contain it's handle,
          * Using that and the handle of this descriptor we can
@@ -1574,7 +1574,11 @@ ble_gatts_connection_broken(uint16_t conn_handle)
 static void
 ble_gatts_free_svc_defs(void)
 {
+#ifdef ESP_PLATFORM
     nimble_platform_mem_free(ble_gatts_svc_defs);
+#else
+    free(ble_gatts_svc_defs);
+#endif
     ble_gatts_svc_defs = NULL;
     ble_gatts_num_svc_defs = 0;
 }
@@ -1595,6 +1599,7 @@ ble_gatts_free_mem(void)
         }
     }
 #endif
+#ifdef ESP_PLATFORM
     nimble_platform_mem_free(ble_gatts_clt_cfg_mem);
     ble_gatts_clt_cfg_mem = NULL;
 
@@ -1611,6 +1616,13 @@ ble_gatts_free_mem(void)
     ble_gatts_svc_entry_mem = NULL;
 #else
     nimble_platform_mem_free(ble_gatts_svc_entries);
+    ble_gatts_svc_entries = NULL;
+#endif
+#else
+    free(ble_gatts_clt_cfg_mem);
+    ble_gatts_clt_cfg_mem = NULL;
+
+    free(ble_gatts_svc_entries);
     ble_gatts_svc_entries = NULL;
 #endif
 }
@@ -1659,7 +1671,11 @@ ble_gatts_start(void)
     }
 
     if (ble_hs_max_client_configs > 0) {
+#ifdef ESP_PLATFORM
         ble_gatts_clt_cfg_mem = nimble_platform_mem_malloc(
+#else
+        ble_gatts_clt_cfg_mem = malloc(
+#endif
             OS_MEMPOOL_BYTES(ble_hs_max_client_configs,
                              sizeof (struct ble_gatts_clt_cfg)));
         if (ble_gatts_clt_cfg_mem == NULL) {
@@ -1675,7 +1691,11 @@ ble_gatts_start(void)
         if (ble_gatts_svc_entry_mem == NULL) {
 #else
         ble_gatts_svc_entries =
+#ifdef ESP_PLATFORM
             nimble_platform_mem_malloc(ble_hs_max_services * sizeof *ble_gatts_svc_entries);
+#else
+            malloc(ble_hs_max_services * sizeof *ble_gatts_svc_entries);
+#endif
         if (ble_gatts_svc_entries == NULL) {
 #endif
             rc = BLE_HS_ENOMEM;

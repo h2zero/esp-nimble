@@ -20,7 +20,7 @@
 #include <stdlib.h>
 #include "nimble/porting/nimble/include/os/os.h"
 #include "nimble/porting/nimble/include/mem/mem.h"
-#include "esp_nimble_mem.h"
+#include "nimble/esp_port/port/include/esp_nimble_mem.h"
 
 /**
  * Generic mempool allocation function.  Used with basic and extended mempools.

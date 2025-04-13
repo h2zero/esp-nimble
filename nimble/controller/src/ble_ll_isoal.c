@@ -17,6 +17,8 @@
  * under the License.
  */
 
+#ifndef ESP_PLATFORM
+
 #include <stdint.h>
 #include <nimble/porting/nimble/include/syscfg/syscfg.h>
 #include <nimble/nimble/include/nimble/hci_common.h>
@@ -401,3 +403,4 @@ ble_ll_isoal_data_in(struct os_mbuf *om)
 }
 
 #endif /* BLE_LL_ISO */
+#endif /* ESP_PLATFORM */

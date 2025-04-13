@@ -17,6 +17,8 @@
  * under the License.
  */
 
+#ifndef ESP_PLATFORM
+
 #include <assert.h>
 #include <stdarg.h>
 #include <stdint.h>
@@ -665,3 +667,4 @@ ble_ll_hci_ev_send_vs_llcp_trace(uint8_t type, uint16_t handle, uint16_t count,
     }
 }
 #endif
+#endif /* ESP_PLATFORM */

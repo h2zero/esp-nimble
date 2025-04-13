@@ -17,6 +17,8 @@
  * under the License.
  */
 
+#ifndef ESP_PLATFORM
+
 #include <stdint.h>
 #include <nrfx.h>
 #include <nimble/nimble/controller/include/controller/ble_fem.h>
@@ -310,3 +312,5 @@ phy_txpower_round(int8_t dbm)
 
     return (int8_t)RADIO_TXPOWER_TXPOWER_Neg40dBm;
 }
+
+#endif /* ESP_PLATFORM */

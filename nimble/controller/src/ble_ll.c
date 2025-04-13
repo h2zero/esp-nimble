@@ -16,6 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+#ifndef ESP_PLATFORM
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -2101,3 +2102,5 @@ ble_ll_is_busy(unsigned int flags)
 
     return 0;
 }
+
+#endif /* ESP_PLATFORM */

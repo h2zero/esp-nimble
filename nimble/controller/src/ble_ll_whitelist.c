@@ -16,6 +16,8 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+#ifndef ESP_PLATFORM
+
 #include <stdint.h>
 #include <assert.h>
 #include <string.h>
@@ -291,3 +293,5 @@ ble_ll_whitelist_disable(void)
     ble_hw_whitelist_disable();
 #endif
 }
+
+#endif

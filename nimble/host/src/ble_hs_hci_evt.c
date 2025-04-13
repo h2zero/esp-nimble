@@ -25,7 +25,7 @@
 #include "nimble/nimble/host/include/host/ble_gap.h"
 #include "ble_hs_priv.h"
 #include "ble_hs_resolv_priv.h"
-#include "esp_nimble_mem.h"
+#include "nimble/esp_port/port/include/esp_nimble_mem.h"
 
 #if MYNEWT_VAL(BLE_ENABLE_CONN_REATTEMPT)
 struct ble_gap_reattempt_ctxt {

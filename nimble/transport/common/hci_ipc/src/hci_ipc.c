@@ -26,6 +26,10 @@
 #include <nimble/nimble/host/mesh/src/transport.h>
 #include <nimble/nimble/transport/common/hci_ipc/include/nimble/transport/hci_ipc.h>
 
+#ifndef min
+#define min(a, b) ((a) < (b) ? (a) : (b))
+#endif
+
 volatile struct hci_ipc_shm *g_ipc_shm;
 
 static void
