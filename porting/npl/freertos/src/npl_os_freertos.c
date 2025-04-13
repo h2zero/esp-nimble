@@ -56,7 +56,7 @@ static void *rtc0_isr_addr;
 #endif
 
 #if CONFIG_BT_NIMBLE_USE_ESP_TIMER
-static const char *TAG = "Timer";
+static const char *LOG_TAG = "Timer";
 #endif
 
 #ifdef CONFIG_NIMBLE_STACK_USE_MEM_POOLS
@@ -922,10 +922,10 @@ npl_freertos_callout_deinit(struct ble_npl_callout *co)
     ble_npl_event_deinit(&callout->ev);
 #if CONFIG_BT_NIMBLE_USE_ESP_TIMER
     if(esp_timer_stop(callout->handle))
-        ESP_LOGD(TAG, "Timer not stopped");
+        ESP_LOGD(LOG_TAG, "Timer not stopped");
 
     if(esp_timer_delete(callout->handle))
-        ESP_LOGW(TAG, "Timer not deleted");
+        ESP_LOGW(LOG_TAG, "Timer not deleted");
 #else
     xTimerDelete(callout->handle, portMAX_DELAY);
 #endif

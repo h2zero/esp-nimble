@@ -48,7 +48,7 @@ static void *ble_hci_rx_acl_hs_arg;
 
 
 static SemaphoreHandle_t vhci_send_sem;
-const static char *TAG = "NimBLE";
+const static char *LOG_TAG = "NimBLE";
 
 int os_msys_buf_alloc(void);
 void os_msys_buf_free(void);
@@ -82,7 +82,7 @@ int ble_hci_trans_hs_cmd_tx(uint8_t *cmd)
     *cmd = BLE_HCI_UART_H4_CMD;
     len = BLE_HCI_CMD_HDR_LEN + cmd[3] + 1;
     if (!esp_vhci_host_check_send_available()) {
-        ESP_LOGD(TAG, "Controller not ready to receive packets");
+        ESP_LOGD(LOG_TAG, "Controller not ready to receive packets");
     }
 
     if (xSemaphoreTake(vhci_send_sem, NIMBLE_VHCI_TIMEOUT_MS / portTICK_PERIOD_MS) == pdTRUE) {
@@ -116,7 +116,7 @@ int ble_hci_trans_hs_acl_tx(struct os_mbuf *om)
     len++;
 
     if (!esp_vhci_host_check_send_available()) {
-        ESP_LOGD(TAG, "Controller not ready to receive packets");
+        ESP_LOGD(LOG_TAG, "Controller not ready to receive packets");
     }
 
     os_mbuf_copydata(om, 0, OS_MBUF_PKTLEN(om), &data[1]);
