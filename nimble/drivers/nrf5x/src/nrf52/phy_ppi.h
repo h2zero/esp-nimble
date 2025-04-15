@@ -20,6 +20,8 @@
 #ifndef H_PHY_PPI_
 #define H_PHY_PPI_
 
+#if defined(ARDUINO_ARCH_NRF5) && defined(NRF52_SERIES)
+
 #include <nrf_ppi.h>
 
 static inline void
@@ -111,3 +113,4 @@ phy_ppi_disable(void)
 }
 
 #endif /* H_PHY_PPI_ */
+#endif /* ARDUINO_ARCH_NRF5 && NRF52_SERIES */

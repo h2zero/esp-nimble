@@ -25,7 +25,9 @@
 #include "nimble/nimble/host/include/host/ble_gap.h"
 #include "ble_hs_priv.h"
 #include "ble_hs_resolv_priv.h"
+#ifdef ESP_PLATFORM
 #include "nimble/esp_port/port/include/esp_nimble_mem.h"
+#endif
 
 #if MYNEWT_VAL(BLE_ENABLE_CONN_REATTEMPT)
 struct ble_gap_reattempt_ctxt {
@@ -1137,7 +1139,7 @@ ble_hs_hci_evt_le_cte_req_failed(uint8_t subevent, const void *data,
     }
 
     ble_gap_rx_cte_req_failed(ev);
- 
+
     return 0;
 }
 #endif

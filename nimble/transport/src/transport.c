@@ -24,11 +24,13 @@
 #include <nimble/porting/nimble/include/os/os_mempool.h>
 #include <nimble/nimble/include/nimble/ble.h>
 #include <nimble/nimble/include/nimble/hci_common.h>
-#include <nimble/nimble/host/mesh/src/transport.h>
+#include <nimble/nimble/transport/include/nimble/transport.h>
 #if BLE_TRANSPORT_IPC
 #include <nimble/nimble/transport/common/hci_ipc/include/nimble/transport/hci_ipc.h>
 #endif
+#ifdef ESP_PLATFORM
 #include "nimble/esp_port/port/include/esp_nimble_mem.h"
+#endif
 
 int os_msys_buf_alloc(void);
 void os_msys_buf_free(void);
@@ -75,6 +77,8 @@ void os_msys_buf_free(void);
                                       BLE_HCI_DATA_HDR_SZ, OS_ALIGNMENT))
 
 #if !SOC_ESP_NIMBLE_CONTROLLER || !CONFIG_BT_CONTROLLER_ENABLED
+
+#ifdef ESP_PLATFORM
 static os_membuf_t *pool_cmd_buf;
 static struct os_mempool pool_cmd;
 
@@ -95,6 +99,31 @@ static os_membuf_t *pool_iso_buf;
 static struct os_mempool_ext pool_iso;
 static struct os_mbuf_pool mpool_iso;
 #endif
+
+#else // !ESP_PLATFORM
+
+static uint8_t pool_cmd_buf[ OS_MEMPOOL_BYTES(POOL_CMD_COUNT, POOL_CMD_SIZE) ];
+static struct os_mempool pool_cmd;
+
+static uint8_t pool_evt_buf[ OS_MEMPOOL_BYTES(POOL_EVT_COUNT, POOL_EVT_SIZE) ];
+static struct os_mempool pool_evt;
+
+static uint8_t pool_evt_lo_buf[ OS_MEMPOOL_BYTES(POOL_EVT_LO_COUNT, POOL_EVT_SIZE) ];
+static struct os_mempool pool_evt_lo;
+
+#if POOL_ACL_COUNT > 0
+static uint8_t pool_acl_buf[ OS_MEMPOOL_BYTES(POOL_ACL_COUNT, POOL_ACL_SIZE) ];
+static struct os_mempool_ext pool_acl;
+static struct os_mbuf_pool mpool_acl;
+#endif
+
+#if POOL_ISO_COUNT > 0
+static uint8_t pool_iso_buf[ OS_MEMPOOL_BYTES(POOL_ISO_COUNT, POOL_ISO_SIZE) ];
+static struct os_mempool_ext pool_iso;
+static struct os_mbuf_pool mpool_iso;
+#endif
+
+#endif // ESP_PLATFORM
 
 static os_mempool_put_fn *transport_put_acl_from_ll_cb;
 
@@ -276,6 +305,8 @@ ble_transport_ipc_free(void *buf)
     }
 }
 
+#ifdef ESP_PLATFORM
+
 #if POOL_ACL_COUNT > 0
 static os_error_t
 ble_transport_acl_put(struct os_mempool_ext *mpe, void *data, void *arg)
@@ -374,6 +405,45 @@ esp_err_t ble_buf_alloc(void)
     return ESP_OK;
 }
 
+#else /* !ESP_PLATFORM */
+
+#if POOL_ACL_COUNT > 0
+static os_error_t
+ble_transport_acl_put(struct os_mempool_ext *mpe, void *data, void *arg)
+{
+    struct os_mbuf *om;
+    struct os_mbuf_pkthdr *pkthdr;
+    bool do_put;
+    bool from_ll;
+    os_error_t err;
+
+    om = data;
+    pkthdr = OS_MBUF_PKTHDR(om);
+
+    do_put = true;
+    from_ll = (pkthdr->omp_flags & OMP_FLAG_FROM_MASK) == OMP_FLAG_FROM_LL;
+    err = 0;
+
+    if (from_ll && transport_put_acl_from_ll_cb) {
+        err = transport_put_acl_from_ll_cb(mpe, data, arg);
+        do_put = false;
+    }
+
+    if (do_put) {
+        err = os_memblock_put_from_cb(&mpe->mpe_mp, data);
+    }
+
+#if BLE_TRANSPORT_IPC_ON_HS
+    if (from_ll && !err) {
+        hci_ipc_put(HCI_IPC_TYPE_ACL);
+    }
+#endif
+
+    return err;
+}
+#endif
+#endif /* ESP_PLATFORM */
+
 void
 ble_transport_init(void)
 {
@@ -420,8 +490,10 @@ void
 ble_transport_deinit(void)
 {
     int rc = 0;
+#if POOL_ISO_COUNT > 0
     rc = os_mempool_ext_clear(&pool_acl);
     SYSINIT_PANIC_ASSERT(rc == 0);
+#endif
 
     rc = os_mempool_clear(&pool_evt_lo);
     SYSINIT_PANIC_ASSERT(rc == 0);
@@ -432,6 +504,7 @@ ble_transport_deinit(void)
     rc = os_mempool_clear(&pool_cmd);
     SYSINIT_PANIC_ASSERT(rc == 0);
 }
+
 int
 ble_transport_register_put_acl_from_ll_cb(os_mempool_put_fn (*cb))
 {
@@ -456,5 +529,4 @@ ble_transport_ipc_buf_evt_type_get(void *buf)
     return 0;
 }
 #endif
-#endif
-
+#endif /* !SOC_ESP_NIMBLE_CONTROLLER || !CONFIG_BT_CONTROLLER_ENABLED */

@@ -15,7 +15,7 @@
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- */ 
+ */
 #ifndef ESP_PLATFORM
 
 #include <stdint.h>
@@ -35,7 +35,7 @@
 #include "nimble/nimble/controller/include/controller/ble_ll_whitelist.h"
 #include "nimble/nimble/controller/include/controller/ble_ll_resolv.h"
 #include "nimble/nimble/controller/include/controller/ble_ll_sync.h"
-#include <controller/ble_ll_utils.h>
+#include "nimble/nimble/controller/include/controller/ble_ll_utils.h"
 #include "nimble/nimble/controller/include/controller/ble_ll_isoal.h"
 #include "nimble/nimble/controller/include/controller/ble_ll_iso.h"
 #include "nimble/nimble/controller/include/controller/ble_ll_iso_big.h"

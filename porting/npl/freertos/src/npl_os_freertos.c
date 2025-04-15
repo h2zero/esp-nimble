@@ -22,6 +22,7 @@
 #include <string.h>
 #include "nimble/porting/nimble/include/syscfg/syscfg.h"
 #include "nimble/nimble/include/nimble/nimble_npl.h"
+
 #include "freertos/FreeRTOS.h"
 #include "nimble/porting/nimble/include/os/queue.h"
 #include "freertos/semphr.h"
@@ -32,11 +33,20 @@
 
 #include "nimble/porting/nimble/include/os/os_mempool.h"
 
+#ifdef ESP_PLATFORM
 #include "esp_log.h"
 
 #include "soc/soc_caps.h"
 
 portMUX_TYPE ble_port_mutex = portMUX_INITIALIZER_UNLOCKED;
+
+#else
+#include "nrf.h"
+
+static void *radio_isr_addr;
+static void *rng_isr_addr;
+static void *rtc0_isr_addr;
+#endif
 
 #if CONFIG_BT_NIMBLE_USE_ESP_TIMER
 static const char *TAG = "Timer";
@@ -257,12 +267,57 @@ npl_freertos_callout_mem_reset(struct ble_npl_callout *co)
     ble_npl_event_reset(&callout->ev);
 }
 
+#ifdef ESP_PLATFORM
 static inline bool
 in_isr(void)
 {
     /* XXX hw specific! */
     return xPortInIsrContext() != 0;
 }
+
+#else
+static inline bool
+in_isr(void)
+{
+    /* XXX hw specific! */
+    return (SCB->ICSR & SCB_ICSR_VECTACTIVE_Msk) != 0;
+}
+
+void
+RADIO_IRQHandler(void)
+{
+    ((void (*)(void))radio_isr_addr)();
+}
+
+void
+RNG_IRQHandler(void)
+{
+    ((void (*)(void))rng_isr_addr)();
+}
+
+void
+RTC0_IRQHandler(void)
+{
+    ((void (*)(void))rtc0_isr_addr)();
+}
+
+/* This is called by NimBLE radio driver to set interrupt handlers */
+void
+npl_freertos_hw_set_isr(int irqn, void (*addr)(void))
+{
+    switch (irqn) {
+    case RADIO_IRQn:
+        radio_isr_addr = addr;
+        break;
+    case RNG_IRQn:
+        rng_isr_addr = addr;
+        break;
+    case RTC0_IRQn:
+        rtc0_isr_addr = addr;
+        break;
+    }
+}
+#endif
 
 struct ble_npl_event *
 npl_freertos_eventq_get(struct ble_npl_eventq *evq, ble_npl_time_t tmo)
@@ -275,9 +330,14 @@ npl_freertos_eventq_get(struct ble_npl_eventq *evq, ble_npl_time_t tmo)
     if (in_isr()) {
         BLE_LL_ASSERT(tmo == 0);
         ret = xQueueReceiveFromISR(eventq->q, &ev, &woken);
+#ifdef ESP_PLATFORM
+
         if( woken == pdTRUE ) {
             portYIELD_FROM_ISR();
         }
+#else
+        portYIELD_FROM_ISR(woken);
+#endif
     } else {
         ret = xQueueReceive(eventq->q, &ev, tmo);
     }
@@ -309,9 +369,13 @@ npl_freertos_eventq_put(struct ble_npl_eventq *evq, struct ble_npl_event *ev)
 
     if (in_isr()) {
         ret = xQueueSendToBackFromISR(eventq->q, &ev, &woken);
+#ifdef ESP_PLATFORM
         if( woken == pdTRUE ) {
             portYIELD_FROM_ISR();
         }
+#else
+        portYIELD_FROM_ISR(woken);
+#endif
     } else {
         ret = xQueueSendToBack(eventq->q, &ev, portMAX_DELAY);
     }
@@ -360,14 +424,23 @@ npl_freertos_eventq_remove(struct ble_npl_eventq *evq,
             woken |= woken2;
         }
 
+#ifdef ESP_PLATFORM
         if( woken == pdTRUE ) {
             portYIELD_FROM_ISR();
         }
+#else
+        portYIELD_FROM_ISR(woken);
+#endif
     } else {
+#ifdef ESP_PLATFORM
         portMUX_TYPE ble_npl_mut = portMUX_INITIALIZER_UNLOCKED;
         portENTER_CRITICAL(&ble_npl_mut);
 
         count = uxQueueMessagesWaiting(eventq->q);
+#else
+        vPortEnterCritical();
+        count = uxQueueMessagesWaiting(eventq->q);
+#endif
         for (i = 0; i < count; i++) {
             ret = xQueueReceive(eventq->q, &tmp_ev, 0);
             BLE_LL_ASSERT(ret == pdPASS);
@@ -379,8 +452,11 @@ npl_freertos_eventq_remove(struct ble_npl_eventq *evq,
             ret = xQueueSendToBack(eventq->q, &tmp_ev, 0);
             BLE_LL_ASSERT(ret == pdPASS);
         }
-
+#ifdef ESP_PLATFORM
         portEXIT_CRITICAL(&ble_npl_mut);
+#else
+        vPortExitCritical();
+#endif
     }
 
     event->queued = 0;
@@ -606,9 +682,13 @@ npl_freertos_sem_pend(struct ble_npl_sem *sem, ble_npl_time_t timeout)
     if (in_isr()) {
         BLE_LL_ASSERT(timeout == 0);
         ret = xSemaphoreTakeFromISR(semaphor->handle, &woken);
+#ifdef ESP_PLATFORM
         if( woken == pdTRUE ) {
             portYIELD_FROM_ISR();
         }
+#else
+        portYIELD_FROM_ISR(woken);
+#endif
     } else {
         ret = xSemaphoreTake(semaphor->handle, timeout);
     }
@@ -631,9 +711,13 @@ npl_freertos_sem_release(struct ble_npl_sem *sem)
 
     if (in_isr()) {
         ret = xSemaphoreGiveFromISR(semaphor->handle, &woken);
+#ifdef ESP_PLATFORM
         if( woken == pdTRUE ) {
             portYIELD_FROM_ISR();
         }
+#else
+        portYIELD_FROM_ISR(woken);
+#endif
     } else {
         ret = xSemaphoreGive(semaphor->handle);
     }
@@ -849,10 +933,13 @@ npl_freertos_callout_reset(struct ble_npl_callout *co, ble_npl_time_t ticks)
         xTimerStopFromISR(callout->handle, &woken1);
         xTimerChangePeriodFromISR(callout->handle, ticks, &woken2);
         xTimerResetFromISR(callout->handle, &woken3);
-
+#ifdef ESP_PLATFORM
         if( woken1 == pdTRUE || woken2 == pdTRUE || woken3 == pdTRUE) {
             portYIELD_FROM_ISR();
         }
+#else
+        portYIELD_FROM_ISR(woken1 || woken2 || woken3);
+#endif
     } else {
         xTimerStop(callout->handle, portMAX_DELAY);
         xTimerChangePeriod(callout->handle, ticks, portMAX_DELAY);
@@ -1034,12 +1121,14 @@ npl_freertos_time_delay(ble_npl_time_t ticks)
 #endif
 }
 
+#ifdef ESP_PLATFORM
 #if NIMBLE_CFG_CONTROLLER || CONFIG_NIMBLE_CONTROLLER_MODE
 void
 npl_freertos_hw_set_isr(int irqn, uint32_t addr)
 {
     //Do nothing
 }
+#endif
 #endif
 
 
@@ -1049,7 +1138,11 @@ uint32_t
 npl_freertos_hw_enter_critical(void)
 {
     ++hw_critical_state_status;
+#ifdef ESP_PLATFORM
     portENTER_CRITICAL(&ble_port_mutex);
+#else
+    portENTER_CRITICAL();
+#endif
     return 0;
 }
 
@@ -1063,7 +1156,12 @@ void
 npl_freertos_hw_exit_critical(uint32_t ctx)
 {
     --hw_critical_state_status;
+#ifdef ESP_PLATFORM
     portEXIT_CRITICAL(&ble_port_mutex);
+#else
+    portEXIT_CRITICAL();
+#endif
+
 
 }
 

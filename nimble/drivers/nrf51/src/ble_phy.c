@@ -17,7 +17,7 @@
  * under the License.
  */
 
-#ifndef ESP_PLATFORM
+#if defined(ARDUINO_ARCH_NRF5) && defined(NRF51)
 
 #include <stdint.h>
 #include <string.h>
@@ -1522,4 +1522,4 @@ ble_phy_rfclk_disable(void)
 #endif
 }
 
-#endif /* ESP_PLATFORM */
+#endif /* ARDUINO_ARCH_NRF5 && NRF51 */

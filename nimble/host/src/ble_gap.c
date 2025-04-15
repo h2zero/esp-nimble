@@ -884,7 +884,7 @@ int ble_gap_get_local_used_addr(ble_addr_t *addr)
     int rc;
 
     if (addr == NULL) {
-        return ESP_FAIL;
+        return BLE_HS_EINVAL;
     }
 
     own_addr_type = ble_gap_slave[0].our_addr_type;
@@ -2923,7 +2923,7 @@ ble_gap_rx_data_len_change(const struct ble_hci_ev_le_subev_data_len_chg *ev)
     g_max_rx_octets[conn_handle] = event.data_len_chg.max_rx_octets;
     g_max_tx_time[conn_handle] = event.data_len_chg.max_tx_time;
     g_max_rx_time[conn_handle] = event.data_len_chg.max_rx_time;
- 
+
     ble_gap_event_listener_call(&event);
     ble_gap_call_conn_event_cb(&event, conn_handle);
 #endif
@@ -5126,7 +5126,7 @@ ble_gap_periodic_adv_sync_create(const ble_addr_t *addr, uint8_t adv_sid,
     cmd.sync_timeout = htole16(params->sync_timeout);
 #if MYNEWT_VAL(BLE_AOA_AOD)
     cmd.sync_cte_type = params->sync_cte_type;
-#else 
+#else
     cmd.sync_cte_type = 0x00;
 #endif
 
@@ -5422,7 +5422,7 @@ periodic_adv_set_default_sync_params(const struct ble_gap_periodic_sync_params *
     if (params != NULL) {
 #if MYNEWT_VAL(BLE_AOA_AOD)
         cmd.sync_cte_type = params->sync_cte_type;
-#else 
+#else
         cmd.sync_cte_type = 0x00;
 #endif
         cmd.mode = params->reports_disabled ? 0x01 : 0x02;
@@ -5606,7 +5606,7 @@ ble_gap_set_periodic_adv_subev_data(uint8_t instance, uint8_t num_subevents,
     uint8_t buf[len + 2];
     uint16_t opcode;
     uint16_t subev_data_len;
-    int rc; 
+    int rc;
 
     if (instance >= BLE_ADV_INSTANCES) {
         rc = BLE_HS_EINVAL;
@@ -5664,7 +5664,7 @@ ble_gap_set_periodic_adv_subev_data(uint8_t instance, uint8_t num_subevents,
 
 done:
     for (int i = 0; i < num_subevents; i++) {
-        os_mbuf_free_chain(params[i].data);  
+        os_mbuf_free_chain(params[i].data);
     }
     return rc;
 }
@@ -5840,7 +5840,7 @@ ble_gap_set_connless_cte_transmit_params(uint8_t instance, const struct ble_gap_
     return ble_hs_hci_cmd_tx(opcode, cmd, len, NULL, 0);
 }
 
-int 
+int
 ble_gap_set_connless_cte_transmit_enable(uint8_t instance, uint8_t cte_enable)
 {
     struct ble_hci_le_set_connless_cte_tx_enable_cp cmd;
@@ -5858,7 +5858,7 @@ ble_gap_set_connless_cte_transmit_enable(uint8_t instance, uint8_t cte_enable)
     return ble_hs_hci_cmd_tx(opcode, &cmd, sizeof(cmd), NULL, 0);
 }
 
-int 
+int
 ble_gap_set_connless_iq_sampling_enable(uint16_t sync_handle, uint8_t sampling_enable, uint8_t max_sampled_ctes,
                                         const struct ble_gap_cte_sampling_params *cte_sampling_params)
 {
@@ -5883,7 +5883,7 @@ ble_gap_set_connless_iq_sampling_enable(uint16_t sync_handle, uint8_t sampling_e
     return ble_hs_hci_cmd_tx(opcode, cmd, len, &rsp, sizeof(rsp));
 }
 
-int 
+int
 ble_gap_set_conn_cte_recv_param(uint16_t conn_handle, uint8_t sampling_enable, const struct ble_gap_cte_sampling_params *cte_sampling_params)
 {
     uint8_t buf[sizeof(struct ble_hci_le_set_conn_cte_rx_params_cp) + cte_sampling_params->switching_pattern_length];
@@ -5907,7 +5907,7 @@ ble_gap_set_conn_cte_recv_param(uint16_t conn_handle, uint8_t sampling_enable, c
     return ble_hs_hci_cmd_tx(opcode, cmd, len, &rsp, sizeof(rsp));
 }
 
-int 
+int
 ble_gap_set_conn_cte_transmit_param(uint16_t conn_handle, uint8_t cte_types, uint8_t switching_pattern_len, const uint8_t *antenna_ids)
 {
     uint8_t buf[sizeof(struct ble_hci_le_set_conn_cte_tx_params_cp) + switching_pattern_len];
@@ -5960,7 +5960,7 @@ ble_gap_conn_cte_req_enable(uint16_t conn_handle, uint8_t enable, uint16_t cte_r
     return ble_hs_hci_cmd_tx(opcode, cmd, len, &rsp, sizeof(rsp));
 }
 
-int 
+int
 ble_gap_conn_cte_rsp_enable(uint16_t conn_handle, uint8_t enable)
 {
     struct ble_hci_le_set_conn_cte_rsp_enable_cp cmd;
@@ -6096,10 +6096,10 @@ ble_gap_disc_cancel(void)
         return BLE_HS_EDISABLED;
     }
 
-#if MYNEWT_VAL(BLE_QUEUE_CONG_CHECK) 
+#if MYNEWT_VAL(BLE_QUEUE_CONG_CHECK)
     ble_adv_list_refresh();
 #endif
-    
+
     ble_hs_lock();
     rc = ble_gap_disc_cancel_no_lock();
     ble_hs_unlock();
@@ -6325,7 +6325,7 @@ ble_gap_disc(uint8_t own_addr_type, int32_t duration_ms,
 
 #if MYNEWT_VAL(BLE_QUEUE_CONG_CHECK)
     ble_adv_list_refresh();
-#endif 
+#endif
 
 #if MYNEWT_VAL(BLE_EXT_ADV)
     struct ble_gap_ext_disc_params p = {0};
@@ -7038,7 +7038,7 @@ ble_gap_ext_connect(uint8_t own_addr_type, const ble_addr_t *peer_addr,
     STATS_INC(ble_gap_stats, initiate);
 
 #if MYNEWT_VAL(OPTIMIZE_MULTI_CONN)
-    /* If the optimization is enabled, we disallow to invoke this API directly. 
+    /* If the optimization is enabled, we disallow to invoke this API directly.
      * See @ble_gap_multi_connect()
      */
     if (ble_gap_multi_conn.enabled && !ble_gap_multi_conn.scheduling_len_set) {
@@ -7218,7 +7218,7 @@ ble_gap_connect(uint8_t own_addr_type, const ble_addr_t *peer_addr,
     STATS_INC(ble_gap_stats, initiate);
 
 #if MYNEWT_VAL(OPTIMIZE_MULTI_CONN)
-    /* If the optimization is enabled, we disallow to invoke this API directly. 
+    /* If the optimization is enabled, we disallow to invoke this API directly.
      * See @ble_gap_multi_connect()
      */
     if (ble_gap_multi_conn.enabled && !ble_gap_multi_conn.scheduling_len_set) {
@@ -7428,7 +7428,7 @@ ble_gap_common_factor_set(bool enable, uint32_t common_factor)
 
 #if MYNEWT_VAL(BLE_ROLE_CENTRAL)
 int
-ble_gap_multi_connect(struct ble_gap_multi_conn_params *multi_conn_params, 
+ble_gap_multi_connect(struct ble_gap_multi_conn_params *multi_conn_params,
                       ble_gap_event_fn *cb, void *cb_arg)
 {
     int rc;
@@ -7457,22 +7457,22 @@ ble_gap_multi_connect(struct ble_gap_multi_conn_params *multi_conn_params,
     scheduling_len_us = multi_conn_params->scheduling_len_us;
 
     /* `scheduling_len_us == 0` is allowed.  It indicates that the optimization for this connection
-     * is disabled. The connection interval must be an integer multiple of `common factor`.  Note 
+     * is disabled. The connection interval must be an integer multiple of `common factor`.  Note
      * that the unit of the connection interval is 1.25ms, while the common factor's unit is 0.625ms.
      */
     if (scheduling_len_us != 0) {
 #if MYNEWT_VAL(BLE_EXT_ADV)
         if (phy_mask & BLE_GAP_LE_PHY_1M_MASK) {
             conn_params = multi_conn_params->phy_1m_conn_params;
-            if ((conn_params == NULL) || 
-                !ble_gap_interval_is_integer_multiple(conn_params->itvl_min << 1, 
+            if ((conn_params == NULL) ||
+                !ble_gap_interval_is_integer_multiple(conn_params->itvl_min << 1,
                                                       conn_params->itvl_max << 1)) {
                 return BLE_HS_EINVAL;
             }
         }
         if (phy_mask & BLE_GAP_LE_PHY_2M_MASK) {
             conn_params = multi_conn_params->phy_2m_conn_params;
-            if ((conn_params == NULL) || 
+            if ((conn_params == NULL) ||
                 !ble_gap_interval_is_integer_multiple(conn_params->itvl_min << 1,
                                                       conn_params->itvl_max << 1)) {
                 return BLE_HS_EINVAL;
@@ -7480,7 +7480,7 @@ ble_gap_multi_connect(struct ble_gap_multi_conn_params *multi_conn_params,
         }
         if (phy_mask & BLE_GAP_LE_PHY_CODED_MASK) {
             conn_params = multi_conn_params->phy_coded_conn_params;
-            if ((conn_params == NULL) || 
+            if ((conn_params == NULL) ||
                 !ble_gap_interval_is_integer_multiple(conn_params->itvl_min << 1,
                                                       conn_params->itvl_max << 1)) {
                 return BLE_HS_EINVAL;
@@ -7488,8 +7488,8 @@ ble_gap_multi_connect(struct ble_gap_multi_conn_params *multi_conn_params,
         }
 #else
         conn_params = multi_conn_params->phy_1m_conn_params;
-        if ((conn_params == NULL) || 
-            !ble_gap_interval_is_integer_multiple(conn_params->itvl_min << 1, 
+        if ((conn_params == NULL) ||
+            !ble_gap_interval_is_integer_multiple(conn_params->itvl_min << 1,
                                                   conn_params->itvl_max << 1)) {
             return BLE_HS_EINVAL;
         }

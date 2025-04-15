@@ -24,7 +24,7 @@
 #include <nimble/porting/nimble/include/syscfg/syscfg.h>
 #include <nimble/nimble/include/nimble/ble.h>
 #include <nimble/nimble/include/nimble/hci_common.h>
-#include <nimble/nimble/host/mesh/src/transport.h>
+#include <nimble/nimble/transport/include/nimble/transport.h>
 #include <nimble/nimble/controller/include/controller/ble_ll.h>
 #include <nimble/nimble/controller/include/controller/ble_ll_adv.h>
 #include <nimble/nimble/controller/include/controller/ble_ll_crypto.h>

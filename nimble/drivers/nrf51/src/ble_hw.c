@@ -17,7 +17,7 @@
  * under the License.
  */
 
-#ifndef ESP_PLATFORM
+#if defined(ARDUINO_ARCH_NRF5) && defined(NRF51)
 
 #include <stdint.h>
 #include <assert.h>
@@ -490,4 +490,4 @@ ble_hw_resolv_list_match(void)
 }
 #endif
 
-#endif /* ESP_PLATFORM */
+#endif /* ARDUINO_ARCH_NRF5 && NRF51 */

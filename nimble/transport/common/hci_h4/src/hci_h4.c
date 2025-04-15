@@ -24,7 +24,7 @@
 #include <nimble/porting/nimble/include/os/os.h>
 #include <nimble/porting/nimble/include/os/os_mbuf.h>
 #include <nimble/nimble/include/nimble/hci_common.h>
-#include <nimble/nimble/host/mesh/src/transport.h>
+#include <nimble/nimble/transport/include/nimble/transport.h>
 #include <nimble/nimble/transport/common/hci_h4/include/nimble/transport/hci_h4.h>
 
 #ifndef min

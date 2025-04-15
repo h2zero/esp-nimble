@@ -25,7 +25,9 @@
 #include "nimble/nimble/host/include/host/ble_uuid.h"
 #include "nimble/nimble/host/include/host/ble_store.h"
 #include "ble_hs_priv.h"
+#ifdef ESP_PLATFORM
 #include "nimble/esp_port/port/include/esp_nimble_mem.h"
+#endif
 
 static uint8_t perm_flags = BLE_ATT_F_READ | BLE_ATT_F_WRITE ;
 

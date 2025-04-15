@@ -57,7 +57,7 @@ static inline void
 phy_gpiote_configure(int idx, int pin)
 {
     nrf_gpio_cfg_output(pin);
-    nrf_gpiote_task_configure(NRF_GPIOTE, idx, pin, NRF_GPIOTE_POLARITY_NONE,
+    nrf_gpiote_task_configure(NRF_GPIOTE, idx, pin, GPIOTE_CONFIG_POLARITY_None/*NRF_GPIOTE_POLARITY_NONE*/,
                               NRF_GPIOTE_INITIAL_VALUE_LOW);
     nrf_gpiote_task_enable(NRF_GPIOTE, idx);
 }

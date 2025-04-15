@@ -28,7 +28,9 @@
 #include "freertos/semphr.h"
 #include "freertos/task.h"
 #include "freertos/timers.h"
+#if CONFIG_BT_NIMBLE_USE_ESP_TIMER
 #include "esp_timer.h"
+#endif
 
 #ifdef __cplusplus
 extern "C" {
@@ -39,6 +41,7 @@ extern "C" {
         (sizeof(array) / sizeof((array)[0]))
 #endif
 
+#ifdef ESP_PLATFORM
 extern int ets_printf(const char *fmt, ...);
 #define  BLE_LL_ASSERT(con)                         \
     do{                                             \
@@ -48,6 +51,9 @@ extern int ets_printf(const char *fmt, ...);
             assert(0);                              \
         }                                           \
     }while(0)
+#else
+#define NIMBLE_CFG_CONTROLLER 1
+#endif // ESP_PLATFORM
 
 #define BLE_NPL_OS_ALIGNMENT    (4)/*ble_npl_get_os_alignment()*/
 

@@ -100,12 +100,14 @@ uint16_t ble_hs_max_services;
 uint16_t ble_hs_max_client_configs;
 
 #if MYNEWT_VAL(BLE_HS_DEBUG)
+#ifdef ESP_PLATFORM
 #define MAX_NESTED_LOCKS 5
 static TaskHandle_t ble_hs_task_handles[MAX_NESTED_LOCKS];
 static int ble_hs_task_handle_index = 0;
 static uint8_t ble_hs_mutex_locked;
 static uint8_t counter_lock = 0;
 static TaskHandle_t ble_hs_task_handle;
+#endif
 static uint8_t ble_hs_dbg_mutex_locked;
 #endif
 
@@ -149,8 +151,10 @@ ble_hs_locked_by_cur_task(void)
 
     owner = ble_hs_mutex.mu.mu_owner;
     return owner != NULL && owner == os_sched_get_current_task();
-#else
+#elif ESP_PLATFORM
     return (ble_hs_mutex_locked && ble_hs_task_handle == xTaskGetCurrentTaskHandle());
+#else
+    return 1;
 #endif
 }
 #endif
@@ -182,7 +186,7 @@ ble_hs_lock_nested(void)
 
     rc = ble_npl_mutex_pend(&ble_hs_mutex, 0xffffffff);
 
-#if MYNEWT_VAL(BLE_HS_DEBUG)
+#if MYNEWT_VAL(BLE_HS_DEBUG) && defined(ESP_PLATFORM)
     counter_lock++;
     ble_hs_mutex_locked = 1;
     ble_hs_task_handle = xTaskGetCurrentTaskHandle();
@@ -205,6 +209,7 @@ ble_hs_unlock_nested(void)
         ble_hs_dbg_mutex_locked = 0;
         return;
     }
+#ifdef ESP_PLATFORM
     if (counter_lock > 0) {
         counter_lock--;
         if (counter_lock == 0) {
@@ -216,6 +221,7 @@ ble_hs_unlock_nested(void)
             ble_hs_task_handle = ble_hs_task_handles[ble_hs_task_handle_index -1];
         }
     }
+#endif
 #endif
 
     rc = ble_npl_mutex_release(&ble_hs_mutex);

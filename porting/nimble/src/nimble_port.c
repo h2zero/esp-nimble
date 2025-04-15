@@ -29,9 +29,7 @@
 #include "nimble/porting/npl/freertos/include/nimble/nimble_port_freertos.h"
 #ifdef ESP_PLATFORM
 #include "esp_log.h"
-#endif
 #include "soc/soc_caps.h"
-
 #include "esp_intr_alloc.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -42,7 +40,7 @@
 #include "nimble/esp_port/esp-hci/include/esp_nimble_hci.h"
 #endif
 #if !CONFIG_BT_CONTROLLER_ENABLED
-#include "nimble/nimble/host/mesh/src/transport.h"
+#include "nimble/nimble/transport/include/nimble/transport.h"
 #endif
 // #if (BT_HCI_LOG_INCLUDED == TRUE)
 // #include "hci_log/bt_hci_log.h"
@@ -50,6 +48,7 @@
 // #include "bt_common.h"
 
 #define NIMBLE_PORT_LOG_TAG          "BLE_INIT"
+#endif // ESP_PLATFORM
 
 extern void os_msys_init(void);
 
@@ -81,6 +80,8 @@ nimble_port_stop_cb(struct ble_npl_event *ev)
 {
     ble_npl_sem_release(&ble_hs_stop_sem);
 }
+
+#ifdef ESP_PLATFORM
 
 /**
  * @brief esp_nimble_init - Initialize the NimBLE host stack
@@ -214,9 +215,9 @@ nimble_port_init(void)
         return ret;
     }
 
-// #if MYNEWT_VAL(BT_HCI_LOG_INCLUDED)
-//     bt_hci_log_init();
-// #endif // (BT_HCI_LOG_INCLUDED == TRUE)
+#if MYNEWT_VAL(BT_HCI_LOG_INCLUDED)
+    bt_hci_log_init();
+#endif // (BT_HCI_LOG_INCLUDED == TRUE)
 
     return ESP_OK;
 }
@@ -252,13 +253,12 @@ nimble_port_deinit(void)
     }
 #endif
 
-// #if (BT_HCI_LOG_INCLUDED == TRUE)
-//     //bt_hci_log_deinit();
-// #endif // (BT_HCI_LOG_INCLUDED == TRUE)
+#if (BT_HCI_LOG_INCLUDED == TRUE)
+    //bt_hci_log_deinit();
+#endif // (BT_HCI_LOG_INCLUDED == TRUE)
 
     return ESP_OK;
 }
-
 
 int
 nimble_port_stop(void)
@@ -319,3 +319,60 @@ IRAM_ATTR nimble_port_get_dflt_eventq(void)
 {
     return &g_eventq_dflt;
 }
+
+#else // !ESP_PLATFORM
+
+#if NIMBLE_CFG_CONTROLLER
+#include "nimble/nimble/controller/include/controller/ble_ll.h"
+#include "nimble/nimble/transport/include/nimble/transport.h"
+#endif
+
+void
+nimble_port_init(void)
+{
+    /* Initialize default event queue */
+    ble_npl_eventq_init(&g_eventq_dflt);
+    /* Initialize the global memory pool */
+    os_mempool_module_init();
+    os_msys_init();
+    /* Initialize transport */
+    ble_transport_init();
+    /* Initialize the host */
+    ble_transport_hs_init();
+
+#if NIMBLE_CFG_CONTROLLER
+#ifndef RIOT_VERSION
+    hal_timer_init(5, NULL);
+    os_cputime_init(32768);
+#endif
+    ble_transport_ll_init();
+#endif
+}
+
+void
+nimble_port_run(void)
+{
+    struct ble_npl_event *ev;
+
+    while (1) {
+        ev = ble_npl_eventq_get(&g_eventq_dflt, BLE_NPL_TIME_FOREVER);
+        ble_npl_event_run(ev);
+    }
+}
+
+struct ble_npl_eventq *
+nimble_port_get_dflt_eventq(void)
+{
+    return &g_eventq_dflt;
+}
+
+#if NIMBLE_CFG_CONTROLLER
+void
+nimble_port_ll_task_func(void *arg)
+{
+    extern void ble_ll_task(void *);
+
+    ble_ll_task(arg);
+}
+#endif
+#endif // ESP_PLATFORM

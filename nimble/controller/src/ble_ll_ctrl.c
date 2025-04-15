@@ -48,7 +48,7 @@
  */
 #undef BLE_LL_ENCRYPT_DEBUG
 #ifdef BLE_LL_ENCRYPT_DEBUG
-#include "console/console.h"
+#include "nimble/console/console.h"
 #endif
 
 /*

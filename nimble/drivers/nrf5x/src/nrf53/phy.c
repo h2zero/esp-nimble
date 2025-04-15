@@ -17,7 +17,7 @@
  * under the License.
  */
 
-#ifndef ESP_PLATFORM
+#if defined(ARDUINO_ARCH_NRF5) && defined(NRF53)
 
 #include <stdint.h>
 #include <nrfx.h>
@@ -313,4 +313,5 @@ phy_txpower_round(int8_t dbm)
     return (int8_t)RADIO_TXPOWER_TXPOWER_Neg40dBm;
 }
 
-#endif /* ESP_PLATFORM */
+#endif /* ARDUINO_ARCH_NRF5 && NRF53 */
+

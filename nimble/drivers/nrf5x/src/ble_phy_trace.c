@@ -17,7 +17,7 @@
  * under the License.
  */
 
-#ifndef ESP_PLATFORM
+#if defined(ARDUINO_ARCH_NRF5) && (defined(NRF52_SERIES) || defined(NRF53_SERIES))
 
 #include <stdint.h>
 #include "nimble/porting/nimble/include/syscfg/syscfg.h"
@@ -45,4 +45,4 @@ ble_phy_trace_init(void)
 }
 #endif
 
-#endif /*ESP_PLATFORM */
+#endif /* defined(ARDUINO_ARCH_NRF5) && (defined(NRF52_SERIES) || defined(NRF53_SERIES)) */

@@ -88,7 +88,7 @@ int ble_store_config_compare_bond_count(const void *a, const void *b) {
 #if MYNEWT_VAL(BLE_STORE_MAX_BONDS)
 int ble_restore_our_sec_nvs(void)
 {
-    esp_err_t err;
+    int rc;
     extern uint16_t ble_store_config_our_bond_count;
     struct ble_store_value_sec temp_our_secs[MYNEWT_VAL(BLE_STORE_MAX_BONDS)];
     int temp_count = 0;
@@ -105,11 +105,11 @@ int ble_restore_our_sec_nvs(void)
         union ble_store_key key;
         ble_store_key_from_value_sec(&key.sec, &temp_our_secs[i]);
 
-        err = ble_store_config_delete(BLE_STORE_OBJ_TYPE_OUR_SEC, &key);
+        rc = ble_store_config_delete(BLE_STORE_OBJ_TYPE_OUR_SEC, &key);
 
-        if (err != ESP_OK) {
+        if (rc != 0) {
             BLE_HS_LOG(DEBUG, "Error deleting from nvs");
-            return err;
+            return rc;
         }
     }
 
@@ -118,11 +118,11 @@ int ble_restore_our_sec_nvs(void)
         union ble_store_value val;
         val.sec = temp_our_secs[i];
 
-        err = ble_store_config_write(BLE_STORE_OBJ_TYPE_OUR_SEC, &val);
+        rc = ble_store_config_write(BLE_STORE_OBJ_TYPE_OUR_SEC, &val);
 
-        if (err != ESP_OK) {
+        if (rc != 0) {
             BLE_HS_LOG(DEBUG, "Error writing record to NVS");
-            return err;
+            return rc;
         }
     }
 
@@ -134,7 +134,7 @@ int ble_restore_our_sec_nvs(void)
  */
 int ble_restore_peer_sec_nvs(void)
 {
-    esp_err_t err;
+    int rc;
     extern uint16_t ble_store_config_peer_bond_count;
     struct ble_store_value_sec temp_peer_secs[MYNEWT_VAL(BLE_STORE_MAX_BONDS)];
     int temp_count = 0;
@@ -151,11 +151,11 @@ int ble_restore_peer_sec_nvs(void)
         union ble_store_key key;
         ble_store_key_from_value_sec(&key.sec, &temp_peer_secs[i]);
 
-        err = ble_store_config_delete(BLE_STORE_OBJ_TYPE_PEER_SEC, &key);
+        rc = ble_store_config_delete(BLE_STORE_OBJ_TYPE_PEER_SEC, &key);
 
-        if (err != ESP_OK) {
+        if (rc != 0) {
             BLE_HS_LOG(DEBUG, "Error deleting from nvs");
-            return err;
+            return rc;
         }
     }
 
@@ -164,11 +164,11 @@ int ble_restore_peer_sec_nvs(void)
         union ble_store_value val;
         val.sec = temp_peer_secs[i];
 
-        err = ble_store_config_write(BLE_STORE_OBJ_TYPE_PEER_SEC, &val);
+        rc = ble_store_config_write(BLE_STORE_OBJ_TYPE_PEER_SEC, &val);
 
-        if (err != ESP_OK) {
+        if (rc != 0) {
             BLE_HS_LOG(DEBUG, "Error writing record to NVS");
-            return err;
+            return rc;
         }
     }
 

@@ -29,7 +29,7 @@
 #include "nimble/nimble/include/nimble/ble.h"
 #include "nimble/nimble/include/nimble/nimble_opt.h"
 #include "nimble/nimble/include/nimble/hci_common.h"
-#include "nimble/nimble/host/mesh/src/transport.h"
+#include "nimble/nimble/transport/include/nimble/transport.h"
 #include "nimble/nimble/controller/include/controller/ble_ll_utils.h"
 #include "nimble/nimble/controller/include/controller/ble_hw.h"
 #include "nimble/nimble/controller/include/controller/ble_phy.h"

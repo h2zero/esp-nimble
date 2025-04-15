@@ -17,7 +17,7 @@
 #include <ctype.h>
 #include <errno.h>
 #include "nimble/nimble/host/mesh/src/shell.h"
-#include "console/console.h"
+#include "nimble/console/console.h"
 #include "nimble/nimble/host/mesh/include/mesh/mesh.h"
 #include "nimble/nimble/host/mesh/include/mesh/main.h"
 #include "nimble/nimble/host/mesh/include/mesh/glue.h"

@@ -17,14 +17,14 @@
  * under the License.
  */
 
-#ifndef ESP_PLATFORM
+#if defined(ARDUINO_ARCH_NRF5) && (defined(NRF52_SERIES) || defined(NRF53_SERIES))
 
 #include <stdint.h>
 #include <assert.h>
 #include <string.h>
 #include "nimble/porting/nimble/include/syscfg/syscfg.h"
 #include "nimble/porting/nimble/include/os/os.h"
-#include "nimble/nimble/drivers/nrf51/include/ble/xcvr.h"
+#include "nimble/nimble/drivers/nrf5x/include/ble/xcvr.h"
 #include "nimble/nimble/include/nimble/ble.h"
 #include "nimble/nimble/include/nimble/nimble_opt.h"
 #include "nrfx.h"
@@ -520,4 +520,4 @@ ble_hw_resolv_list_match(void)
 }
 #endif
 
-#endif /* ESP_PLATFORM */
+#endif /* defined(ARDUINO_ARCH_NRF5) && (defined(NRF52_SERIES) || defined(NRF53_SERIES)) */

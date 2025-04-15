@@ -24,6 +24,8 @@
 #include "nimble/porting/nimble/include/os/os.h"
 #include "nimble/nimble/include/nimble/hci_common.h"
 #include "ble_hs_priv.h"
+
+#ifdef ESP_PLATFORM
 // #include "bt_common.h"
 // #if (BT_HCI_LOG_INCLUDED == TRUE)
 // #include "hci_log/bt_hci_log.h"
@@ -111,6 +113,52 @@ ble_hs_hci_cmd_send(uint16_t opcode, uint8_t len, const void *cmddata)
 
     return rc;
 }
+# else /* ! ESP_PLATFORM */
+static int
+ble_hs_hci_cmd_transport(struct ble_hci_cmd *cmd)
+{
+    int rc;
+
+    rc = ble_transport_to_ll_cmd(cmd);
+    switch (rc) {
+    case 0:
+        return 0;
+
+    case BLE_ERR_MEM_CAPACITY:
+        return BLE_HS_ENOMEM_EVT;
+
+    default:
+        return BLE_HS_EUNKNOWN;
+    }
+}
+
+static int
+ble_hs_hci_cmd_send(uint16_t opcode, uint8_t len, const void *cmddata)
+{
+    struct ble_hci_cmd *cmd;
+    int rc;
+
+    cmd = ble_transport_alloc_cmd();
+    BLE_HS_DBG_ASSERT(cmd != NULL);
+
+    cmd->opcode = htole16(opcode);
+    cmd->length = len;
+    if (len != 0) {
+        memcpy(cmd->data, cmddata, len);
+    }
+
+    rc = ble_hs_hci_cmd_transport(cmd);
+
+    if (rc == 0) {
+        STATS_INC(ble_hs_stats, hci_cmd);
+    } else {
+        BLE_HS_LOG(DEBUG, "ble_hs_hci_cmd_send failure; rc=%d\n", rc);
+    }
+
+    return rc;
+}
+
+#endif /*ESP_PLATFORM */
 
 int
 ble_hs_hci_cmd_send_buf(uint16_t opcode, const void *buf, uint8_t buf_len)

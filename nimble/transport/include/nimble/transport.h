@@ -29,6 +29,9 @@ extern "C" {
 #if MYNEWT_PKG_apache_mynewt_nimble__nimble_transport_common_hci_ipc
 #include <nimble/nimble/transport/include/nimble/transport/transport_ipc.h>
 #endif
+
+#ifdef ESP_PLATFORM
+
 #include <inttypes.h>
 #include "nimble/porting/nimble/include/os/os_mempool.h"
 
@@ -184,6 +187,8 @@ void esp_ble_hci_trans_cfg_hs(ble_hci_trans_rx_cmd_fn *evt_cb,
  *                              A BLE_ERR_[...] error code on failure.
  */
 int esp_ble_hci_trans_reset(void);
+
+#endif /* ESP_PLATFORM */
 
 struct os_mbuf;
 

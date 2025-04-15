@@ -25,7 +25,9 @@
 #include "nimble/nimble/include/nimble/ble.h"
 #include "nimble/nimble/host/include/host/ble_uuid.h"
 #include "ble_hs_priv.h"
+#ifdef ESP_PLATFORM
 #include "nimble/esp_port/port/include/esp_nimble_mem.h"
+#endif
 
 #ifndef MIN
 #define MIN(a, b) (((a) < (b)) ? (a) : (b))
@@ -824,7 +826,7 @@ ble_att_clt_tx_signed_write_cmd(uint16_t conn_handle, uint16_t cid, uint16_t han
 
     /** Copying sign counter */
     memcpy(&message[BLE_ATT_SIGNED_WRITE_DATA_OFFSET + OS_MBUF_PKTLEN(txom)], &counter, sizeof(counter));
-    
+
     /* ble_sm_alg_aes_cmac takes data in little-endian format,
      * so converting it to LE.
      */

@@ -17,7 +17,7 @@
  * under the License.
  */
 
-#ifndef ESP_PLATFORM
+#if defined(ARDUINO_ARCH_NRF5) && (defined(NRF52_SERIES) || defined(NRF53_SERIES))
 
 #include <stdint.h>
 #include <string.h>
@@ -32,7 +32,7 @@
 #include "nimble/porting/nimble/include/os/os.h"
 /* Keep os_cputime explicitly to enable build on non-Mynewt platforms */
 #include "nimble/porting/nimble/include/os/os_cputime.h"
-#include "nimble/nimble/drivers/nrf51/include/ble/xcvr.h"
+#include "nimble/nimble/drivers/nrf5x/include/ble/xcvr.h"
 #include "nimble/nimble/include/nimble/ble.h"
 #include "nimble/nimble/include/nimble/nimble_opt.h"
 #include "nimble/nimble/include/nimble/nimble_npl.h"
@@ -2327,4 +2327,4 @@ ble_phy_tifs_txtx_set(uint16_t usecs, uint8_t anchor)
     g_ble_phy_data.txtx_time_anchor = anchor;
 }
 
-#endif /* ESP_PLATFORM */
+#endif /* defined(ARDUINO_ARCH_NRF5) && (defined(NRF52_SERIES) || defined(NRF53_SERIES)) */

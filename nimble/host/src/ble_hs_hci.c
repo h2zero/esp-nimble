@@ -24,7 +24,7 @@
 #include "nimble/porting/nimble/include/mem/mem.h"
 #include "ble_hs_priv.h"
 
-#include "nimble/nimble/host/mesh/src/transport.h"
+#include "nimble/nimble/transport/include/nimble/transport.h"
 // #include "bt_common.h"
 // #if (BT_HCI_LOG_INCLUDED == TRUE)
 // #include "hci_log/bt_hci_log.h"
@@ -143,6 +143,8 @@ static struct err_code core_err_code_list[] = {
       { BLE_HS_ESTALLED,                              ": BLE_HS_ESTALLED (Operation stalled)" }
 };
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdiscarded-qualifiers"
 static struct err_code err_code_list[] = {
       { BLE_HS_HCI_ERR(BLE_ERR_UNKNOWN_HCI_CMD),      ": BLE_ERR_UNKNOWN_HCI_CMD (Unknown HCI Command)" },
       { BLE_HS_HCI_ERR(BLE_ERR_UNK_CONN_ID),          ": BLE_ERR_UNK_CONN_ID (Unknown Connection Identifier)" },
@@ -212,6 +214,7 @@ static struct err_code err_code_list[] = {
       { BLE_HS_HCI_ERR(BLE_ERR_PACKET_TOO_LONG),      ": BLE_ERR_PACKET_TOO_LONG (Packet Too Long)"},
       { BLE_HS_HCI_ERR(BLE_ERR_MAX),                  ": BLE_ERR_MAX"}
 };
+#pragma GCC diagnostic pop
 
 static void esp_core_err_to_name(int error_code, uint16_t *opcode)
 {

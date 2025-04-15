@@ -17,6 +17,8 @@
  * under the License.
  */
 
+#if defined(ARDUINO_ARCH_NRF5) && (defined(NRF52_SERIES) || defined(NRF53_SERIES))
+
 #ifndef H_BLE_XCVR_
 #define H_BLE_XCVR_
 
@@ -59,3 +61,4 @@ extern "C" {
 #endif
 
 #endif /* H_BLE_XCVR_ */
+#endif /* defined(ARDUINO_ARCH_NRF5) && (defined(NRF52_SERIES) || defined(NRF53_SERIES)) */
