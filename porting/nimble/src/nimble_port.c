@@ -51,20 +51,18 @@
 #endif // ESP_PLATFORM
 
 extern void os_msys_init(void);
+extern void os_mempool_module_init(void);
 
 #if CONFIG_BT_NIMBLE_ENABLED
-
 extern void ble_hs_deinit(void);
-static struct ble_hs_stop_listener stop_listener;
-
 #endif //CONFIG_BT_NIMBLE_ENABLED
 
 static struct ble_npl_eventq g_eventq_dflt;
-static struct ble_npl_sem ble_hs_stop_sem;
-static struct ble_npl_event ble_hs_ev_stop;
 
-extern void os_msys_init(void);
-extern void os_mempool_module_init(void);
+#ifdef ESP_PLATFORM
+static struct ble_npl_sem ble_hs_stop_sem;
+static struct ble_hs_stop_listener stop_listener;
+static struct ble_npl_event ble_hs_ev_stop;
 
 /**
  * Called when the host stop procedure has completed.
@@ -80,8 +78,6 @@ nimble_port_stop_cb(struct ble_npl_event *ev)
 {
     ble_npl_sem_release(&ble_hs_stop_sem);
 }
-
-#ifdef ESP_PLATFORM
 
 /**
  * @brief esp_nimble_init - Initialize the NimBLE host stack
@@ -324,7 +320,9 @@ IRAM_ATTR nimble_port_get_dflt_eventq(void)
 
 #if NIMBLE_CFG_CONTROLLER
 #include "nimble/nimble/controller/include/controller/ble_ll.h"
-#include "nimble/nimble/transport/include/nimble/transport.h"
+#include "nimble/porting/nimble/include/hal/hal_timer.h"
+#include "nimble/porting/nimble/include/os/os_cputime.h"
+//#include "nimble/nimble/transport/include/nimble/transport.h"
 #endif
 
 void

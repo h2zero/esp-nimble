@@ -219,7 +219,9 @@ ble_hs_hci_evt_dispatch_find(uint8_t event_code)
     return NULL;
 }
 
-static const uint8_t ble_hs_conn_null_addr[6];
+#if MYNEWT_VAL(BLE_HOST_BASED_PRIVACY)
+    static const uint8_t ble_hs_conn_null_addr[6];
+#endif
 
 static ble_hs_hci_evt_le_fn *
 ble_hs_hci_evt_le_dispatch_find(uint8_t event_code)

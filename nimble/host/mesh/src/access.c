@@ -306,7 +306,7 @@ static int bt_mesh_vnd_mod_msg_cid_check(struct bt_mesh_model *mod)
 		}
 
 		BT_ERR("Invalid vendor model(company:0x%04x"
-		       " id:0x%04x) message opcode 0x%08x",
+		       " id:0x%04x) message opcode 0x%08" PRIx32,
 		       mod->vnd.company, mod->vnd.id, op->opcode);
 
 		return -EINVAL;
@@ -701,10 +701,10 @@ void bt_mesh_model_recv(struct bt_mesh_net_rx *rx, struct os_mbuf *buf)
 		}
 
 		if ((op->len >= 0) && (buf->om_len < (size_t)op->len)) {
-			BT_ERR("Too short message for OpCode 0x%08x", opcode);
+			BT_ERR("Too short message for OpCode 0x%08" PRIx32, opcode);
 			continue;
 		} else if ((op->len < 0) && (buf->om_len != (size_t)(-op->len))) {
-			BT_ERR("Invalid message size for OpCode 0x%08x",
+			BT_ERR("Invalid message size for OpCode 0x%08" PRIx32,
 			       opcode);
 			continue;
 		}

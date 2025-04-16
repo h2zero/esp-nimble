@@ -1298,7 +1298,7 @@ static int trans_seg(struct os_mbuf *buf, struct bt_mesh_net_rx *net_rx,
 	}
 
 	if (bt_mesh_rpl_check(net_rx, &rpl)) {
-		BT_WARN("Replay: src 0x%04x dst 0x%04x seq 0x%06x",
+		BT_WARN("Replay: src 0x%04x dst 0x%04x seq 0x%06" PRIx32,
 			net_rx->ctx.addr, net_rx->ctx.recv_dst, net_rx->seq);
 		return -EINVAL;
 	}
@@ -1426,7 +1426,7 @@ static int trans_seg(struct os_mbuf *buf, struct bt_mesh_net_rx *net_rx,
 	 */
 	if (rpl && rpl->src && auth_seqnum <= rpl->seg &&
 	(!rpl->old_iv || net_rx->old_iv)) {
-		BT_WARN("Ignoring old SeqAuth 0x%06x", auth_seqnum);
+		BT_WARN("Ignoring old SeqAuth 0x%06" PRIx32, auth_seqnum);
 		return -EALREADY;
 	}
 

@@ -537,7 +537,7 @@ ble_ll_ctrl_proc_unk_rsp(struct ble_ll_conn_sm *connsm, uint8_t *dptr, uint8_t *
             return BLE_LL_CTRL_CONN_UPDATE_IND;
         }
 #endif
-        /* note: fall-through intentional */
+        /* fall through */
     case BLE_LL_CTRL_CONN_PARM_RSP:
         ctrl_proc = BLE_LL_CTRL_PROC_CONN_PARAM_REQ;
         break;

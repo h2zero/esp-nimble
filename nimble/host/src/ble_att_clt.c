@@ -27,6 +27,8 @@
 #include "ble_hs_priv.h"
 #ifdef ESP_PLATFORM
 #include "nimble/esp_port/port/include/esp_nimble_mem.h"
+#else
+#include "nimble/porting/nimble/include/mem/mem.h"
 #endif
 
 #ifndef MIN

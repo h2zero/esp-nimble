@@ -279,7 +279,7 @@ hci_h4_sm_rx(struct hci_h4_sm *h4sm, const uint8_t *buf, uint16_t len)
             hci_h4_frame_start(h4sm, ib.buf[0]);
             hci_h4_ib_consume(&ib, 1);
             h4sm->state = HCI_H4_SM_W4_HEADER;
-        /* no break */
+        /* fall through */
         case HCI_H4_SM_W4_HEADER:
             rc = hci_h4_sm_w4_header(h4sm, &ib);
             assert(rc >= 0);
@@ -287,7 +287,7 @@ hci_h4_sm_rx(struct hci_h4_sm *h4sm, const uint8_t *buf, uint16_t len)
                 break;
             }
             h4sm->state = HCI_H4_SM_W4_PAYLOAD;
-        /* no break */
+        /* fall through */
         case HCI_H4_SM_W4_PAYLOAD:
             rc = hci_h4_sm_w4_payload(h4sm, &ib);
             assert(rc >= 0);
@@ -295,7 +295,7 @@ hci_h4_sm_rx(struct hci_h4_sm *h4sm, const uint8_t *buf, uint16_t len)
                 break;
             }
             h4sm->state = HCI_H4_SM_COMPLETED;
-        /* no break */
+        /* fall through */
         case HCI_H4_SM_COMPLETED:
             hci_h4_sm_completed(h4sm);
             h4sm->state = HCI_H4_SM_W4_PKT_TYPE;

@@ -283,7 +283,7 @@ uint8_t bt_mesh_hb_sub_set(uint16_t src, uint16_t dst, uint32_t period)
 	}
 
 	if (period > (1U << 16)) {
-		BT_WARN("Prohibited subscription period %u s", period);
+		BT_WARN("Prohibited subscription period %" PRIu32 "s", period);
 		return STATUS_CANNOT_SET;
 	}
 

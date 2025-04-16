@@ -19,6 +19,7 @@
 
 #include <inttypes.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "nimble/porting/nimble/include/sysinit/sysinit.h"
 #include "nimble/porting/nimble/include/syscfg/syscfg.h"

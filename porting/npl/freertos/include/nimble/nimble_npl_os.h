@@ -134,7 +134,11 @@ struct npl_funcs_t {
     ble_npl_time_t (*p_ble_npl_time_ms_to_ticks32)(uint32_t);
     uint32_t (*p_ble_npl_time_ticks_to_ms32)(ble_npl_time_t);
     void (*p_ble_npl_time_delay)(ble_npl_time_t);
+#ifdef ESP_PLATFORM
     void (*p_ble_npl_hw_set_isr)(int, uint32_t);
+#else
+    void (*p_ble_npl_hw_set_isr)(int, void (*addr)(void));
+#endif
     uint32_t (*p_ble_npl_hw_enter_critical)(void);
     void (*p_ble_npl_hw_exit_critical)(uint32_t);
     uint32_t (*p_ble_npl_get_time_forever)(void);
@@ -362,11 +366,19 @@ ble_npl_time_delay(ble_npl_time_t ticks)
 }
 
 #if NIMBLE_CFG_CONTROLLER
+#ifdef ESP_PLATFORM
 static inline void
 ble_npl_hw_set_isr(int irqn, uint32_t addr)
 {
     return npl_funcs->p_ble_npl_hw_set_isr(irqn, addr);
 }
+#else
+static inline void
+ble_npl_hw_set_isr(int irqn, void (*addr)(void))
+{
+    return npl_funcs->p_ble_npl_hw_set_isr(irqn, addr);
+}
+#endif
 #endif
 
 static inline uint32_t

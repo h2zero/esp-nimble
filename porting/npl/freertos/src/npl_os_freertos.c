@@ -20,7 +20,10 @@
 #include <assert.h>
 #include <stddef.h>
 #include <string.h>
+#include <stdlib.h>
 #include "nimble/porting/nimble/include/syscfg/syscfg.h"
+#include "nimble/console/console.h"
+
 #include "nimble/nimble/include/nimble/nimble_npl.h"
 
 #include "freertos/FreeRTOS.h"
@@ -32,6 +35,10 @@
 #include "nimble/porting/npl/freertos/include/nimble/npl_freertos.h"
 
 #include "nimble/porting/nimble/include/os/os_mempool.h"
+
+#if NIMBLE_CFG_CONTROLLER
+#include "nimble/nimble/controller/include/controller/ble_ll.h"
+#endif
 
 #ifdef ESP_PLATFORM
 #include "esp_log.h"

@@ -2124,9 +2124,9 @@ ble_ll_scan_check_phy_params(uint8_t type, uint16_t itvl, uint16_t window)
 
     /* Check interval and window */
     if ((itvl < BLE_HCI_SCAN_ITVL_MIN) ||
-        (itvl > BLE_HCI_SCAN_ITVL_MAX_EXT) ||
+        // (itvl > BLE_HCI_SCAN_ITVL_MAX_EXT) ||
         (window < BLE_HCI_SCAN_WINDOW_MIN) ||
-        (window > BLE_HCI_SCAN_WINDOW_MAX_EXT) ||
+        // (window > BLE_HCI_SCAN_WINDOW_MAX_EXT) ||
         (itvl < window)) {
         return BLE_ERR_INV_HCI_CMD_PARMS;
     }

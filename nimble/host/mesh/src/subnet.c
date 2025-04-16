@@ -231,7 +231,7 @@ static void key_refresh(struct bt_mesh_subnet *sub, uint8_t new_phase)
 		if (sub->kr_phase == BT_MESH_KR_NORMAL) {
 			return;
 		}
-		/* __fallthrough; */
+		/* fall through */
 	case BT_MESH_KR_NORMAL:
 		sub->kr_phase = BT_MESH_KR_NORMAL;
 		memcpy(&sub->keys[0], &sub->keys[1], sizeof(sub->keys[0]));
@@ -426,7 +426,7 @@ uint8_t bt_mesh_subnet_update(uint16_t net_idx, const uint8_t key[16])
 		if (!memcmp(key, sub->keys[1].net, 16)) {
 			return STATUS_SUCCESS;
 		}
-		/* __fallthrough; */
+		/* fall through */
 	case BT_MESH_KR_PHASE_2:
 	case BT_MESH_KR_PHASE_3:
 		return STATUS_CANNOT_UPDATE;
