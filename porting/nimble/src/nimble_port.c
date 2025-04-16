@@ -95,6 +95,7 @@ esp_err_t esp_nimble_init(void)
 
     npl_freertos_mempool_init();
 
+#if false // Arduino disable
 #if CONFIG_BT_CONTROLLER_ENABLED
     if(esp_nimble_hci_init() != ESP_OK) {
         ESP_LOGE(NIMBLE_PORT_LOG_TAG, "hci inits failed\n");
@@ -111,6 +112,7 @@ esp_err_t esp_nimble_init(void)
     ble_adv_list_init();
 #endif
 #endif
+#endif // Arduino disable
 
     /* Initialize default event queue */
     ble_npl_eventq_init(&g_eventq_dflt);
@@ -169,6 +171,7 @@ nimble_port_init(void)
 {
     esp_err_t ret;
 
+#if false // Arduino disable
 #if CONFIG_IDF_TARGET_ESP32 && CONFIG_BT_CONTROLLER_ENABLED
     esp_bt_controller_mem_release(ESP_BT_MODE_CLASSIC_BT);
 #endif
@@ -192,6 +195,7 @@ nimble_port_init(void)
         return ret;
     }
 #endif
+#endif // Arduino disable
 
     ret = esp_nimble_init();
     if (ret != ESP_OK) {
@@ -211,9 +215,9 @@ nimble_port_init(void)
         return ret;
     }
 
-#if MYNEWT_VAL(BT_HCI_LOG_INCLUDED)
-    bt_hci_log_init();
-#endif // (BT_HCI_LOG_INCLUDED == TRUE)
+// #if MYNEWT_VAL(BT_HCI_LOG_INCLUDED)
+//     bt_hci_log_init();
+// #endif // (BT_HCI_LOG_INCLUDED == TRUE)
 
     return ESP_OK;
 }
@@ -328,6 +332,9 @@ IRAM_ATTR nimble_port_get_dflt_eventq(void)
 void
 nimble_port_init(void)
 {
+    npl_freertos_funcs_init();
+    npl_freertos_mempool_init();
+
     /* Initialize default event queue */
     ble_npl_eventq_init(&g_eventq_dflt);
     /* Initialize the global memory pool */
