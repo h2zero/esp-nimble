@@ -59,7 +59,13 @@ static void *rtc0_isr_addr;
 static const char *TAG = "Timer";
 #endif
 
-#define OS_MEM_ALLOC (1)
+#ifdef CONFIG_NIMBLE_STACK_USE_MEM_POOLS
+#define OS_MEM_ALLOC (CONFIG_NIMBLE_STACK_USE_MEM_POOLS)
+#else
+#define OS_MEM_ALLOC (0)
+#endif
+
+#if OS_MEM_ALLOC
 
 #if CONFIG_BT_NIMBLE_ENABLED
 #define BT_LE_HCI_EVT_HI_BUF_COUNT MYNEWT_VAL(BLE_TRANSPORT_EVT_COUNT)
@@ -166,6 +172,20 @@ static os_membuf_t ble_freertos_mutex_buf[
 ];
 
 #endif
+#else
+
+#ifndef CONFIG_BT_NIMBLE_LL_EVENT_QUEUE_SIZE
+#define CONFIG_BT_NIMBLE_LL_EVENT_QUEUE_SIZE (5)
+#endif
+
+#ifndef CONFIG_BT_NIMBLE_DEFAULT_EVENT_QUEUE_SIZE
+#define CONFIG_BT_NIMBLE_DEFAULT_EVENT_QUEUE_SIZE (10)
+#endif
+
+#define NIMBLE_LL_QUEUE_SIZE CONFIG_BT_NIMBLE_LL_EVENT_QUEUE_SIZE
+#define NIMBLE_DEFAULT_QUEUE_SIZE CONFIG_BT_NIMBLE_DEFAULT_EVENT_QUEUE_SIZE
+
+#endif
 
 bool
 npl_freertos_os_started(void)
@@ -242,7 +262,14 @@ npl_freertos_eventq_init(struct ble_npl_eventq *evq)
         BLE_LL_ASSERT(eventq);
 
         memset(eventq, 0, sizeof(*eventq));
-        eventq->q = xQueueCreate(BLE_TOTAL_EV_COUNT, sizeof(struct ble_npl_eventq *));
+#if NIMBLE_CFG_CONTROLLER
+        eventq->q = xQueueCreate(evq == &g_ble_ll_data.ll_evq ?
+                                 NIMBLE_LL_QUEUE_SIZE :
+                                 NIMBLE_DEFAULT_QUEUE_SIZE,
+                                 sizeof(struct ble_npl_eventq *));
+#else
+        eventq->q = xQueueCreate(NIMBLE_DEFAULT_QUEUE_SIZE , sizeof(struct ble_npl_eventq *));
+#endif
         BLE_LL_ASSERT(eventq->q);
     }
 #endif
@@ -1251,6 +1278,7 @@ void npl_freertos_funcs_init(void)
 
 int npl_freertos_mempool_init(void)
 {
+#if OS_MEM_ALLOC
     int rc = -1;
 
 #if SOC_ESP_NIMBLE_CONTROLLER && CONFIG_BT_CONTROLLER_ENABLED
@@ -1340,11 +1368,13 @@ _error:
    BLE_LL_ASSERT(rc == 0);
    return rc;
 #endif
+#endif // OS_MEM_ALLOC
+return 0;
 }
 
 void npl_freertos_mempool_deinit(void)
 {
-#if SOC_ESP_NIMBLE_CONTROLLER && CONFIG_BT_CONTROLLER_ENABLED
+#if OS_MEM_ALLOC && SOC_ESP_NIMBLE_CONTROLLER && CONFIG_BT_CONTROLLER_ENABLED
     if(ble_freertos_ev_buf) {
         free(ble_freertos_ev_buf);
 	ble_freertos_ev_buf = NULL;
