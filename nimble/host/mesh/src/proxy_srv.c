@@ -939,9 +939,11 @@ static void ble_mesh_handle_connect(struct ble_gap_event *event, void *arg)
 			return;
 		}
 
+#if MYNEWT_VAL(BLE_MESH_PROXY)
 		if (event->adv_complete.instance != BT_MESH_ADV_GATT_INST) {
 			return;
 		}
+#endif
 
 		gatt_connected(event->adv_complete.conn_handle);
 #if MYNEWT_VAL(BLE_MESH_PB_GATT)
