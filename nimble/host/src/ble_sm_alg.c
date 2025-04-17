@@ -45,9 +45,9 @@
 #include "nimble/ext/tinycrypt/include/tinycrypt/aes.h"
 #include "nimble/ext/tinycrypt/include/tinycrypt/constants.h"
 #include "nimble/ext/tinycrypt/include/tinycrypt/utils.h"
+#include "nimble/ext/tinycrypt/include/tinycrypt/cmac_mode.h"
 
 #if MYNEWT_VAL(BLE_SM_SC)
-#include "nimble/ext/tinycrypt/include/tinycrypt/cmac_mode.h"
 #include "nimble/ext/tinycrypt/include/tinycrypt/ecc_dh.h"
 #if MYNEWT_VAL(TRNG)
 #include "trng/trng.h"
@@ -240,16 +240,6 @@ done:
     return rc;
 }
 
-#if MYNEWT_VAL(BLE_SM_SC)
-
-static void
-ble_sm_alg_log_buf(const char *name, const uint8_t *buf, int len)
-{
-    BLE_HS_LOG(DEBUG, "    %s=", name);
-    ble_hs_log_flat_buf(buf, len);
-    BLE_HS_LOG(DEBUG, "\n");
-}
-
 /**
  * Cypher based Message Authentication Code (CMAC) with AES 128 bit
  *
@@ -320,6 +310,16 @@ ble_sm_alg_aes_cmac(const uint8_t *key, const uint8_t *in, size_t len,
     return 0;
 }
 #endif
+
+#if MYNEWT_VAL(BLE_SM_SC)
+
+static void
+ble_sm_alg_log_buf(const char *name, const uint8_t *buf, int len)
+{
+    BLE_HS_LOG(DEBUG, "    %s=", name);
+    ble_hs_log_flat_buf(buf, len);
+    BLE_HS_LOG(DEBUG, "\n");
+}
 
 int
 ble_sm_alg_f4(const uint8_t *u, const uint8_t *v, const uint8_t *x,
