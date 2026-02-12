@@ -17,6 +17,8 @@
  * under the License.
  */
 
+#ifndef ESP_PLATFORM
+
 #include <errno.h>
 #include <stdint.h>
 #include <nimble/porting/nimble/include/syscfg/syscfg.h>
@@ -1374,3 +1376,4 @@ ble_ll_iso_big_reset(void)
 }
 
 #endif /* BLE_LL_ISO_BROADCASTER */
+#endif /* ESP_PLATFORM */

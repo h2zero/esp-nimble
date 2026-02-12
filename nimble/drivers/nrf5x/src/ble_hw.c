@@ -17,6 +17,8 @@
  * under the License.
  */
 
+#ifndef ESP_PLATFORM
+
 #include <stdint.h>
 #include <assert.h>
 #include <string.h>
@@ -517,3 +519,5 @@ ble_hw_resolv_list_match(void)
     return -1;
 }
 #endif
+
+#endif /* ESP_PLATFORM */

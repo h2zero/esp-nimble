@@ -17,6 +17,8 @@
  * under the License.
  */
 
+#ifndef ESP_PLATFORM
+
 #include <stdint.h>
 #include <string.h>
 #include <assert.h>
@@ -2324,3 +2326,5 @@ ble_phy_tifs_txtx_set(uint16_t usecs, uint8_t anchor)
     g_ble_phy_data.txtx_time_us = usecs;
     g_ble_phy_data.txtx_time_anchor = anchor;
 }
+
+#endif /* ESP_PLATFORM */

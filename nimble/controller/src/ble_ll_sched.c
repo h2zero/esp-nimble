@@ -16,6 +16,8 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+#ifndef ESP_PLATFORM
+
 #include <stdint.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -1282,4 +1284,5 @@ ble_ll_sched_css_get_conn_interval_us(void)
 }
 #endif
 
+#endif
 #endif

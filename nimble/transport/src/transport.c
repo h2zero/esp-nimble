@@ -28,7 +28,7 @@
 #if BLE_TRANSPORT_IPC
 #include <nimble/nimble/transport/common/hci_ipc/include/nimble/transport/hci_ipc.h>
 #endif
-#include "esp_nimble_mem.h"
+#include "nimble/esp_port/port/include/esp_nimble_mem.h"
 
 int os_msys_buf_alloc(void);
 void os_msys_buf_free(void);

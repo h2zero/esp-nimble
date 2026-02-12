@@ -16,6 +16,8 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+#ifndef ESP_PLATFORM
+
 #include <stdint.h>
 #include <assert.h>
 #include <string.h>
@@ -3266,4 +3268,6 @@ ble_ll_ctrl_init_conn_sm(struct ble_ll_conn_sm *connsm)
                          ble_ll_conn_auth_pyld_timer_cb, connsm);
 #endif
 }
+
+#endif
 #endif

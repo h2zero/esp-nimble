@@ -17,6 +17,8 @@
  * under the License.
  */
 
+#ifndef ESP_PLATFORM
+
 #include <stdint.h>
 #include "nimble/porting/nimble/include/syscfg/syscfg.h"
 #include "nimble/porting/nimble/include/os/os_trace_api.h"
@@ -42,3 +44,5 @@ ble_phy_trace_init(void)
                                      ble_phy_trace_module_send_desc);
 }
 #endif
+
+#endif /*ESP_PLATFORM */

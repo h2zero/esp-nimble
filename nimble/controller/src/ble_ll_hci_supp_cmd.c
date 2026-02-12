@@ -17,6 +17,8 @@
  * under the License.
  */
 
+#ifndef ESP_PLATFORM
+
 #include <stdint.h>
 #include <string.h>
 #include <nimble/porting/nimble/include/syscfg/syscfg.h>
@@ -339,3 +341,5 @@ ble_ll_hci_supp_cmd_get(uint8_t *buf)
 {
     memcpy(buf, g_ble_ll_hci_supp_cmds, sizeof(g_ble_ll_hci_supp_cmds));
 }
+
+#endif /* ESP_PLATFORM */

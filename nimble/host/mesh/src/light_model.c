@@ -7,7 +7,7 @@
 #include "nimble/porting/nimble/include/syscfg/syscfg.h"
 
 #include "nimble/nimble/host/mesh/include/mesh/mesh.h"
-#include "console/console.h"
+#include "nimble/console/console.h"
 #include "light_model.h"
 
 

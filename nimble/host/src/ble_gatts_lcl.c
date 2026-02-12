@@ -21,7 +21,7 @@
 #include <string.h>
 #include "nimble/nimble/host/include/host/ble_gatt.h"
 #include "nimble/nimble/host/include/host/ble_uuid.h"
-#include "console/console.h"
+#include "nimble/console/console.h"
 #include "nimble/nimble/include/nimble/ble.h"
 #include "ble_hs_priv.h"
 

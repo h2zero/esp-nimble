@@ -21,7 +21,7 @@
 #include "nimble/porting/nimble/include/os/os.h"
 #include "nimble/porting/nimble/include/mem/mem.h"
 #include "nimble/porting/nimble/include/sysinit/sysinit.h"
-#include "esp_nimble_mem.h"
+#include "nimble/esp_port/port/include/esp_nimble_mem.h"
 #include "esp_err.h"
 
 static STAILQ_HEAD(, os_mbuf_pool) g_msys_pool_list =

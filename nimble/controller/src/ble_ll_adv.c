@@ -17,6 +17,8 @@
  * under the License.
  */
 
+#ifndef ESP_PLATFORM
+
 #include <errno.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -5355,4 +5357,5 @@ ble_ll_adv_init(void)
     }
 }
 
+#endif
 #endif

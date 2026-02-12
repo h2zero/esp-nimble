@@ -6,7 +6,7 @@
 
 #include <stddef.h>
 
-#include "console/console.h"
+#include "nimble/console/console.h"
 #include "nimble/nimble/host/mesh/include/mesh/testing.h"
 #include "nimble/nimble/host/mesh/include/mesh/slist.h"
 #include "nimble/nimble/host/mesh/include/mesh/glue.h"

@@ -17,6 +17,8 @@
  * under the License.
  */
 
+#ifndef ESP_PLATFORM
+
 #include "nimble/porting/nimble/include/syscfg/syscfg.h"
 
 #if MYNEWT_VAL(BLE_STORE_CONFIG_PERSIST)
@@ -364,3 +366,4 @@ ble_store_config_conf_init(void)
 }
 
 #endif /* MYNEWT_VAL(BLE_STORE_CONFIG_PERSIST) */
+#endif /* ESP_PLATFORM */

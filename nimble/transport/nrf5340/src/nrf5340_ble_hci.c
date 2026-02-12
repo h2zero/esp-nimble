@@ -17,6 +17,8 @@
  * under the License.
  */
 
+#ifndef ESP_PLATFORM
+
 #include <assert.h>
 #include <string.h>
 #include <nimble/porting/nimble/include/syscfg/syscfg.h>
@@ -229,3 +231,5 @@ hci_ipc_atomic_put(volatile uint16_t *num)
                       : [addr] "r" (num)
                       : "r1", "r2", "memory");
 }
+
+#endif /* ESP_PLATFORM */

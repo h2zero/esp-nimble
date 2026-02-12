@@ -26,7 +26,7 @@
 
 #include "nimble/porting/nimble/include/nimble/storage_port.h"
 #include "nimble/nimble/host/include/host/ble_gatt.h"
-#include "esp_nimble_mem.h"
+#include "nimble/esp_port/port/include/esp_nimble_mem.h"
 
 #define GATT_CACHE_PREFIX "gatt_cache"
 #define INVALID_ADDR_NUM 0xff

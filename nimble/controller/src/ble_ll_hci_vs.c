@@ -17,6 +17,8 @@
  * under the License.
  */
 
+#ifndef ESP_PLATFORM
+
 #include <stdint.h>
 #include "nimble/porting/nimble/include/syscfg/syscfg.h"
 #include "nimble/nimble/controller/include/controller/ble_ll_utils.h"
@@ -417,3 +419,5 @@ ble_ll_hci_vs_init(void)
 }
 
 #endif
+
+#endif /* ESP_PLATFORM */
