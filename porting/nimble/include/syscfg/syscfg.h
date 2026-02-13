@@ -20,6 +20,10 @@
 #ifndef H_MYNEWT_SYSCFG_
 #define H_MYNEWT_SYSCFG_
 
+#ifdef ESP_PLATFORM
+#include "esp_nimble_cfg.h"
+#else
+
 #define MYNEWT_VAL(_name)                       MYNEWT_VAL_ ## _name
 #define MYNEWT_VAL_CHOICE(_name, _val)          MYNEWT_VAL_ ## _name ## __ ## _val
 
@@ -1313,3 +1317,4 @@
 #define MYNEWT_API_stats 1
 
 #endif
+#endif 

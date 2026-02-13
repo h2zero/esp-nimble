@@ -17,40 +17,31 @@
  * under the License.
  */
 
-#ifndef _NIMBLE_PORT_FREERTOS_H
-#define _NIMBLE_PORT_FREERTOS_H
+#ifndef _STORAGE_PORT_H
+#define _STORAGE_PORT_H
 
-#include "nimble/nimble_npl.h"
-#include "esp_err.h"
+#include <stdio.h>
 
+typedef enum {
+    READONLY,
+    READWRITE
+} open_mode_t;
 
-#ifdef __cplusplus
-extern "C" {
+typedef uint32_t cache_handle_t;
+typedef int (*open_cache)(const char *namespace_name, open_mode_t open_mode, cache_handle_t *out_handle);
+typedef void (*close_cache)(cache_handle_t handle);
+typedef int (*erase_all_cache)(cache_handle_t handle);
+typedef int (*write_cache)(cache_handle_t handle, const char *key, const void* value, size_t length);
+typedef int (*read_cache)(cache_handle_t handle, const char *key, void* out_value, size_t *length);
+
+struct cache_fn_mapping {
+    open_cache open;
+    close_cache close;
+    erase_all_cache erase_all;
+    write_cache write;
+    read_cache read;
+};
+
+struct cache_fn_mapping link_storage_fn(void *storage_cb);
+
 #endif
-
-/**
- * @brief esp_nimble_enable - Initialize the NimBLE host task
- * 
- * @param host_task 
- * @return esp_err_t 
- */
-esp_err_t esp_nimble_enable(void *host_task);
-
-/**
- * @brief esp_nimble_disable - Disable the NimBLE host task
- * 
- * @return esp_err_t 
- */
-esp_err_t esp_nimble_disable(void);
-
-void nimble_port_freertos_init(TaskFunction_t host_task_fn);
-void nimble_port_freertos_deinit(void);
-void npl_freertos_funcs_init(void);
-void npl_freertos_funcs_deinit(void);
-int npl_freertos_mempool_init(void);
-struct npl_funcs_t * npl_freertos_funcs_get(void);
-#ifdef __cplusplus
-}
-#endif
-
-#endif /* _NIMBLE_PORT_FREERTOS_H */

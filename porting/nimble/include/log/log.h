@@ -17,40 +17,18 @@
  * under the License.
  */
 
-#ifndef _NIMBLE_PORT_FREERTOS_H
-#define _NIMBLE_PORT_FREERTOS_H
-
-#include "nimble/nimble_npl.h"
-#include "esp_err.h"
-
+#ifndef __LOG_H__
+#define __LOG_H__
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-/**
- * @brief esp_nimble_enable - Initialize the NimBLE host task
- * 
- * @param host_task 
- * @return esp_err_t 
- */
-esp_err_t esp_nimble_enable(void *host_task);
+struct log {
+};
 
-/**
- * @brief esp_nimble_disable - Disable the NimBLE host task
- * 
- * @return esp_err_t 
- */
-esp_err_t esp_nimble_disable(void);
-
-void nimble_port_freertos_init(TaskFunction_t host_task_fn);
-void nimble_port_freertos_deinit(void);
-void npl_freertos_funcs_init(void);
-void npl_freertos_funcs_deinit(void);
-int npl_freertos_mempool_init(void);
-struct npl_funcs_t * npl_freertos_funcs_get(void);
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* _NIMBLE_PORT_FREERTOS_H */
+#endif /* __LOG_H__ */
