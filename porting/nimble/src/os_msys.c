@@ -303,3 +303,42 @@ get_msys_pool_list(void)
     return &g_msys_pool_list;
 }
 #endif
+
+int
+os_msys_buf_alloc(void)
+{
+#if OS_MSYS_1_BLOCK_COUNT > 0
+    os_msys_init_1_data = (os_membuf_t *)nimble_platform_mem_calloc(1, (sizeof(os_membuf_t) * SYSINIT_MSYS_1_MEMPOOL_SIZE));
+    if (!os_msys_init_1_data) {
+        return ESP_FAIL;
+    }
+#endif
+
+#if OS_MSYS_2_BLOCK_COUNT > 0
+    os_msys_init_2_data = (os_membuf_t *)nimble_platform_mem_calloc(1, (sizeof(os_membuf_t) * SYSINIT_MSYS_2_MEMPOOL_SIZE));
+    if (!os_msys_init_2_data) {
+#if OS_MSYS_1_BLOCK_COUNT > 0
+       nimble_platform_mem_free(os_msys_init_1_data);
+       os_msys_init_1_data = NULL;
+#endif
+        return ESP_FAIL;
+    }
+#endif
+
+    return ESP_OK;
+}
+
+void
+os_msys_buf_free(void)
+{
+#if OS_MSYS_1_BLOCK_COUNT > 0
+    nimble_platform_mem_free(os_msys_init_1_data);
+    os_msys_init_1_data = NULL;
+#endif
+
+#if OS_MSYS_2_BLOCK_COUNT > 0
+    nimble_platform_mem_free(os_msys_init_2_data);
+    os_msys_init_2_data = NULL;
+#endif
+
+}

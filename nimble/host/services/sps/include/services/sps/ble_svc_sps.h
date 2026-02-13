@@ -1,4 +1,4 @@
-/*
+/**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -17,40 +17,16 @@
  * under the License.
  */
 
-#ifndef _NIMBLE_PORT_FREERTOS_H
-#define _NIMBLE_PORT_FREERTOS_H
+/* Scan Parameters Service */
 
-#include "nimble/nimble_npl.h"
-#include "esp_err.h"
+#ifndef H_BLE_SVC_SPS_
+#define H_BLE_SVC_SPS_
 
 
-#ifdef __cplusplus
-extern "C" {
+#define BLE_SVC_SPS_UUID16                              0x1813
+#define BLE_SVC_SPS_CHR_UUID16_SCAN_ITVL_WINDOW	        0x2A4F
+#define BLE_SVC_SPS_CHR_UUID16_SCAN_REFRESH             0x2A31
+
+void ble_svc_sps_scan_refresh(void);
+void ble_svc_sps_init(uint16_t scan_itvl, uint16_t scan_window);
 #endif
-
-/**
- * @brief esp_nimble_enable - Initialize the NimBLE host task
- * 
- * @param host_task 
- * @return esp_err_t 
- */
-esp_err_t esp_nimble_enable(void *host_task);
-
-/**
- * @brief esp_nimble_disable - Disable the NimBLE host task
- * 
- * @return esp_err_t 
- */
-esp_err_t esp_nimble_disable(void);
-
-void nimble_port_freertos_init(TaskFunction_t host_task_fn);
-void nimble_port_freertos_deinit(void);
-void npl_freertos_funcs_init(void);
-void npl_freertos_funcs_deinit(void);
-int npl_freertos_mempool_init(void);
-struct npl_funcs_t * npl_freertos_funcs_get(void);
-#ifdef __cplusplus
-}
-#endif
-
-#endif /* _NIMBLE_PORT_FREERTOS_H */
