@@ -9,10 +9,11 @@
 #include <stdint.h>
 #include <sysinit/sysinit.h>
 #include <syscfg/syscfg.h>
-#include <os/os_mbuf.h>
 #include "nimble/transport.h"
-#include "ble_hci_trans.h"
 #include "esp_nimble_hci.h"
+
+int ble_hci_trans_hs_cmd_tx(uint8_t *cmd);
+int ble_hci_trans_hs_acl_tx(struct os_mbuf *om);
 
 /* This file is only used by ESP32, ESP32C3 and ESP32S3. */
 int

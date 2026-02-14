@@ -22,6 +22,15 @@
 
 #ifdef ESP_PLATFORM
 #include "esp_nimble_cfg.h"
+
+#ifndef MYNEWT_VAL_BLE_ISO_MAX_BISES
+#define MYNEWT_VAL_BLE_ISO_MAX_BISES (0)
+#endif
+
+#ifndef MYNEWT_VAL_BLE_HS_EXT_ADV_LEGACY_INSTANCE
+#define MYNEWT_VAL_BLE_HS_EXT_ADV_LEGACY_INSTANCE (0)
+#endif
+
 #else
 
 #define MYNEWT_VAL(_name)                       MYNEWT_VAL_ ## _name
@@ -1317,4 +1326,4 @@
 #define MYNEWT_API_stats 1
 
 #endif
-#endif 
+#endif
