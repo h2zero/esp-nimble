@@ -26,6 +26,7 @@
 #include "host/ble_hs_hci.h"
 #include "ble_hs_priv.h"
 #include "ble_gap_priv.h"
+#include "ble_hs_resolv_priv.h"
 
 #ifndef min
 #define min(a, b) ((a) < (b) ? (a) : (b))
@@ -422,6 +423,25 @@ ble_gap_fill_conn_desc(struct ble_hs_conn *conn,
     ble_hs_conn_addrs(conn, &addrs);
 
     desc->our_id_addr = addrs.our_id_addr;
+
+#if MYNEWT_VAL(BLE_HOST_BASED_PRIVACY)
+    /* Check if the privacy is enabled, change the address type accordingly
+     * */
+    if (ble_host_rpa_enabled())
+    {
+        uint8_t *local_id = NULL;
+        struct ble_hs_resolv_entry *rl = NULL;
+        rl = ble_hs_resolv_list_find(conn->bhc_peer_addr.val);
+
+        if (rl != NULL) {
+            /* Get public ID address here */
+            ble_hs_id_addr(BLE_ADDR_PUBLIC, (const uint8_t **) &local_id, NULL);
+            memcpy(desc->our_id_addr.val, local_id, BLE_DEV_ADDR_LEN);
+            desc->our_id_addr.type = BLE_ADDR_PUBLIC;
+        }
+    }
+#endif
+
     desc->peer_id_addr = addrs.peer_id_addr;
     desc->our_ota_addr = addrs.our_ota_addr;
     desc->peer_ota_addr = addrs.peer_ota_addr;
@@ -2396,6 +2416,11 @@ ble_gap_timer(void)
 static int
 ble_gap_wl_busy(void)
 {
+#if MYNEWT_VAL(BLE_HOST_BASED_PRIVACY)
+    if (ble_host_rpa_enabled()) {
+        return BLE_HS_ENOTSUP;
+    }
+#endif
     /* Check if an auto or selective connection establishment procedure is in
      * progress.
      */
@@ -2450,6 +2475,12 @@ ble_gap_wl_read_size(uint8_t *size)
 int
 ble_gap_wl_set(const ble_addr_t *addrs, uint8_t white_list_count)
 {
+#if MYNEWT_VAL(BLE_HOST_BASED_PRIVACY)
+    if (ble_host_rpa_enabled()) {
+        return BLE_HS_ENOTSUP;
+    }
+#endif
+
 #if MYNEWT_VAL(BLE_WHITELIST)
     int rc;
     int i;
@@ -5785,6 +5816,7 @@ ble_gap_connect(uint8_t own_addr_type, const ble_addr_t *peer_addr,
                                conn_params, NULL, NULL, cb, cb_arg);
 #else
     uint32_t duration_ticks;
+    ble_addr_t bhc_peer_addr;
     int rc;
 
     STATS_INC(ble_gap_stats, initiate);
@@ -5867,8 +5899,34 @@ ble_gap_connect(uint8_t own_addr_type, const ble_addr_t *peer_addr,
 
     ble_gap_master.op = BLE_GAP_OP_M_CONN;
 
-    rc = ble_gap_conn_create_tx(own_addr_type, peer_addr,
-                                conn_params);
+    if (peer_addr != NULL) {
+        bhc_peer_addr.type = peer_addr->type;
+        memcpy(bhc_peer_addr.val, peer_addr->val, BLE_DEV_ADDR_LEN);
+
+#if MYNEWT_VAL(BLE_HOST_BASED_PRIVACY)
+    if (ble_host_rpa_enabled())
+    {
+        struct ble_hs_resolv_entry *rl = NULL;
+        rl = ble_hs_resolv_list_find(bhc_peer_addr.val);
+
+        if (rl != NULL && rl->rl_isrpa) {
+            memcpy(bhc_peer_addr.val, rl->rl_peer_rpa, BLE_DEV_ADDR_LEN);
+            bhc_peer_addr.type = rl->rl_addr_type;
+        }
+    }
+#endif
+    } else {
+        memset(&bhc_peer_addr, 0, sizeof bhc_peer_addr);
+    }
+
+    if (peer_addr != NULL) {
+        rc = ble_gap_conn_create_tx(own_addr_type, &bhc_peer_addr,
+                                    conn_params);
+    } else {
+        rc = ble_gap_conn_create_tx(own_addr_type, NULL,
+                                    conn_params);
+    }
+
     if (rc != 0) {
         ble_gap_master_reset_state();
         goto done;
