@@ -20,7 +20,7 @@
  */
 
 #include "syscfg/syscfg.h"
-#if 0 //MYNEWT_VAL(BLE_HOST_BASED_PRIVACY)
+#if MYNEWT_VAL(BLE_HOST_BASED_PRIVACY)
 
 #include <stdint.h>
 #include <string.h>
@@ -355,7 +355,7 @@ ble_hs_rand_prand_get(uint8_t *prand)
 
     while (1) {
         /* Get 24 bits of random data */
-        rc = ble_hs_hci_util_rand(prand, 3);
+        rc = ble_hs_hci_rand(prand, 3);
         if (rc != 0) {
             return;
         }

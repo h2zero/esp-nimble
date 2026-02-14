@@ -37,6 +37,10 @@ int ble_hs_pvcy_ensure_started(void);
 int ble_hs_pvcy_set_mode(const ble_addr_t *addr, uint8_t priv_mode);
 void ble_hs_pvcy_reset(void);
 
+#if MYNEWT_VAL(BLE_HOST_BASED_PRIVACY)
+bool ble_hs_pvcy_enabled(void);
+#endif
+
 #ifdef __cplusplus
 }
 #endif
