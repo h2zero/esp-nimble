@@ -67,9 +67,9 @@ ble_hs_stop_done(int status)
     slist = ble_hs_stop_listeners;
     SLIST_INIT(&ble_hs_stop_listeners);
 
-    ble_hs_enabled_state = BLE_HS_ENABLED_STATE_OFF;
-
     ble_hs_stop_hci_reset();
+
+    ble_hs_enabled_state = BLE_HS_ENABLED_STATE_OFF;
 
     /* Clear advertising, scanning and connection states. */
     ble_gap_reset_state(0);
