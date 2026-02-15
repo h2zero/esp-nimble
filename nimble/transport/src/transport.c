@@ -372,6 +372,23 @@ ble_transport_init(void)
 #endif
 }
 
+void
+ble_transport_deinit(void)
+{
+    int rc = 0;
+    rc = os_mempool_ext_clear(&pool_acl);
+    SYSINIT_PANIC_ASSERT(rc == 0);
+
+    rc = os_mempool_clear(&pool_evt_lo);
+    SYSINIT_PANIC_ASSERT(rc == 0);
+
+    rc = os_mempool_clear(&pool_evt);
+    SYSINIT_PANIC_ASSERT(rc == 0);
+
+    rc = os_mempool_clear(&pool_cmd);
+    SYSINIT_PANIC_ASSERT(rc == 0);
+}
+
 int
 ble_transport_register_put_acl_from_ll_cb(os_mempool_put_fn (*cb))
 {

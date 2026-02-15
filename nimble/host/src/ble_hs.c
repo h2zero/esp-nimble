@@ -66,6 +66,16 @@ static int ble_hs_reset_reason;
 
 #define BLE_HS_SYNC_RETRY_TIMEOUT_MS    100 /* ms */
 
+extern void ble_hs_hci_deinit(void);
+extern void ble_gap_deinit(void);
+extern void ble_hs_stop_deinit(void);
+extern void ble_mqueue_deinit(struct ble_mqueue *);
+extern void ble_hs_flow_init(void);
+extern void ble_hs_flow_deinit(void);
+extern void ble_monitor_deinit(void);
+extern void ble_gatts_stop(void);
+extern void ble_hs_resolv_deinit(void);
+
 static void *ble_hs_parent_task;
 
 /**
@@ -836,4 +846,42 @@ void
 ble_transport_hs_init(void)
 {
     ble_hs_init();
+}
+
+void
+ble_hs_deinit(void)
+{
+    ble_hs_flow_deinit();
+
+#if BLE_MONITOR
+    ble_monitor_deinit();
+#endif
+
+    ble_npl_mutex_deinit(&ble_hs_mutex);
+
+    ble_mqueue_deinit(&ble_hs_rx_q);
+
+    ble_hs_stop_deinit();
+
+    ble_gap_deinit();
+
+    ble_hs_hci_deinit();
+
+    ble_npl_event_deinit(&ble_hs_ev_start_stage2);
+
+    ble_npl_event_deinit(&ble_hs_ev_start_stage1);
+
+    ble_npl_event_deinit(&ble_hs_ev_reset);
+
+#if NIMBLE_BLE_CONNECT
+    ble_npl_event_deinit(&ble_hs_ev_tx_notifications);
+
+    ble_gatts_stop();
+#endif
+
+    ble_npl_callout_deinit(&ble_hs_timer);
+
+#if (MYNEWT_VAL(BLE_HOST_BASED_PRIVACY))
+    ble_hs_resolv_deinit();
+#endif
 }

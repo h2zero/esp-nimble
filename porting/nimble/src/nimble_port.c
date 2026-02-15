@@ -29,6 +29,11 @@
 #include "os/os_cputime.h"
 #endif
 
+#include "bt_common.h"
+#if (BT_HCI_LOG_INCLUDED == TRUE)
+#include "hci_log/bt_hci_log.h"
+#endif // (BT_HCI_LOG_INCLUDED == TRUE)
+
 #include "nimble/nimble_port_freertos.h"
 #if CONFIG_BT_CONTROLLER_ENABLED
 #include "esp_bt.h"
@@ -41,18 +46,70 @@
 #define NIMBLE_PORT_LOG_TAG          "BLE_INIT"
 
 static struct ble_npl_eventq g_eventq_dflt;
+static struct ble_npl_eventq g_eventq_dflt;
+static struct ble_npl_sem ble_hs_stop_sem;
+static struct ble_npl_event ble_hs_ev_stop;
 
 extern void os_msys_init(void);
 extern void os_mempool_module_init(void);
-#if NIMBLE_CFG_CONTROLLER
-extern void ble_ll_init(void);
-#endif
 extern void ble_hs_deinit(void);
+static struct ble_hs_stop_listener stop_listener;
+
+/**
+ * Called when the host stop procedure has completed.
+ */
+static void
+ble_hs_stop_cb(int status, void *arg)
+{
+    ble_npl_sem_release(&ble_hs_stop_sem);
+}
+
+static void
+nimble_port_stop_cb(struct ble_npl_event *ev)
+{
+    ble_npl_sem_release(&ble_hs_stop_sem);
+}
+
+/**
+ * @brief esp_nimble_deinit - Deinitialize the NimBLE host stack
+ *
+ * @return esp_err_t
+ */
+esp_err_t esp_nimble_deinit(void)
+{
+#if !SOC_ESP_NIMBLE_CONTROLLER || !CONFIG_BT_CONTROLLER_ENABLED
+#if CONFIG_BT_CONTROLLER_ENABLED
+    if(esp_nimble_hci_deinit() != ESP_OK) {
+        ESP_LOGE(NIMBLE_PORT_LOG_TAG, "hci deinit failed\n");
+        return ESP_FAIL;
+    }
+#else
+#if MYNEWT_VAL(BLE_QUEUE_CONG_CHECK)
+    ble_adv_list_deinit();
+#endif
+    ble_transport_deinit();
+    ble_buf_free();
+#endif
+
+    ble_npl_eventq_deinit(&g_eventq_dflt);
+#endif
+    ble_hs_deinit();
+#if !SOC_ESP_NIMBLE_CONTROLLER || !CONFIG_BT_CONTROLLER_ENABLED
+    npl_freertos_funcs_deinit();
+#endif
+
+#if !SOC_ESP_NIMBLE_CONTROLLER
+    npl_freertos_mempool_deinit();
+#endif
+
+    ble_transport_ll_deinit();
+    return ESP_OK;
+}
 
 /**
  * @brief esp_nimble_init - Initialize the NimBLE host stack
- * 
- * @return esp_err_t 
+ *
+ * @return esp_err_t
  */
 esp_err_t esp_nimble_init(void)
 {
@@ -152,6 +209,75 @@ nimble_port_init(void)
     return ESP_OK;
 }
 
+esp_err_t
+nimble_port_deinit(void)
+{
+    esp_err_t ret;
+
+    ret = esp_nimble_deinit();
+    if(ret != ESP_OK) {
+        ESP_LOGE(NIMBLE_PORT_LOG_TAG, "nimble host deinit failed\n");
+        return ret;
+    }
+
+#if CONFIG_BT_CONTROLLER_ENABLED
+    ret = esp_bt_controller_disable();
+    if(ret != ESP_OK) {
+        ESP_LOGE(NIMBLE_PORT_LOG_TAG, "controller disable failed\n");
+        return ret;
+    }
+
+    ret = esp_bt_controller_deinit();
+    if(ret != ESP_OK) {
+        ESP_LOGE(NIMBLE_PORT_LOG_TAG, "controller deinit failed\n");
+        return ret;
+    }
+#endif
+
+#if (BT_HCI_LOG_INCLUDED == TRUE)
+    bt_hci_log_deinit();
+#endif // (BT_HCI_LOG_INCLUDED == TRUE)
+
+    return ESP_OK;
+}
+
+int
+nimble_port_stop(void)
+{
+    esp_err_t err = ESP_OK;
+    ble_npl_error_t rc;
+
+    rc = ble_npl_sem_init(&ble_hs_stop_sem, 0);
+
+    if( rc != 0) {
+        ESP_LOGE(NIMBLE_PORT_LOG_TAG, "sem init failed with reason: %d \n", rc);
+	    return rc;
+    }
+
+    /* Initiate a host stop procedure. */
+    err = ble_hs_stop(&stop_listener, ble_hs_stop_cb,
+                     NULL);
+    if (err != 0) {
+        ble_npl_sem_deinit(&ble_hs_stop_sem);
+        return err;
+    }
+
+    /* Wait till the host stop procedure is complete */
+    ble_npl_sem_pend(&ble_hs_stop_sem, BLE_NPL_TIME_FOREVER);
+
+    ble_npl_event_init(&ble_hs_ev_stop, nimble_port_stop_cb, NULL);
+    ble_npl_eventq_put(&g_eventq_dflt, &ble_hs_ev_stop);
+
+    /* Wait till the event is serviced */
+    ble_npl_sem_pend(&ble_hs_stop_sem, BLE_NPL_TIME_FOREVER);
+
+    ble_npl_sem_deinit(&ble_hs_stop_sem);
+
+    ble_npl_event_deinit(&ble_hs_ev_stop);
+
+    return ESP_OK;
+}
+
 void
 nimble_port_run(void)
 {
@@ -159,7 +285,12 @@ nimble_port_run(void)
 
     while (1) {
         ev = ble_npl_eventq_get(&g_eventq_dflt, BLE_NPL_TIME_FOREVER);
-        ble_npl_event_run(ev);
+        if (ev) {
+            ble_npl_event_run(ev);
+            if (ev == &ble_hs_ev_stop) {
+                break;
+            }
+        }
     }
 }
 

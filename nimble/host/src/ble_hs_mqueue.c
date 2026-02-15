@@ -19,6 +19,12 @@
 
 #include "ble_hs_priv.h"
 
+void
+ble_mqueue_deinit(struct ble_mqueue *mq)
+{
+    ble_npl_event_deinit(&mq->ev);
+}
+
 int
 ble_mqueue_init(struct ble_mqueue *mq, ble_npl_event_fn *ev_fn, void *ev_arg)
 {
