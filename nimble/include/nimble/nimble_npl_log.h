@@ -39,7 +39,7 @@ extern "C" {
  * logging macros used by NiBLE (eg via modlog) or BLE_NPL_LOG_IMPL
  * macro implementation that generates required logging functions/macros
  */
-#include "nimble/nimble_npl_os_log.h"
+#include "../../../porting/npl/freertos/include/nimble/nimble_npl_os_log.h"
 
 /* generate logging functions for modules, can be macro or function  */
 #ifdef BLE_NPL_LOG_IMPL

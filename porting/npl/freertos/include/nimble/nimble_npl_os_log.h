@@ -21,17 +21,41 @@
 #define _NIMBLE_NPL_OS_LOG_H_
 
 #include <stdarg.h>
-#include <stdio.h>
+#include "esp_log.h"
+#include "log_common/log_common.h"
 
-/* Example on how to use macro to generate module logging functions */
-#define BLE_NPL_LOG_IMPL(lvl) \
-        static inline void _BLE_NPL_LOG_CAT(BLE_NPL_LOG_MODULE, \
-                _BLE_NPL_LOG_CAT(_, lvl))(const char *fmt, ...)\
-        {                               \
-            va_list args;               \
-            va_start(args, fmt);        \
-            vprintf(fmt, args);          \
-            va_end(args);               \
-        }
+/* Default log level (can be overridden via kconfig) */
+#ifndef BLE_HS_LOG_LVL
+#define BLE_HS_LOG_LVL LOG_LEVEL_INFO
+#endif
+
+/* Map NimBLE log levels to ESP-IDF log levels */
+#define _BLE_TO_ESP_LEVEL(lvl) _BLE_TO_ESP_LEVEL_##lvl
+#define _BLE_TO_ESP_LEVEL_DEBUG    ESP_LOG_DEBUG
+#define _BLE_TO_ESP_LEVEL_INFO     ESP_LOG_INFO
+#define _BLE_TO_ESP_LEVEL_WARN     ESP_LOG_WARN
+#define _BLE_TO_ESP_LEVEL_ERROR    ESP_LOG_ERROR
+#define _BLE_TO_ESP_LEVEL_CRITICAL ESP_LOG_ERROR
+
+/* Map log level names to numeric values */
+#define _BLE_LOG_LEVEL_VALUE(lvl) _BLE_LOG_LEVEL_VALUE_##lvl
+#define _BLE_LOG_LEVEL_VALUE_DEBUG    LOG_LEVEL_DEBUG
+#define _BLE_LOG_LEVEL_VALUE_INFO     LOG_LEVEL_INFO
+#define _BLE_LOG_LEVEL_VALUE_WARN     LOG_LEVEL_WARN
+#define _BLE_LOG_LEVEL_VALUE_ERROR    LOG_LEVEL_ERROR
+#define _BLE_LOG_LEVEL_VALUE_CRITICAL LOG_LEVEL_CRITICAL
+
+/* Generate module logging functions with compile-time filtering */
+#define BLE_NPL_LOG_IMPL(lvl)                                                 \
+    static inline void _BLE_NPL_LOG_CAT(                                      \
+        BLE_NPL_LOG_MODULE, _BLE_NPL_LOG_CAT(_, lvl))(const char *fmt, ...)   \
+    {                                                                         \
+        if (BLE_HS_LOG_LVL <= _BLE_LOG_LEVEL_VALUE(lvl)) {                    \
+            va_list args;                                                     \
+            va_start(args, fmt);                                              \
+            esp_log_writev(_BLE_TO_ESP_LEVEL(lvl), "NimBLE", fmt, args);      \
+            va_end(args);                                                     \
+        }                                                                     \
+    }
 
 #endif  /* _NIMBLE_NPL_OS_LOG_H_ */
