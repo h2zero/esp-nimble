@@ -49,6 +49,7 @@ static struct ble_hs_hci_sup_cmd ble_hs_hci_sup_cmd;
      sizeof (struct ble_mbuf_hdr) +     \
      sizeof (struct os_mbuf))
 #else
+#define BLE_HS_CTRL_DATA_HDR_SZ     0x4
 #define BLE_HS_HCI_FRAG_DATABUF_SIZE    \
      (BLE_ACL_MAX_PKT_SIZE +            \
       BLE_HCI_DATA_HDR_SZ +             \
