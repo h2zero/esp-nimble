@@ -57,15 +57,15 @@ int nimble_port_stop(void);
 
 /**
  * @brief esp_nimble_init - Initialize the NimBLE host stack
- * 
- * @return esp_err_t 
+ *
+ * @return esp_err_t
  */
 esp_err_t esp_nimble_init(void);
 
 /**
  * @brief esp_nimble_deinit - Deinitialize the NimBLE host stack
- * 
- * @return esp_err_t 
+ *
+ * @return esp_err_t
  */
 esp_err_t esp_nimble_deinit(void);
 
@@ -75,6 +75,11 @@ struct ble_npl_eventq *nimble_port_get_dflt_eventq(void);
 #if NIMBLE_CFG_CONTROLLER
 void nimble_port_ll_task_func(void *arg);
 #endif
+
+/** Callback function types; executed when HCI packets are received. */
+struct os_mbuf;
+typedef int ble_hci_trans_rx_cmd_fn(uint8_t *cmd, void *arg);
+typedef int ble_hci_trans_rx_acl_fn(struct os_mbuf *om, void *arg);
 
 #ifdef __cplusplus
 }
