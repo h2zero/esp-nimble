@@ -24,7 +24,7 @@
 #include "nimble/nimble_port.h"
 #include "nimble/nimble_port_freertos.h"
 #include "nimble/transport.h"
-#if NIMBLE_CFG_CONTROLLER
+#if NIMBLE_CFG_CONTROLLER && !defined(ESP_PLATFORM)
 #include "controller/ble_ll.h"
 #include "os/os_cputime.h"
 #endif
@@ -300,7 +300,7 @@ nimble_port_get_dflt_eventq(void)
     return &g_eventq_dflt;
 }
 
-#if NIMBLE_CFG_CONTROLLER
+#if NIMBLE_CFG_CONTROLLER && !defined(ESP_PLATFORM)
 void
 nimble_port_ll_task_func(void *arg)
 {

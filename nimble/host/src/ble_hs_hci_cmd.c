@@ -24,6 +24,7 @@
 #include "os/os.h"
 #include "nimble/hci_common.h"
 #include "ble_hs_priv.h"
+#include "bt_common.h"
 
 #define BLE_HCI_CMD_HDR_LEN                 (3)
 
