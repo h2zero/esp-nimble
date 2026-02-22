@@ -3,6 +3,11 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
+
+#include <syscfg/syscfg.h>
+#ifdef ESP_PLATFORM
+#if !defined(CONFIG_IDF_TARGET_ESP32) && !defined(CONFIG_IDF_TARGET_ESP32C3) && !defined(CONFIG_IDF_TARGET_ESP32S3)
+
 #include <assert.h>
 #include <string.h>
 #include <errno.h>
@@ -69,3 +74,6 @@ ble_transport_free(void *buf)
 {
     r_ble_hci_trans_buf_free(buf);
 }
+
+#endif /* !CONFIG_IDF_TARGET_ESP32 && !CONFIG_IDF_TARGET_ESP32C3 && !CONFIG_IDF_TARGET_ESP32S3 */
+#endif /* ESP_PLATFORM */

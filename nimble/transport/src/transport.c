@@ -28,7 +28,9 @@
 #if BLE_TRANSPORT_IPC
 #include <nimble/transport/hci_ipc.h>
 #endif
+#ifdef ESP_PLATFORM
 #include "esp_nimble_mem.h"
+#endif
 
 #define OMP_FLAG_FROM_HS        (0x01)
 #define OMP_FLAG_FROM_LL        (0x02)
@@ -376,8 +378,10 @@ void
 ble_transport_deinit(void)
 {
     int rc = 0;
+#if POOL_ISO_COUNT > 0
     rc = os_mempool_ext_clear(&pool_acl);
     SYSINIT_PANIC_ASSERT(rc == 0);
+#endif
 
     rc = os_mempool_clear(&pool_evt_lo);
     SYSINIT_PANIC_ASSERT(rc == 0);
@@ -414,6 +418,8 @@ ble_transport_ipc_buf_evt_type_get(void *buf)
 }
 
 #endif
+
+#ifdef ESP_PLATFORM
 
 int os_msys_buf_alloc(void);
 void os_msys_buf_free(void);
@@ -480,4 +486,5 @@ esp_err_t ble_buf_alloc(void)
     return ESP_OK;
 }
 
+#endif /* ESP_PLATFORM */
 #endif

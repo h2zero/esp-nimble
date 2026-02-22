@@ -1130,7 +1130,7 @@ ble_ll_adv_tx_start_cb(struct ble_ll_sched_item *sch)
     uint32_t txstart;
     struct ble_ll_adv_sm *advsm;
 #if MYNEWT_VAL(BLE_LL_PHY) && MYNEWT_VAL(BLE_LL_CFG_FEAT_LL_EXT_ADV)
-    uint8_t phy_mode;
+    uint8_t phy_mode __attribute__((unused));
 #endif
 
     /* Get the state machine for the event */

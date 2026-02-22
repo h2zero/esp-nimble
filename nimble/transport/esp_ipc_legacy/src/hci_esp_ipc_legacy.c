@@ -3,6 +3,9 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
+#include <syscfg/syscfg.h>
+#if defined(CONFIG_IDF_TARGET_ESP32) || defined(CONFIG_IDF_TARGET_ESP32C3) || defined(CONFIG_IDF_TARGET_ESP32S3)
+
 #include <assert.h>
 #include <string.h>
 #include <errno.h>
@@ -40,3 +43,4 @@ ble_transport_ll_deinit(void)
 
 }
 
+#endif

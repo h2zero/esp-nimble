@@ -179,8 +179,6 @@ static ble_hs_hci_evt_le_fn * const ble_hs_hci_evt_le_dispatch[] = {
 #endif
 };
 
-static const uint8_t ble_hs_conn_null_addr[6];
-
 #define BLE_HS_HCI_EVT_LE_DISPATCH_SZ \
     (sizeof ble_hs_hci_evt_le_dispatch / sizeof ble_hs_hci_evt_le_dispatch[0])
 
@@ -398,6 +396,7 @@ ble_hs_hci_evt_le_enh_conn_complete(uint8_t subevent, const void *data,
         memcpy(evt.peer_rpa,ev->peer_rpa, BLE_DEV_ADDR_LEN);
 
 #if MYNEWT_VAL(BLE_HOST_BASED_PRIVACY)
+        static const uint8_t ble_hs_conn_null_addr[6];
         /* RPA needs to be resolved here, as controller is not aware of the
          * address is RPA in Host based RPA  */
         if (ble_host_rpa_enabled() && ((!memcmp(evt.local_rpa, ble_hs_conn_null_addr, 6)) == 0)) {
