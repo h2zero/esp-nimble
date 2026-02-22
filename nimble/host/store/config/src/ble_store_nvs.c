@@ -19,6 +19,7 @@
 * under the License.
 */
 
+#ifdef ESP_PLATFORM
 
 #include "syscfg/syscfg.h"
 
@@ -935,3 +936,4 @@ void ble_store_config_conf_init(void)
 
 /***************************************************************************************/
 #endif /* MYNEWT_VAL(BLE_STORE_CONFIG_PERSIST) */
+#endif /* ESP_PLATFORM */

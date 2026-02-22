@@ -53,6 +53,7 @@
 #define PHY_GPIOTE_FEM_LNA  (PHY_GPIOTE_FEM_PA - PHY_USE_FEM_LNA)
 #endif
 
+#if PHY_USE_DEBUG
 static inline void
 phy_gpiote_configure(int idx, int pin)
 {
@@ -61,6 +62,7 @@ phy_gpiote_configure(int idx, int pin)
                               NRF_GPIOTE_INITIAL_VALUE_LOW);
     nrf_gpiote_task_enable(NRF_GPIOTE, idx);
 }
+#endif
 
 #if PHY_USE_DEBUG
 void phy_debug_init(void);
