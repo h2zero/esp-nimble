@@ -48,6 +48,16 @@ extern "C" {
 /** Object type: Client Characteristic Configuration Descriptor. */
 #define BLE_STORE_OBJ_TYPE_CCCD         3
 
+#define BLE_STORE_OBJ_TYPE_PEER_DEV_REC      4
+
+#if MYNEWT_VAL(ENC_ADV_DATA)
+#define BLE_STORE_OBJ_TYPE_ENC_ADV_DATA      5
+#endif
+#define BLE_STORE_OBJ_TYPE_PEER_ADDR         6
+
+#define BLE_STORE_OBJ_TYPE_LOCAL_IRK         7
+#define BLE_STORE_OBJ_TYPE_CSFC              8
+
 /** @} */
 
 /**
@@ -90,6 +100,9 @@ struct ble_store_value_sec {
     /** Peer address for which the security material is stored. */
     ble_addr_t peer_addr;
 
+    /* Espressif added for bond age tracking persistence */
+    uint16_t bond_count;
+
     /** Encryption key size. */
     uint8_t key_size;
     /** Encrypted Diversifier used for encryption key generation. */
@@ -110,6 +123,9 @@ struct ble_store_value_sec {
     uint8_t csrk[16];
     /** Flag indicating if Connection Signature Resolving Key is present. */
     uint8_t csrk_present:1;
+
+    /* Espressif added for signed write support */
+    uint32_t sign_counter;
 
     /** Flag indicating whether the connection is authenticated. */
     unsigned authenticated:1;
@@ -155,6 +171,78 @@ struct ble_store_value_cccd {
 };
 
 /**
+ * Used as a key for lookups of stored client supported features characteristic (CSFC).
+ * This struct corresponds to the BLE_STORE_OBJ_TYPE_CSFC store object type.
+ */
+struct ble_store_key_csfc {
+    /**
+     * Key by peer identity address;
+     */
+    ble_addr_t peer_addr;
+
+    /** Number of results to skip; 0 means retrieve the first match. */
+    uint8_t idx;
+};
+
+/**
+ * Represents a stored client supported features characteristic (CSFC).
+ * This struct corresponds to the BLE_STORE_OBJ_TYPE_CSFC store object type.
+ */
+struct ble_store_value_csfc {
+    ble_addr_t peer_addr;
+    uint8_t csfc[MYNEWT_VAL(BLE_GATT_CSFC_SIZE)];
+};
+
+#if MYNEWT_VAL(ENC_ADV_DATA)
+/**
+ * Used as a key for lookups of encrypted advertising data. This struct corresponds
+ * to the BLE_STORE_OBJ_TYPE_ENC_ADV_DATA store object type.
+ */
+struct ble_store_key_ead {
+    /**
+     * Key by peer identity address;
+     * peer_addr=BLE_ADDR_NONE means don't key off peer.
+     */
+    ble_addr_t peer_addr;
+
+    /** Number of results to skip; 0 means retrieve the first match. */
+    uint8_t idx;
+};
+
+/**
+ * Represents a stored encrypted advertising data. This struct corresponds
+ * to the BLE_STORE_OBJ_TYPE_ENC_ADV_DATA store object type.
+ */
+struct ble_store_value_ead {
+    ble_addr_t peer_addr;
+    unsigned km_present:1;
+    struct key_material *km;
+};
+#endif
+
+struct ble_store_key_local_irk {
+    ble_addr_t addr;
+
+    uint8_t idx;
+};
+
+struct ble_store_value_local_irk {
+     ble_addr_t addr;
+
+     uint8_t irk[16];
+};
+
+struct ble_store_key_rpa_rec{
+    ble_addr_t peer_rpa_addr;
+    uint8_t idx;
+};
+
+struct ble_store_value_rpa_rec{
+    ble_addr_t peer_rpa_addr;
+    ble_addr_t peer_addr;
+};
+
+/**
  * Used as a key for store lookups.  This union must be accompanied by an
  * object type code to indicate which field is valid.
  */
@@ -163,6 +251,12 @@ union ble_store_key {
     struct ble_store_key_sec sec;
     /** Key for Client Characteristic Configuration Descriptor store lookups. */
     struct ble_store_key_cccd cccd;
+#if MYNEWT_VAL(ENC_ADV_DATA)
+    struct ble_store_key_ead ead;
+#endif
+    struct ble_store_key_rpa_rec rpa_rec;
+    struct ble_store_key_local_irk local_irk;
+    struct ble_store_key_csfc csfc;
 };
 
 /**
@@ -174,6 +268,12 @@ union ble_store_value {
     struct ble_store_value_sec sec;
     /** Stored Client Characteristic Configuration Descriptor. */
     struct ble_store_value_cccd cccd;
+#if MYNEWT_VAL(ENC_ADV_DATA)
+    struct ble_store_value_ead ead;
+#endif
+    struct ble_store_value_rpa_rec rpa_rec;
+    struct ble_store_value_local_irk local_irk;
+    struct ble_store_value_csfc csfc;
 };
 
 /** Represents an event associated with the BLE Store. */
@@ -556,6 +656,10 @@ int ble_store_write_cccd(const struct ble_store_value_cccd *value);
  */
 int ble_store_delete_cccd(const struct ble_store_key_cccd *key);
 
+int ble_store_read_csfc(const struct ble_store_key_csfc *key,
+                        struct ble_store_value_csfc *out_value);
+int ble_store_write_csfc(const struct ble_store_value_csfc *value);
+int ble_store_delete_csfc(const struct ble_store_key_csfc *key);
 
 /**
  * @brief Generates a storage key for a security material entry from its value.
@@ -587,6 +691,33 @@ void ble_store_key_from_value_sec(struct ble_store_key_sec *out_key,
 void ble_store_key_from_value_cccd(struct ble_store_key_cccd *out_key,
                                    const struct ble_store_value_cccd *value);
 
+void ble_store_key_from_value_csfc(struct ble_store_key_csfc *out_key,
+                                   const struct ble_store_value_csfc *value);
+
+#if MYNEWT_VAL(ENC_ADV_DATA)
+int ble_store_read_ead(const struct ble_store_key_ead *key,
+                       struct ble_store_value_ead *out_value);
+int ble_store_write_ead(const struct ble_store_value_ead *value);
+int ble_store_delete_ead(const struct ble_store_key_ead *key);
+void ble_store_key_from_value_ead(struct ble_store_key_ead *out_key,
+                                  const struct ble_store_value_ead *value);
+#endif
+/* irk store*/
+int ble_store_read_local_irk(const struct ble_store_key_local_irk *key,
+                             struct ble_store_value_local_irk *out_value);
+int ble_store_write_local_irk(const struct ble_store_value_local_irk *value);
+int ble_store_delete_local_irk(const struct ble_store_key_local_irk *key);
+void ble_store_key_from_value_local_irk(struct ble_store_key_local_irk *out_key,
+                                        const struct ble_store_value_local_irk *value);
+/*irk store */
+/* rpa mapping*/
+int ble_store_read_rpa_rec(const struct ble_store_key_rpa_rec *key,
+                           struct ble_store_value_rpa_rec *out_value);
+int ble_store_write_rpa_rec(const struct ble_store_value_rpa_rec *value);
+int ble_store_delete_rpa_rec(const struct ble_store_key_rpa_rec *key);
+void ble_store_key_from_value_rpa_rec(struct ble_store_key_rpa_rec *out_key,
+                                      const struct ble_store_value_rpa_rec *value);
+/* rpa mapping*/
 
 /**
  * @brief Generates a storage key from a value based on the object type.
