@@ -74,8 +74,8 @@ def step1_copy_core_folders():
             print(f"  Copying nimble/transport (selective)")
             transport_dest.mkdir(exist_ok=True)
 
-            # Copy only specific folders: esp_ipc, esp_ipc_legacy, common, include, src
-            for folder in ['esp_ipc', 'esp_ipc_legacy', 'common', 'include', 'src']:
+            # Copy only specific folders: include, src
+            for folder in ['include', 'src']:
                 folder_src = transport_src / folder
                 folder_dest = transport_dest / folder
                 if folder_src.exists():
