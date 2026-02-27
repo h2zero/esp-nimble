@@ -444,6 +444,7 @@ ble_hs_timer_reset(uint32_t ticks)
 
     if (!ble_hs_is_enabled()) {
         ble_npl_callout_stop(&ble_hs_timer);
+        ble_npl_callout_deinit(&ble_hs_timer);
     } else {
         rc = ble_npl_callout_reset(&ble_hs_timer, ticks);
         BLE_HS_DBG_ASSERT_EVAL(rc == 0);
@@ -466,6 +467,13 @@ ble_hs_timer_sched(int32_t ticks_from_now)
     if (!ble_npl_callout_is_active(&ble_hs_timer) ||
             ((ble_npl_stime_t)(abs_time -
                                ble_npl_callout_get_ticks(&ble_hs_timer))) < 0) {
+        ble_hs_timer_reset(ticks_from_now);
+    } else if (ble_npl_callout_get_ticks(&ble_hs_timer) <= ble_npl_time_get()) {
+        /* RP-TODO: this condition should not be needed;
+        the timer callback should have been called already if the timer had expired.
+        Remove this condition after verifying that the timer callback is being called as expected.*/
+        /* Reset timer if current time is later than expiration time. */
+        BLE_HS_LOG(DEBUG,"exp_time:%d.now:%d.ticks:%d.active:%d.Need reset.",ble_npl_callout_get_ticks(&ble_hs_timer),ble_npl_time_get(),ticks_from_now,ble_npl_callout_is_active(&ble_hs_timer));
         ble_hs_timer_reset(ticks_from_now);
     }
 }
@@ -504,6 +512,9 @@ ble_hs_event_rx_hci_ev(struct ble_npl_event *ev)
     int rc;
 
     hci_ev = ble_npl_event_get_arg(ev);
+
+    /* Deinitialize hci npl event */
+    ble_npl_event_deinit(ev);
 
     rc = os_memblock_put(&ble_hs_hci_ev_pool, ev);
     BLE_HS_DBG_ASSERT_EVAL(rc == 0);
