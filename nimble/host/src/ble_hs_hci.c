@@ -703,7 +703,8 @@ ble_hs_hci_init(void)
     BLE_HS_DBG_ASSERT_EVAL(rc == 0);
 }
 
-void ble_hs_hci_deinit(void)
+void
+ble_hs_hci_deinit(void)
 {
     int rc;
 
