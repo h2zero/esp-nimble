@@ -53,19 +53,19 @@ def step1_copy_core_folders():
         print(f"  Copying ext/tinycrypt/")
         shutil.copytree(ext_tinycrypt, dest_tinycrypt, dirs_exist_ok=True)
 
-    # Copy nimble folder (excluding transport for now)
+    # Copy nimble folder (excluding transport and doc)
     nimble_src = WORKSPACE_ROOT / "nimble"
     if nimble_src.exists():
         nimble_dest = OUTPUT_DIR / "nimble"
-        print(f"  Copying nimble/ (excluding transport)")
+        print(f"  Copying nimble/ (excluding transport and doc)")
 
-        def ignore_transport(dir, files):
-            # If we're at the nimble root level, ignore the transport folder
+        def ignore_folders(dir, files):
+            # If we're at the nimble root level, ignore the transport and doc folders
             if Path(dir) == nimble_src:
-                return ['transport']
+                return ['transport', 'doc']
             return []
 
-        shutil.copytree(nimble_src, nimble_dest, ignore=ignore_transport, dirs_exist_ok=True)
+        shutil.copytree(nimble_src, nimble_dest, ignore=ignore_folders, dirs_exist_ok=True)
 
         # Now selectively copy transport folder
         transport_src = nimble_src / "transport"
@@ -86,26 +86,27 @@ def step1_copy_core_folders():
                         if transport_c.exists():
                             shutil.copy2(transport_c, folder_dest / 'transport.c')
                             print(f"    Copied transport/src/transport.c")
-                    else:
+                    elif folder == 'include':
                         # Copy entire folder
                         shutil.copytree(folder_src, folder_dest, dirs_exist_ok=True)
-                        print(f"    Copied transport/{folder}/")
+                        print(f"    Copied transport/include/")
 
-    # Copy porting/nimble and porting/npl only
-    porting_nimble_src = WORKSPACE_ROOT / "porting" / "nimble"
-    if porting_nimble_src.exists():
-        dest_porting = OUTPUT_DIR / "porting"
-        dest_porting.mkdir(exist_ok=True)
-        print(f"  Copying porting/nimble/")
-        shutil.copytree(porting_nimble_src, dest_porting / "nimble", dirs_exist_ok=True)
+    # Copy porting nimble and porting/npl/freertos folders 
+    # (temporary until all includes are fixed to not require it, then we can remove this entire folder)
+    porting_src = WORKSPACE_ROOT / "porting"
+    if porting_src.exists():
+        porting_dest = OUTPUT_DIR / "porting"
+        print(f"  Copying porting/ (nimble and npl/freertos)")
 
-    porting_npl_src = WORKSPACE_ROOT / "porting" / "npl"
-    if porting_npl_src.exists():
-        dest_porting = OUTPUT_DIR / "porting"
-        dest_porting.mkdir(exist_ok=True)
-        print(f"  Copying porting/npl/")
-        shutil.copytree(porting_npl_src, dest_porting / "npl", dirs_exist_ok=True)
+        def ignore_porting(dir, files):
+            if Path(dir) == porting_src:
+                return [f for f in files if f not in ['nimble', 'npl']]
+            elif Path(dir) == porting_src / "npl":
+                return [f for f in files if f != 'freertos']
+            return []
 
+        shutil.copytree(porting_src, porting_dest, ignore=ignore_porting, dirs_exist_ok=True)
+        
     # Copy root files to keep
     root_keep = ['LICENSE', 'NOTICE', 'README.md', 'RELEASE_NOTES.md']
     for file_name in root_keep:
@@ -134,50 +135,13 @@ def step2_remove_non_gap_gatt_services():
 
     print("  Step 2 complete")
 
-
-def step3_remove_non_freertos_npl():
+def step3_cleanup_nimble_folders():
     """
-    Remove all folders in nimble/porting/npl and porting/npl except for freertos
+    Remove all folders inside nimble/drivers except anything that starts with "nrf"
     """
-    print("Step 3: Removing non-freertos NPL folders from arduino_lib...")
-
-    # Clean nimble/porting/npl
-    npl_dir = OUTPUT_DIR / "nimble" / "porting" / "npl"
-    if npl_dir.exists():
-        keep_npl = {'freertos'}
-
-        for item in npl_dir.iterdir():
-            if item.is_dir() and item.name not in keep_npl:
-                print(f"  Removing directory: nimble/porting/npl/{item.name}")
-                shutil.rmtree(item)
-
-    # Clean root porting/npl
-    root_npl_dir = OUTPUT_DIR / "porting" / "npl"
-    if root_npl_dir.exists():
-        keep_npl = {'freertos'}
-
-        for item in root_npl_dir.iterdir():
-            if item.is_dir() and item.name not in keep_npl:
-                print(f"  Removing directory: porting/npl/{item.name}")
-                shutil.rmtree(item)
-
-    print("  Step 3 complete")
-
-
-def step4_cleanup_nimble_folders():
-    """
-    Remove nimble/doc folder and all folders inside nimble/drivers
-    except anything that starts with "nrf"
-    """
-    print("Step 4: Cleaning up nimble folder in arduino_lib...")
+    print("Step 3: Cleaning up nimble folder in arduino_lib...")
 
     nimble_dir = OUTPUT_DIR / "nimble"
-
-    # Remove doc folder
-    doc_dir = nimble_dir / "doc"
-    if doc_dir.exists():
-        print(f"  Removing directory: doc")
-        shutil.rmtree(doc_dir)
 
     # Remove non-nrf drivers
     drivers_dir = nimble_dir / "drivers"
@@ -193,20 +157,40 @@ def step4_cleanup_nimble_folders():
         print(f"  Removing directory: drivers/nrf5x/src/nrf53")
         shutil.rmtree(nrf53_dir)
 
-    # Remove porting/nimble/include/syscfg folder
-    syscfg_dir = OUTPUT_DIR / "porting" / "nimble" / "include" / "syscfg"
-    if syscfg_dir.exists():
-        print(f"  Removing directory: porting/nimble/include/syscfg")
-        shutil.rmtree(syscfg_dir)
+    # Remove nimble/host/audio folder
+    audio_dir = nimble_dir / "host" / "audio"
+    if audio_dir.exists():
+        print(f"  Removing directory: nimble/host/audio")
+        shutil.rmtree(audio_dir)
 
-    print("  Step 4 complete")
+    # Remove nimble/host/mesh folder
+    mesh_dir = nimble_dir / "host" / "mesh"
+    if mesh_dir.exists():
+        print(f"  Removing directory: nimble/host/mesh")
+        shutil.rmtree(mesh_dir)
+
+    # Remove ble_store_config_conf.c file from nimble/host/store/config/src
+    store_config_file = nimble_dir / "host" / "store" / "config" / "src" / "ble_store_config_conf.c"
+    if store_config_file.exists():
+        print(f"  Removing file: {store_config_file.name}")
+        store_config_file.unlink()
+
+    # Remove ble_gattc_cache* files from nimble/host/src
+    # host_src_dir = nimble_dir / "host" / "src"
+    # if host_src_dir.exists():
+    #     for cache_file in host_src_dir.glob("ble_gattc_cache*"):
+    #         print(f"  Removing file: {cache_file.name}")
+    #         cache_file.unlink()
+    #         removed_files += 1
+
+    print("  Step 3 complete")
 
 
-def step5_remove_all_test_folders():
+def step4_remove_all_test_folders():
     """
     Remove any folder named test recursively
     """
-    print("Step 5: Removing all test folders recursively from arduino_lib...")
+    print("Step 4: Removing all test folders recursively from arduino_lib...")
 
     count = 0
     for root, dirs, files in os.walk(OUTPUT_DIR):
@@ -217,61 +201,18 @@ def step5_remove_all_test_folders():
             shutil.rmtree(test_path)
             count += 1
 
-    print(f"  Step 5 complete ({count} test folders removed)")
+    print(f"  Step 4 complete ({count} test folders removed)")
 
 
-def step6_remove_non_source_files_and_empty_dirs():
+def step5_remove_non_source_files_and_empty_dirs():
     """
     Remove all files that are not source code files recursively
     then delete any empty folders except for the root files
     """
-    print("Step 6: Removing non-source files and empty directories from arduino_lib...")
+    print("Step 5: Removing non-source files and empty directories from arduino_lib...")
 
     removed_files = 0
     removed_dirs = 0
-
-    # Remove nimble/host/audio folder
-    audio_dir = OUTPUT_DIR / "nimble" / "host" / "audio"
-    if audio_dir.exists():
-        print(f"  Removing directory: nimble/host/audio")
-        shutil.rmtree(audio_dir)
-        removed_dirs += 1
-
-    # Remove nimble/host/mesh folder
-    mesh_dir = OUTPUT_DIR / "nimble" / "host" / "mesh"
-    if mesh_dir.exists():
-        print(f"  Removing directory: nimble/host/mesh")
-        shutil.rmtree(mesh_dir)
-        removed_dirs += 1
-
-    # Remove ble_gattc_cache* files from nimble/host/src
-    host_src_dir = OUTPUT_DIR / "nimble" / "host" / "src"
-    if host_src_dir.exists():
-        for cache_file in host_src_dir.glob("ble_gattc_cache*"):
-            print(f"  Removing file: {cache_file.name}")
-            cache_file.unlink()
-            removed_files += 1
-
-    # Remove ble_store_config_conf.c file from nimble/host/store/config/src
-    store_config_file = OUTPUT_DIR / "nimble" / "host" / "store" / "config" / "src" / "ble_store_config_conf.c"
-    if store_config_file.exists():
-        print(f"  Removing file: {store_config_file.name}")
-        store_config_file.unlink()
-        removed_files += 1
-
-    # Delete all files and folders under porting
-    porting_dir = OUTPUT_DIR / "porting"
-    if porting_dir.exists():
-        print(f"  Removing entire porting directory")
-        shutil.rmtree(porting_dir)
-        removed_dirs += 1
-
-    # Copy all files from arduino_porting into the porting folder
-    arduino_porting_src = WORKSPACE_ROOT / "arduino_porting"
-    if arduino_porting_src.exists():
-        print(f"  Copying arduino_porting to porting/")
-        shutil.copytree(arduino_porting_src, porting_dir, dirs_exist_ok=True)
-        print(f"  Replaced porting folder with arduino_porting")
 
     # Track which files to keep at root of arduino_lib
     root_keep = {'LICENSE', 'NOTICE', 'README.md', 'RELEASE_NOTES.md'}
@@ -306,16 +247,16 @@ def step6_remove_non_source_files_and_empty_dirs():
             except OSError:
                 pass
 
-    print(f"  Step 6 complete ({removed_files} files, {removed_dirs} directories removed)")
+    print(f"  Step 5 complete ({removed_files} files, {removed_dirs} directories removed)")
 
 
-def step7_convert_include_paths():
+def step6_convert_include_paths():
     """
     Convert all include statements in all files recursively within arduino_lib folder
     to be the full path from arduino_lib root unless it is already a relative
     statement or the file is in the same folder.
     """
-    print("Step 7: Converting include paths in arduino_lib...")
+    print("Step 6: Converting include paths in arduino_lib...")
 
     modified_files = 0
 
@@ -470,15 +411,15 @@ def step7_convert_include_paths():
                 except Exception as e:
                     print(f"  Error processing {file_path}: {e}")
 
-    print(f"  Step 7 complete ({modified_files} files modified)")
+    print(f"  Step 6 complete ({modified_files} files modified)")
 
 
-def step8_add_esp_platform_guards():
+def step7_add_esp_platform_guards():
     """
     Wrap all .c files in nimble/controller folder with #ifndef ESP_PLATFORM guards
     so they won't compile anything when ESP_PLATFORM is defined
     """
-    print("Step 8: Adding ESP_PLATFORM guards to .c files in arduino_lib...")
+    print("Step 7: Adding ESP_PLATFORM guards to .c files in arduino_lib...")
 
     modified_files = 0
     controller_dir = OUTPUT_DIR / "nimble" / "controller"
@@ -509,20 +450,20 @@ def step8_add_esp_platform_guards():
                     except Exception as e:
                         print(f"  Error processing {file}: {e}")
 
-    print(f"  Step 8 complete ({modified_files} files modified)")
+    print(f"  Step 7 complete ({modified_files} files modified)")
 
 
-def step9_add_arduino_arch_guards():
+def step8_add_arduino_arch_guards():
     """
     Wrap .c files in nrf51 and nrf5x folders with appropriate Arduino architecture guards
     """
-    print("Step 9: Adding Arduino architecture guards to nrf driver .c files...")
+    print("Step 8: Adding Arduino architecture guards to nrf driver .c files...")
 
     modified_files = 0
     drivers_dir = OUTPUT_DIR / "nimble" / "drivers"
 
     if not drivers_dir.exists():
-        print("  Step 9 complete (no drivers directory found)")
+        print("  Step 8 complete (no drivers directory found)")
         return
 
     # Process nrf51 folder
@@ -581,15 +522,15 @@ def step9_add_arduino_arch_guards():
                     except Exception as e:
                         print(f"  Error processing {file}: {e}")
 
-    print(f"  Step 9 complete ({modified_files} files modified)")
+    print(f"  Step 8 complete ({modified_files} files modified)")
 
 
-def step10_remove_bt_common_and_hci_log():
+def step9_remove_bt_common_and_hci_log():
     """
     Remove all #include "bt_common.h" statements and any code sections
     within and including the preprocessor check for BT_HCI_LOG_INCLUDED == TRUE
     """
-    print("Step 10: Removing bt_common.h includes and BT_HCI_LOG_INCLUDED blocks...")
+    print("Step 9: Removing bt_common.h includes and BT_HCI_LOG_INCLUDED blocks...")
 
     modified_files = 0
 
@@ -675,14 +616,14 @@ def step10_remove_bt_common_and_hci_log():
                 except Exception as e:
                     print(f"  Error processing {file}: {e}")
 
-    print(f"  Step 10 complete ({modified_files} files modified)")
+    print(f"  Step 9 complete ({modified_files} files modified)")
 
 
-def step11_convert_esp_hci_includes():
+def step10_convert_esp_hci_includes():
     """
     Convert esp_hci_* includes to absolute paths under nimble/esp_port/port/transport/include
     """
-    print("Step 11: Converting esp_hci include paths...")
+    print("Step 10: Converting esp_hci include paths...")
 
     modified_files = 0
 
@@ -724,15 +665,15 @@ def step11_convert_esp_hci_includes():
                 except Exception as e:
                     print(f"  Error processing {file}: {e}")
 
-    print(f"  Step 11 complete ({modified_files} files modified)")
+    print(f"  Step 10 complete ({modified_files} files modified)")
 
 
-def step12_convert_esp_mem_includes():
+def step11_convert_esp_mem_includes():
     """
     Convert esp_nimble_mem.h and bt_osi_mem.h includes to absolute paths
     under nimble/esp_port/port/include
     """
-    print("Step 12: Converting esp_mem include paths...")
+    print("Step 11: Converting esp_mem include paths...")
 
     modified_files = 0
 
@@ -767,15 +708,15 @@ def step12_convert_esp_mem_includes():
                 except Exception as e:
                     print(f"  Error processing {file}: {e}")
 
-    print(f"  Step 12 complete ({modified_files} files modified)")
+    print(f"  Step 11 complete ({modified_files} files modified)")
 
 
-def step13_convert_esp_nimble_hci_includes():
+def step12_convert_esp_nimble_hci_includes():
     """
     Convert esp_nimble_hci.h includes to absolute paths
     under nimble/esp_port/esp-hci/include
     """
-    print("Step 13: Converting esp_nimble_hci include paths...")
+    print("Step 12: Converting esp_nimble_hci include paths...")
 
     modified_files = 0
 
@@ -803,8 +744,21 @@ def step13_convert_esp_nimble_hci_includes():
                 except Exception as e:
                     print(f"  Error processing {file}: {e}")
 
-    print(f"  Step 13 complete ({modified_files} files modified)")
+    print(f"  Step 12 complete ({modified_files} files modified)")
 
+# Delete porting folder if it exists (cleanup from step 1 - we only needed it temporarily to copy some files, but now all includes should be fixed to not require it, so we can remove the entire folder)
+def step13_cleanup_porting_folder():
+    """
+    Remove the entire porting folder from arduino_lib since all includes should now be fixed to not require it
+    """
+    print("Step 13: Cleaning up porting folder from arduino_lib...")
+
+    porting_dir = OUTPUT_DIR / "porting"
+    if porting_dir.exists():
+        print(f"  Removing directory: porting")
+        shutil.rmtree(porting_dir)
+
+    print("  Step 13 complete")
 
 def main():
     """Execute all steps in order"""
@@ -819,18 +773,17 @@ def main():
     try:
         step1_copy_core_folders()
         step2_remove_non_gap_gatt_services()
-        step3_remove_non_freertos_npl()
-        step4_cleanup_nimble_folders()
-        step5_remove_all_test_folders()
-        step6_remove_non_source_files_and_empty_dirs()
-        step7_convert_include_paths()
-        step8_add_esp_platform_guards()
-        step9_add_arduino_arch_guards()
-        step10_remove_bt_common_and_hci_log()
-        step11_convert_esp_hci_includes()
-        step12_convert_esp_mem_includes()
-        step13_convert_esp_nimble_hci_includes()
-
+        step3_cleanup_nimble_folders()
+        step4_remove_all_test_folders()
+        step5_remove_non_source_files_and_empty_dirs()
+        step6_convert_include_paths()
+        step7_add_esp_platform_guards()
+        step8_add_arduino_arch_guards()
+        step9_remove_bt_common_and_hci_log()
+        step10_convert_esp_hci_includes()
+        step11_convert_esp_mem_includes()
+        step12_convert_esp_nimble_hci_includes()
+        step13_cleanup_porting_folder()
         print("\nAll steps completed successfully!")
         print(f"Output written to: {OUTPUT_DIR}")
 
