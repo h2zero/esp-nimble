@@ -46,10 +46,11 @@ ble_hs_hci_cmd_transport(struct ble_hci_cmd *cmd)
     }
 }
 
+#ifdef ESP_PLATFORM
 static int
 ble_hs_hci_cmd_send(uint16_t opcode, uint8_t len, const void *cmddata)
 {
-struct ble_hci_cmd *cmd;
+    struct ble_hci_cmd *cmd;
     uint8_t *buf;
     int rc;
 
@@ -98,6 +99,38 @@ struct ble_hci_cmd *cmd;
 
     return rc;
 }
+
+#else /* !ESP_PLATFORM */
+
+static int
+ble_hs_hci_cmd_send(uint16_t opcode, uint8_t len, const void *cmddata)
+{
+    struct ble_hci_cmd *cmd;
+    int rc;
+
+    cmd = ble_transport_alloc_cmd();
+    BLE_HS_DBG_ASSERT(cmd != NULL);
+    if (cmd == NULL) {
+        return BLE_HS_ENOMEM;
+    }
+
+    cmd->opcode = htole16(opcode);
+    cmd->length = len;
+    if (len != 0) {
+        memcpy(cmd->data, cmddata, len);
+    }
+
+    rc = ble_hs_hci_cmd_transport(cmd);
+
+    if (rc == 0) {
+        STATS_INC(ble_hs_stats, hci_cmd);
+    } else {
+        BLE_HS_LOG(DEBUG, "ble_hs_hci_cmd_send failure; rc=%d\n", rc);
+    }
+
+    return rc;
+}
+#endif /* ESP_PLATFORM */
 
 int
 ble_hs_hci_cmd_send_buf(uint16_t opcode, const void *buf, uint8_t buf_len)
