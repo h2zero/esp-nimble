@@ -19,6 +19,7 @@
 
 #include <inttypes.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "sysinit/sysinit.h"
 #include "syscfg/syscfg.h"

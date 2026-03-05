@@ -560,7 +560,7 @@ ble_ll_ctrl_proc_unk_rsp(struct ble_ll_conn_sm *connsm, uint8_t *dptr, uint8_t *
             return BLE_LL_CTRL_CONN_UPDATE_IND;
         }
 #endif
-        /* note: fall-through intentional */
+        /* fall through */
     case BLE_LL_CTRL_CONN_PARM_RSP:
         ctrl_proc = BLE_LL_CTRL_PROC_CONN_PARAM_REQ;
         break;
@@ -3041,7 +3041,7 @@ ble_ll_ctrl_rx_pdu(struct ble_ll_conn_sm *connsm, struct os_mbuf *om)
     case BLE_LL_CTRL_CONN_PARM_RSP:
         rsp_opcode = ble_ll_ctrl_rx_conn_param_rsp(connsm, dptr, rspbuf);
         break;
-    /* Fall-through intentional... */
+    /* fall through */
     case BLE_LL_CTRL_REJECT_IND:
     case BLE_LL_CTRL_REJECT_IND_EXT:
         /* Sometimes reject triggers sending other LL CTRL msg */
@@ -3248,7 +3248,7 @@ ble_ll_ctrl_tx_done(struct os_mbuf *txpdu, struct ble_ll_conn_sm *connsm)
 #if MYNEWT_VAL(BLE_LL_CFG_FEAT_LE_ENCRYPTION)
     case BLE_LL_CTRL_PAUSE_ENC_REQ:
         connsm->flags.encrypt_paused = 1;
-        /* note: fall-through intentional */
+        /* fall through */
     case BLE_LL_CTRL_ENC_REQ:
         connsm->enc_data.enc_state = CONN_ENC_S_ENC_RSP_WAIT;
         break;

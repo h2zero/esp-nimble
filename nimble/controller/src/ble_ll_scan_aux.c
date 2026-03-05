@@ -591,7 +591,7 @@ ble_ll_hci_ev_send_ext_adv_report(struct os_mbuf *rxpdu,
         switch (report->evt_type & BLE_HCI_ADV_DATA_STATUS_MASK) {
         case BLE_HCI_ADV_DATA_STATUS_TRUNCATED:
             truncated = true;
-            /* no break */
+            /* fall through */
         case BLE_HCI_ADV_DATA_STATUS_COMPLETE:
             BLE_LL_ASSERT(!hci_ev_next);
             break;
