@@ -73,28 +73,32 @@
                                       BLE_MBUF_MEMBLOCK_OVERHEAD +         \
                                       BLE_HCI_DATA_HDR_SZ, OS_ALIGNMENT))
 
-// static os_membuf_t pool_cmd_buf[ OS_MEMPOOL_SIZE(POOL_CMD_COUNT, POOL_CMD_SIZE) ];
-// static struct os_mempool pool_cmd;
-
-// static os_membuf_t pool_evt_buf[ OS_MEMPOOL_SIZE(POOL_EVT_COUNT, POOL_EVT_SIZE) ];
-// static struct os_mempool pool_evt;
-
-// static os_membuf_t pool_evt_lo_buf[ OS_MEMPOOL_SIZE(POOL_EVT_LO_COUNT, POOL_EVT_SIZE) ];
-// static struct os_mempool pool_evt_lo;
-
-// #if POOL_ACL_COUNT > 0
-// static os_membuf_t pool_acl_buf[ OS_MEMPOOL_SIZE(POOL_ACL_COUNT, POOL_ACL_SIZE) ];
-// static struct os_mempool_ext pool_acl;
-// static struct os_mbuf_pool mpool_acl;
-// #endif
-
-// #if POOL_ISO_COUNT > 0
-// static os_membuf_t pool_iso_buf[ OS_MEMPOOL_SIZE(POOL_ISO_COUNT, POOL_ISO_SIZE) ];
-// static struct os_mempool_ext pool_iso;
-// static struct os_mbuf_pool mpool_iso;
-// #endif
-
 #if !SOC_ESP_NIMBLE_CONTROLLER || !CONFIG_BT_CONTROLLER_ENABLED
+
+#ifndef ESP_PLATFORM
+static os_membuf_t pool_cmd_buf[ OS_MEMPOOL_SIZE(POOL_CMD_COUNT, POOL_CMD_SIZE) ];
+static struct os_mempool pool_cmd;
+
+static os_membuf_t pool_evt_buf[ OS_MEMPOOL_SIZE(POOL_EVT_COUNT, POOL_EVT_SIZE) ];
+static struct os_mempool pool_evt;
+
+static os_membuf_t pool_evt_lo_buf[ OS_MEMPOOL_SIZE(POOL_EVT_LO_COUNT, POOL_EVT_SIZE) ];
+static struct os_mempool pool_evt_lo;
+
+#if POOL_ACL_COUNT > 0
+static os_membuf_t pool_acl_buf[ OS_MEMPOOL_SIZE(POOL_ACL_COUNT, POOL_ACL_SIZE) ];
+static struct os_mempool_ext pool_acl;
+static struct os_mbuf_pool mpool_acl;
+#endif
+
+#if POOL_ISO_COUNT > 0
+static os_membuf_t pool_iso_buf[ OS_MEMPOOL_SIZE(POOL_ISO_COUNT, POOL_ISO_SIZE) ];
+static struct os_mempool_ext pool_iso;
+static struct os_mbuf_pool mpool_iso;
+#endif
+
+#else /* ESP_PLATFORM */
+
 static os_membuf_t *pool_cmd_buf;
 static struct os_mempool pool_cmd;
 
@@ -115,6 +119,8 @@ static os_membuf_t *pool_iso_buf;
 static struct os_mempool_ext pool_iso;
 static struct os_mbuf_pool mpool_iso;
 #endif
+
+#endif /* ESP_PLATFORM */
 
 static os_mempool_put_fn *transport_put_acl_from_ll_cb;
 
@@ -378,8 +384,13 @@ void
 ble_transport_deinit(void)
 {
     int rc = 0;
-#if POOL_ISO_COUNT > 0
+#if POOL_ACL_COUNT > 0
     rc = os_mempool_ext_clear(&pool_acl);
+    SYSINIT_PANIC_ASSERT(rc == 0);
+#endif
+
+#if POOL_ISO_COUNT > 0
+    rc = os_mempool_ext_clear(&pool_iso);
     SYSINIT_PANIC_ASSERT(rc == 0);
 #endif
 
@@ -487,4 +498,4 @@ esp_err_t ble_buf_alloc(void)
 }
 
 #endif /* ESP_PLATFORM */
-#endif
+#endif /* !SOC_ESP_NIMBLE_CONTROLLER || !CONFIG_BT_CONTROLLER_ENABLED */
