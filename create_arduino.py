@@ -176,12 +176,11 @@ def step3_cleanup_nimble_folders():
         store_config_file.unlink()
 
     # Remove ble_gattc_cache* files from nimble/host/src
-    # host_src_dir = nimble_dir / "host" / "src"
-    # if host_src_dir.exists():
-    #     for cache_file in host_src_dir.glob("ble_gattc_cache*"):
-    #         print(f"  Removing file: {cache_file.name}")
-    #         cache_file.unlink()
-    #         removed_files += 1
+    host_src_dir = nimble_dir / "host" / "src"
+    if host_src_dir.exists():
+        for cache_file in host_src_dir.glob("ble_gattc_cache*"):
+            print(f"  Removing file: {cache_file.name}")
+            cache_file.unlink()
 
     print("  Step 3 complete")
 
