@@ -511,3 +511,8 @@ os_mempool_module_init(void)
     STAILQ_INIT(&g_os_mempool_list);
 }
 
+void
+os_mempool_flags_set(struct os_mempool *mp, uint8_t flags)
+{
+    mp->mp_flags |= flags;
+}

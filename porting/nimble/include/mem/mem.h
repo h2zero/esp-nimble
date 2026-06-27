@@ -51,7 +51,7 @@ int r_mem_malloc_mbufpkt_pool(struct os_mempool *mempool,
 
 int r_mem_init_mbuf_pool(void *mem, struct os_mempool *mempool,
                        struct os_mbuf_pool *mbuf_pool, int num_blocks,
-                       int block_size, const char *name);
+                       int block_size, char *name);
 #define mem_init_mbuf_pool r_mem_init_mbuf_pool
 #else
 int mem_malloc_mempool(struct os_mempool *mempool, uint16_t num_blocks,

@@ -24,9 +24,12 @@
 #include "nimble/nimble_port.h"
 #include "nimble/nimble_port_freertos.h"
 #include "nimble/transport.h"
+
+#ifndef ESP_PLATFORM
 #if NIMBLE_CFG_CONTROLLER
 #include "controller/ble_ll.h"
 #include "os/os_cputime.h"
+#endif
 #endif
 
 #include "bt_common.h"

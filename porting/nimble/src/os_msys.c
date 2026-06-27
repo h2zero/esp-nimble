@@ -342,3 +342,12 @@ os_msys_buf_free(void)
 #endif
 
 }
+
+#if SOC_ESP_NIMBLE_CONTROLLER
+extern void r_esp_ble_msys_deinit(void);
+void
+os_msys_deinit(void)
+{
+    r_esp_ble_msys_deinit();
+}
+#endif
